@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://hongyiyoung.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://hongyiyoung.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-19T04:43:02+00:00</updated><id>https://hongyiyoung.github.io/feed.xml</id><title type="html">Hongyi Yang’s Website</title><subtitle>A SWU student majoring CS, interested in AI, ML, and DL.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://hongyiyoung.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://hongyiyoung.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-08-19T05:44:01+00:00</updated><id>https://hongyiyoung.github.io/feed.xml</id><title type="html">Hongyi Yang’s Website</title><subtitle>A SWU student majoring CS, interested in AI, ML, and DL.
 </subtitle><entry><title type="html">a post with plotly.js</title><link href="https://hongyiyoung.github.io/blog/2025/plotly/" rel="alternate" type="text/html" title="a post with plotly.js" /><published>2025-03-26T14:24:00+00:00</published><updated>2025-03-26T14:24:00+00:00</updated><id>https://hongyiyoung.github.io/blog/2025/plotly</id><content type="html" xml:base="https://hongyiyoung.github.io/blog/2025/plotly/"><![CDATA[<p>This is an example post with some <a href="https://plotly.com/javascript/">plotly</a> code.</p>
 
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">plotly
@@ -185,7 +185,7 @@ Content 2
 
 <p>With this you can generate visualizations like:</p>
 
-<ul id="log" class="tab" data-tab="c4c58e6d-0ddd-4507-93ce-3fbbce847cc4" data-name="log">
+<ul id="log" class="tab" data-tab="113cc9aa-9bd3-4323-adff-e9a54a4df765" data-name="log">
   
       <li class="active" id="log-php">
           <a href="#">php </a>
@@ -200,7 +200,7 @@ Content 2
       </li>
   
 </ul>
-<ul class="tab-content" id="c4c58e6d-0ddd-4507-93ce-3fbbce847cc4" data-name="log">
+<ul class="tab-content" id="113cc9aa-9bd3-4323-adff-e9a54a4df765" data-name="log">
   
       <li class="active">
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">var_dump</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
@@ -224,7 +224,7 @@ Content 2
 
 <h2 id="another-example">Another example</h2>
 
-<ul id="data-struct" class="tab" data-tab="df5bf1ae-dbea-4f78-9d88-c3b4c6332b8c" data-name="data-struct">
+<ul id="data-struct" class="tab" data-tab="fa408a6d-5e23-4841-93cf-e492e9272592" data-name="data-struct">
   
       <li class="active" id="data-struct-yaml">
           <a href="#">yaml </a>
@@ -235,7 +235,7 @@ Content 2
       </li>
   
 </ul>
-<ul class="tab-content" id="df5bf1ae-dbea-4f78-9d88-c3b4c6332b8c" data-name="data-struct">
+<ul class="tab-content" id="fa408a6d-5e23-4841-93cf-e492e9272592" data-name="data-struct">
   
       <li class="active">
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">hello</span><span class="pi">:</span>
@@ -257,7 +257,7 @@ Content 2
 
 <h2 id="tabs-for-something-else">Tabs for something else</h2>
 
-<ul id="something-else" class="tab" data-tab="a95f8e03-ec85-494a-882f-9c538724ecae" data-name="something-else">
+<ul id="something-else" class="tab" data-tab="824ecb79-ca48-4d82-9b56-137cc62d754c" data-name="something-else">
   
       <li class="active" id="something-else-text">
           <a href="#">text </a>
@@ -272,7 +272,7 @@ Content 2
       </li>
   
 </ul>
-<ul class="tab-content" id="a95f8e03-ec85-494a-882f-9c538724ecae" data-name="something-else">
+<ul class="tab-content" id="824ecb79-ca48-4d82-9b56-137cc62d754c" data-name="something-else">
   
       <li class="active">
 <p>Regular text</p>
