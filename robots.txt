@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://HongyiYoung.github.io/sitemap.xml
+Sitemap: https://HongyiYoung.github.io//sitemap.xml
