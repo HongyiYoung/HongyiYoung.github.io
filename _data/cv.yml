@@ -1,97 +1,132 @@
 - title: General Information
   type: map
   contents:
-    - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
-    - name: Languages
-      value: English, German
+    - name: Name
+      value: Hongyi Yang
+    - name: Email
+      value: yhy520@email.swu.edu.cn
+    - name: Url
+      value: https://HongyiYoung.github.io<br>https://Vinyyang.github.io
+
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: Undergraduate
+      institution: Southwest University, Chongqing, China
+      year: 2023 - 2027
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
-      description:
-        - Description 1.
-        - Description 2.
+        - Major in Computer Science.
+        - Research experience in CV and Embodied Systems.
+        # - title: Description 3.
+        #   contents:
+        #     - Sub-description 1.
+        #     - Sub-description 2.
+    # - title: Federal teaching diploma
+    #   institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
+    #   year: 1900
+    #   description:
+    #     - Description 1.
+    #     - Description 2.
 
 - title: Experience
   type: time_table
   contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
+    - title: Autonomous Driving Algorithm R&D Intern
+      institution: Chongqing Zhongke Automotive Software Innovation Center
+      year: 2024.07 - 2024.08
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
+        - Responsible for 2D semantic segmentation task in autonomous driving scenarios
+        - Dataset construction and annotation for autonomous driving
+        - Model research, training and optimization
+        - Real-vehicle deployment optimization
+        - title: Key Skills Applied
           contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
-      description:
-        - Description 1.
-        - Description 2.
+            - 2D Semantic Segmentation
+            - Dataset Construction & Annotation
+            - Model Training & Optimization
+            - Real-Vehicle Deployment
 
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
+    # - title: Director
+    #   institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
+    #   year: 1917-1933
 
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
-      description:
+    # - title: Professor of Theoretical Physics
+    #   institution: Karl-Ferdinand University, Prague, Czechoslovakia
+    #   year: 1911 - 1917
+    #   description:
 
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
+    # - title: Associate Professor of Theoretical Physics
+    #   institution: University of Zurich, Zurich, Switzerland
+    #   year: 1909 - 1911
 
-- title: Open Source Projects
-  type: time_table
-  contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
+# - title: Open Source Projects
+#   type: time_table
+#   contents:
+#     - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
+#       year: 2015-now
+#       description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
 
 - title: Honors and Awards
   type: time_table
   contents:
-    - year: 1921
+    - year: 2025.08
       items:
-        - Nobel Prize in Physics
-        - Matteucci Medal
-    - year: 2029
+        - <a href="https://nuedc.xjtu.edu.cn/" target="_blank">National College Student Electronic Design Competition - Provincial First Prize</a>
+        - National College Student Electronic Design Competition Organizing Committee
+    - year: 2025.01
       items:
-        - Max Planck Medal
+        - <a href="https://www.comap.com/contests/mcm-icm" target="_blank">Mathematical Contest in Modeling (MCM) - Finalist</a>
+        - Consortium for Mathematics and Its Applications (COMAP)
+    - year: 2024.12
+      items:
+        - <a href="http://www.moe.gov.cn/srcsite/A05/s7505/202412/t20241230_1172663.html" target="_blank">National Scholarship</a>
+        - Ministry of Education of the People's Republic of China
+    - year: 2024.11
+      items:
+        - <a href="https://www.mcm.edu.cn/" target="_blank">National Mathematical Contest in Modeling - Provincial Second Prize</a>
+        - China Society for Industrial and Applied Mathematics
 
 - title: Academic Interests
   type: nested_list
   contents:
-    - title: Topic 1.
+    - title: Artificial Intelligence
       items:
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
+        - Computer Vision
+        - Natural Language Processing
+
+    - title: Autonomous Systems
       items:
-        - Description 1.
-        - Description 2.
+        - Autonomous Driving
+        - Robotics
+
+    - title: Embodied AI
+      items:
+        - Robotics
+        - Human-Computer Interaction
+        - Reinforcement Learning
+        - Multi-modal Learning
+
+- title: Languages
+  type: nested_list
+  contents:
+    - title: Spoken Languages
+      items:
+        - Chinese (Native)
+        - Cantonese (Native)
+        - "English (Fluent): CET-4 551, CET-6 570"
+
+    - title: Programming Languages
+      items:
+        - "Python (Proficient)"
+        - "C++ (Proficient)"
+        - "R (Expert)"
+        - "LaTeX (Expert)"
 
 - title: Other Interests
   type: list
   contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+    - <u>Calligraphy:</u> Chinese Calligraphy (4 years) - Regular, Clerical, and Running Scripts
+    - <u>Sports:</u> Table Tennis, Fitness, Chinese Chess
+    - <u>Travel:</u> Visited 20+ provinces and regions in China
+    - <u>Hobbies:</u> Traditional Chinese Arts, Strategic Games, Outdoor Activities

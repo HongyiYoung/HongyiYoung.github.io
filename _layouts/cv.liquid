@@ -7,18 +7,42 @@ layout: default
       <h1 class="post-title">
         {{ page.title }}
         {% if page.cv_pdf %}
-          <a
-            {% if page.cv_pdf contains '://' %}
-              href="{{ page.cv_pdf }}"
-            {% else %}
-              href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url }}"
-            {% endif %}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="float-right"
-          >
-            <i class="fa-solid fa-file-pdf"></i>
-          </a>
+          {% if page.cv_pdf.en or page.cv_pdf.zh %}
+            <div class="float-right">
+              {% if page.cv_pdf.en %}
+                <a
+                  href="{{ page.cv_pdf.en | prepend: 'assets/pdf/' | relative_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="me-2"
+                >
+                  <i class="fa-solid fa-file-pdf"></i> EN
+                </a>
+              {% endif %}
+              {% if page.cv_pdf.zh %}
+                <a
+                  href="{{ page.cv_pdf.zh | prepend: 'assets/pdf/' | relative_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fa-solid fa-file-pdf"></i> 中文
+                </a>
+              {% endif %}
+            </div>
+          {% else %}
+            <a
+              {% if page.cv_pdf contains '://' %}
+                href="{{ page.cv_pdf }}"
+              {% else %}
+                href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url }}"
+              {% endif %}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="float-right"
+            >
+              <i class="fa-solid fa-file-pdf"></i>
+            </a>
+          {% endif %}
         {% endif %}
       </h1>
       {% if page.description %}
@@ -58,18 +82,42 @@ layout: default
       <h1 class="post-title">
         {{ page.title }}
         {% if page.cv_pdf %}
-          <a
-            {% if page.cv_pdf contains '://' %}
-              href="{{ page.cv_pdf }}"
-            {% else %}
-              href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url }}"
-            {% endif %}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="float-right"
-          >
-            <i class="fa-solid fa-file-pdf"></i>
-          </a>
+          {% if page.cv_pdf.en or page.cv_pdf.zh %}
+            <div class="float-right">
+              {% if page.cv_pdf.en %}
+                <a
+                  href="{{ page.cv_pdf.en | prepend: 'assets/pdf/' | relative_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="me-2"
+                >
+                  <i class="fa-solid fa-file-pdf"></i> EN
+                </a>
+              {% endif %}
+              {% if page.cv_pdf.zh %}
+                <a
+                  href="{{ page.cv_pdf.zh | prepend: 'assets/pdf/' | relative_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fa-solid fa-file-pdf"></i> 中文
+                </a>
+              {% endif %}
+            </div>
+          {% else %}
+            <a
+              {% if page.cv_pdf contains '://' %}
+                href="{{ page.cv_pdf }}"
+              {% else %}
+                href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url }}"
+              {% endif %}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="float-right"
+            >
+              <i class="fa-solid fa-file-pdf"></i>
+            </a>
+          {% endif %}
         {% endif %}
       </h1>
       {% if page.description %}
