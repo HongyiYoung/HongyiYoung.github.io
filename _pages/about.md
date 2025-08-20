@@ -9,9 +9,11 @@ profile:
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>🏛️ College of Computer and Information Science</p>
-    <p>🎓 Southwest University</p>
-    <p>📍 Chongqing, China</p>
+    <p style="font-weight: 600; font-family: 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif; color: #333; margin: 0; line-height: 1.4;">
+    🏛️ College of Computer and Information Science<br>
+    🎓 Southwest University<br>
+    📍 Chongqing, China
+    </p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
