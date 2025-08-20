@@ -32,7 +32,7 @@ ninja.data = [{
           },
         },{id: "nav-cv",
           title: "cv",
-          description: "This is a description of the page. You can modify it in &#39;_pages/cv.md&#39;. You can also change or remove the top pdf download button.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
@@ -383,16 +383,17 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+            },},{id: "news-️-won-provincial-second-prize-in-the-national-mathematical-contest-in-modeling",
+          title: '🎖️ Won Provincial Second Prize in the National Mathematical Contest in Modeling!',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
+          section: "News",},{id: "news-awarded-the-national-scholarship-by-the-ministry-of-education-of-china",
+          title: '🌟 Awarded the National Scholarship by the Ministry of Education of China!',
           description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
+          section: "News",},{id: "news-achieved-finalist-status-in-the-mathematical-contest-in-modeling-mcm-by-comap",
+          title: '🎯 Achieved Finalist status in the Mathematical Contest in Modeling (MCM) by COMAP!...',
+          description: "",
+          section: "News",},{id: "news-won-provincial-first-prize-in-the-national-college-student-electronic-design-competition",
+          title: '🏆 Won Provincial First Prize in the National College Student Electronic Design Competition!...',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
@@ -458,7 +459,7 @@ ninja.data = [{
         title: 'RSS Feed',
         section: 'Socials',
         handler: () => {
-          window.open("//feed.xml", "_blank");
+          window.open("/feed.xml", "_blank");
         },
       },{
         id: 'social-scholar',
