@@ -56,7 +56,7 @@ I'm proud to have received several prestigious awards, including the **National 
 
 **Technical Skills:** Proficient in Python, C++, R, and LaTeX. Experienced with machine learning frameworks and have a growing expertise in autonomous systems and robotics.
 
-Feel free to explore my [academic portfolio](https://hongyiyoung.github.io) or visit my [personal page](https://vinyyang.github.io) to learn more about my projects and journey. You can also check out my favorite discussions on [r/MachineLearning](http://reddit.com/r/MachineLearning) where I love engaging with the AI community!
+Feel free to explore my [academic portfolio](https://hongyiyoung.github.io) or visit my [personal page](https://vinyyang.github.io) to learn more about my projects and journey. You can also check out my favorite discussions on [guestbook](https://hongyiyang.online/guestbook) where I love engaging with the AI community!
 
 <!-- Write HongyiYang's biography here ok. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
