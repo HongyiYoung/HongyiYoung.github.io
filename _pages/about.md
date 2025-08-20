@@ -35,8 +35,8 @@ latest_posts:
     <div style="font-size: 14px;">GPA</div>
   </div>
   <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 15px; border-radius: 10px; text-align: center; min-width: 120px;">
-    <div style="font-size: 24px; font-weight: bold;">20/123</div>
-    <div style="font-size: 14px;">Rank</div>
+    <div style="font-size: 24px; font-weight: bold;">2/123</div>
+    <div style="font-size: 14px;">Rank 1.63%</div>
   </div>
   <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 15px; border-radius: 10px; text-align: center; min-width: 120px;">
     <div style="font-size: 24px; font-weight: bold;">451</div>
