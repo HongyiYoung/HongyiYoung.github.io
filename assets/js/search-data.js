@@ -389,8 +389,8 @@ ninja.data = [{
           section: "News",},{id: "news-awarded-the-national-scholarship-by-the-ministry-of-education-of-china",
           title: '🌟 Awarded the National Scholarship by the Ministry of Education of China!',
           description: "",
-          section: "News",},{id: "news-achieved-finalist-status-in-the-mathematical-contest-in-modeling-mcm-by-comap",
-          title: '🎯 Achieved Finalist status in the Mathematical Contest in Modeling (MCM) by COMAP!...',
+          section: "News",},{id: "news-achieved-finalist-in-the-mathematical-contest-in-modeling-mcm-by-comap",
+          title: '🎯 Achieved Finalist in the Mathematical Contest in Modeling (MCM) by COMAP!',
           description: "",
           section: "News",},{id: "news-won-provincial-first-prize-in-the-national-college-student-electronic-design-competition",
           title: '🏆 Won Provincial First Prize in the National College Student Electronic Design Competition!...',
@@ -440,6 +440,11 @@ ninja.data = [{
           description: "another project with an image 🎉",
           section: "Projects",handler: () => {
               window.location.href = "/projects/9_project/";
+            },},{id: "projects-autonomous-targeting-vision-system",
+          title: 'Autonomous Targeting Vision System',
+          description: "Computer vision system and hardware design",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/electronic_design_2025/";
             },},{
         id: 'social-email',
         title: 'email',
