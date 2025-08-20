@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Autonomous Targeting Vision System
-description: Computer vision system and hardware design 
+description: Computer vision system and hardware design
 img: assets/img/electronic_design_2025/cover.png
 importance: 1
 category: work
@@ -81,16 +81,19 @@ A comprehensive autonomous targeting system integrating **computer vision**, **e
 ## Core Technologies
 
 ### 1. Perspective-Adaptive Target Detection
+
 - **Classical Computer Vision**: Blob detection with multi-threshold filtering
 - **Edge Boundary Checking**: Robust false-positive elimination
 - **Diagonal Intersection Method**: Precise center calculation under perspective distortion
 
 ### 2. Real-time Circle Generation Algorithm
+
 - **Perspective Compensation**: Dynamic ellipse parameter calculation
 - **Synchronization Control**: Vehicle motion and drawing trajectory matching
 - **Smooth Interpolation**: Angular velocity coordination for seamless operation
 
 ### 3. Multi-Module Communication Protocol
+
 - **UART-based**: Custom frame protocol with error detection
 - **Real-time Coordination**: <30ms latency between vision and control
 - **Robust Data Transfer**: Frame validation and recovery mechanisms
@@ -154,27 +157,29 @@ A comprehensive autonomous targeting system integrating **computer vision**, **e
 ## Implementation Details
 
 ### Vision Processing Module
+
 ```python
 # Core blob detection with multi-criteria filtering
 def find_target_boundary_rect(img):
-    blobs = img.find_blobs([BLACK_THRESHOLD], 
-                          pixels_threshold=min_pixels, 
+    blobs = img.find_blobs([BLACK_THRESHOLD],
+                          pixels_threshold=min_pixels,
                           area_threshold=min_area)
-    
+
     # Edge boundary validation
     valid_blobs = filter_edge_touching_blobs(blobs)
-    
+
     # Perspective center calculation
     return calculate_diagonal_intersection(valid_blobs)
 ```
 
 ### Communication Protocol
+
 ```python
 # Custom UART frame structure
 def send_coordinates(x, y):
-    frame = struct.pack('<BBBBBB', 
+    frame = struct.pack('<BBBBBB',
                        0x3C, 0x3B,    # Header
-                       x, y,          # Coordinates  
+                       x, y,          # Coordinates
                        0x01, 0x01)    # Footer
     uart.write(frame)
 ```
@@ -188,8 +193,9 @@ def send_coordinates(x, y):
 This project was successfully implemented and tested, achieving all target specifications. The system was later applied in the 2025 National College Student Electronic Design Contest, earning **Provincial First Prize**.
 
 **Key Contributions:**
+
 - Designed and implemented complete vision processing system
-- Achieved sub-centimeter targeting accuracy under various conditions  
+- Achieved sub-centimeter targeting accuracy under various conditions
 - Developed novel perspective-adaptive circle generation algorithm
 - Established robust real-time communication between vision and control modules
 

@@ -29,7 +29,6 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-
 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 20px 0;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 10px; text-align: center; min-width: 120px;">
     <div style="font-size: 24px; font-weight: bold;">3.0/5.0</div>
@@ -48,7 +47,6 @@ latest_posts:
     <div style="font-size: 14px;">CET-6</div>
   </div>
 </div>
-
 
 Hi there! I'm **Hongyi Yang**, a passionate Computer Science undergraduate at [Southwest University](https://swu.edu.cn) in Chongqing, China. Currently pursuing my Bachelor's degree (2023-2027) with a strong academic record, I'm deeply fascinated by the intersection of artificial intelligence and real-world applications.
 

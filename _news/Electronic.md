@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-🏆 Won **Provincial First Prize** in the [National College Student Electronic Design Competition](https://nuedc.xjtu.edu.cn/){:target="_blank"}!
+🏆 Won **Provincial First Prize** in the [National College Student Electronic Design Competition](https://nuedc.xjtu.edu.cn/){:target="\_blank"}!
