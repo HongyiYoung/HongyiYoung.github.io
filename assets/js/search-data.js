@@ -395,42 +395,7 @@ ninja.data = [{
           section: "News",},{id: "news-won-provincial-first-prize-in-the-national-college-student-electronic-design-competition",
           title: '🏆 Won Provincial First Prize in the National College Student Electronic Design Competition!...',
           description: "",
-          section: "News",},{id: "projects-project-3-with-very-long-name",
-          title: 'project 3 with very long name',
-          description: "a project that redirects to another website",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/3_project/";
-            },},{id: "projects-project-4",
-          title: 'project 4',
-          description: "another without an image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/4_project/";
-            },},{id: "projects-project-5",
-          title: 'project 5',
-          description: "a project with a background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/5_project/";
-            },},{id: "projects-project-6",
-          title: 'project 6',
-          description: "a project with no image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/6_project/";
-            },},{id: "projects-project-7",
-          title: 'project 7',
-          description: "with background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/7_project/";
-            },},{id: "projects-project-8",
-          title: 'project 8',
-          description: "an other project with a background image and giscus comments",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/8_project/";
-            },},{id: "projects-project-9",
-          title: 'project 9',
-          description: "another project with an image 🎉",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/9_project/";
-            },},{id: "projects-autonomous-driving-perception-system",
+          section: "News",},{id: "projects-autonomous-driving-perception-system",
           title: 'Autonomous Driving Perception System',
           description: "Deep learning-based 2D semantic segmentation and 3D object detection for intelligent vehicles",
           section: "Projects",handler: () => {
