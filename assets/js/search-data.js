@@ -395,17 +395,7 @@ ninja.data = [{
           section: "News",},{id: "news-won-provincial-first-prize-in-the-national-college-student-electronic-design-competition",
           title: '🏆 Won Provincial First Prize in the National College Student Electronic Design Competition!...',
           description: "",
-          section: "News",},{id: "projects-project-1",
-          title: 'project 1',
-          description: "with background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/1_project/";
-            },},{id: "projects-project-2",
-          title: 'project 2',
-          description: "a project with a background image and giscus comments",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/2_project/";
-            },},{id: "projects-project-3-with-very-long-name",
+          section: "News",},{id: "projects-project-3-with-very-long-name",
           title: 'project 3 with very long name',
           description: "a project that redirects to another website",
           section: "Projects",handler: () => {
@@ -440,6 +430,11 @@ ninja.data = [{
           description: "another project with an image 🎉",
           section: "Projects",handler: () => {
               window.location.href = "/projects/9_project/";
+            },},{id: "projects-autonomous-driving-perception-system",
+          title: 'Autonomous Driving Perception System',
+          description: "Deep learning-based 2D semantic segmentation and 3D object detection for intelligent vehicles",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/autonomous_driving_2024/";
             },},{id: "projects-autonomous-targeting-vision-system",
           title: 'Autonomous Targeting Vision System',
           description: "Computer vision system and hardware design",
