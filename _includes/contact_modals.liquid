@@ -1,0 +1,54 @@
+<!-- filepath: c:\AcademicPage\_includes\contact_modals.liquid -->
+<!-- 邮箱模态框 -->
+<div id="email-modal" class="contact-modal-overlay" style="display: none;">
+  <div class="contact-modal-box">
+    <div class="contact-modal-header">
+      <span class="contact-modal-title">Email</span>
+      <div class="header-actions">
+        <button class="copy-button" data-email="{{ site.contact_info.email }}">
+          <i class="fa fa-copy"></i> Copy
+        </button>
+        <button class="contact-modal-close" onclick="closeEmailModal()">×</button>
+      </div>
+    </div>
+    <div class="contact-modal-body">
+      <div class="image-wrapper">
+        <img class="contact-qrcode" src="{{ site.contact_info.email_qr }}" alt="邮箱二维码">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 微信模态框 -->
+<div id="wechat-modal" class="contact-modal-overlay" style="display: none;">
+  <div class="contact-modal-box">
+    <div class="contact-modal-header">
+      <span class="contact-modal-title">Wechat</span>
+      <div class="header-actions">
+        <button class="contact-modal-close" onclick="closeWeChatModal()">×</button>
+      </div>
+    </div>
+    <div class="contact-modal-body">
+      <div class="image-wrapper">
+        <img class="contact-qrcode" src="{{ site.contact_info.wechat_qr }}" alt="微信二维码">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QQ模态框 -->
+<div id="qq-modal" class="contact-modal-overlay" style="display: none;">
+  <div class="contact-modal-box">
+    <div class="contact-modal-header">
+      <span class="contact-modal-title">QQ</span>
+      <div class="header-actions">
+        <button class="contact-modal-close" onclick="closeQQModal()">×</button>
+      </div>
+    </div>
+    <div class="contact-modal-body">
+      <div class="image-wrapper">
+        <img class="contact-qrcode" src="{{ site.contact_info.qq_qr }}" alt="QQ二维码">
+      </div>
+    </div>
+  </div>
+</div>

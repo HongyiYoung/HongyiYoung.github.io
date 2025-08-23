@@ -646,3 +646,9 @@ jsonresume:
   - languages
   - interests
   - references
+
+contact_info:
+  email: "yhy520@email.swu.edu.cn"
+  wechat_qr: "https://hongyiyang.online/images/wechat.png"
+  qq_qr: "https://hongyiyang.online/images/qq.png"
+  email_qr: "https://hongyiyang.online/images/email.png"

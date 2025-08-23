@@ -1,3 +1,4 @@
+<!-- filepath: c:\AcademicPage\_includes\social.liquid -->
 {% for social in site.data.socials %}
   {% case social[0] %}
     {% when 'acm_id' %}
@@ -11,7 +12,7 @@
     {% when 'discord_id' %}
       <a href="https://discord.com/users/{{ social[1] }}" title="Discord"><i class="fa-brands fa-discord"></i></a>
     {% when 'email' %}
-      <a href="mailto:{{ social[1] | encode_email }}" title="email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="#" onclick="openEmailModal(event)" title="邮箱"><i class="fa-solid fa-envelope"></i></a>
     {% when 'facebook_id' %}
       <a href="https://facebook.com/{{ social[1] }}" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
     {% when 'flickr_id' %}
@@ -26,7 +27,7 @@
       <a href="https://ieeexplore.ieee.org/author/{{ social[1] }}/" title="IEEE Xplore"><i class="ai ai-ieee"></i></a>
     {% when 'inspirehep_id' %}
       <a href="https://inspirehep.net/authors/{{ social[1] }}" title="Inspire HEP"><i class="ai ai-inspire"></i></a>
-    {% when 'instagram_id' %}
+    {% when 'instagram_id' %>
       <a href="https://instagram.com/{{ social[1] }}" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
     {% when 'kaggle_id' %}
       <a href="https://www.kaggle.com/{{ social[1] }}" title="Kaggle"><i class="fa-brands fa-kaggle"></i></a>
@@ -38,11 +39,11 @@
       <a href="http://lattes.cnpq.br/{{ social[1] }}" target="_blank" title="Lattes"><i class="ai ai-lattes"></i></a>
     {% when 'leetcode_id' %}
       <a href="https://leetcode.com/u/{{ social[1] }}/" target="_blank" title="LeetCode"><i class="si si-leetcode"></i></a>
-    {% when 'linkedin_username' %}
+    {% when 'linkedin_username' %>
       <a href="https://www.linkedin.com/in/{{ social[1] }}" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-    {% when 'mastodon_username' %}
+    {% when 'mastodon_username' %>
       <a rel="me" href="https://{{ social[1] }}" title="Mastodon"><i class="fa-brands fa-mastodon"></i></a>
-    {% when 'medium_username' %}
+    {% when 'medium_username' %>
       <a href="https://medium.com/@{{ social[1] }}" title="Medium"><i class="fa-brands fa-medium"></i></a>
     {% when 'orcid_id' %}
       <a href="https://orcid.org/{{ social[1] }}" title="ORCID"><i class="ai ai-orcid"></i></a>
@@ -52,6 +53,8 @@
       <a href="https://www.pinterest.com/{{ social[1] }}" title="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
     {% when 'publons_id' %}
       <a href="https://publons.com/a/{{ social[1] }}/" title="Publons"><i class="ai ai-publons"></i></a>
+    {% when 'qq_qr' %}
+      <a href="#" onclick="openQQModal(event)" title="QQ"><i class="fa-brands fa-qq"></i></a>
     {% when 'quora_username' %}
       <a href="https://www.quora.com/profile/{{ social[1] }}" title="Quora"><i class="fa-brands fa-quora"></i></a>
     {% when 'research_gate_profile' %}
@@ -66,25 +69,21 @@
       <a href="https://www.semanticscholar.org/author/{{ social[1] }}" title="Semantic Scholar"><i class="ai ai-semantic-scholar"></i></a>
     {% when 'spotify_id' %}
       <a href="https://open.spotify.com/user/{{ social[1] }}" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
-    {% when 'stackoverflow_id' %}
+    {% when 'stackoverflow_id' %>
       <a href="https://stackoverflow.com/users/{{ social[1] }}" title="Stackoverflow"><i class="fa-brands fa-stack-overflow"></i></a>
-    {% when 'strava_userid' %}
+    {% when 'strava_userid' %>
       <a href="https://www.strava.com/athletes/{{ social[1] }}" title="Strava"><i class="fa-brands fa-strava"></i></a>
-    {% when 'telegram_username' %}
+    {% when 'telegram_username' %>
       <a href="https://telegram.me/{{ social[1] }}" title="telegram"><i class="fa-brands fa-telegram"></i></a>
-    {% when 'unsplash_id' %}
+    {% when 'unsplash_id' %>
       <a href="https://unsplash.com/@{{ social[1] }}" title="Unsplash"><i class="fa-brands fa-unsplash"></i></a>
     {% when 'wechat_qr' %}
-      <a id="WeChatBtn" title="WeChat"><i class="fa-brands fa-weixin"></i></a>
-      <div id="WeChatMod" class="wechat-modal">
-        <img src="{{ social[1] | prepend: 'assets/img/' | relative_url }}" alt="WeChat QR" id="WeChatQR">
-      </div>
-      <script defer src="{{ '/assets/js/wechat.js' | relative_url | bust_file_cache }}" type="text/javascript"></script>
+      <a href="#" onclick="openWeChatModal(event)" title="微信"><i class="fa-brands fa-weixin"></i></a>
     {% when 'whatsapp_number' %}
       <a href="https://wa.me/{{ social[1] }}" title="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
     {% when 'wikidata_id' %}
       <a href="https://www.wikidata.org/wiki/{{ social[1] }}" title="Wikidata"><i class="fa-solid fa-barcode"></i></a>
-    {% when 'wikipedia_id' %}
+    {% when 'wikipedia_id' %>
       <a href="https://wikipedia.org/wiki/User:{{ social[1] }}" title="Wikipedia"><i class="fa-brands fa-wikipedia-w"></i></a>
     {% when 'work_url' %}
       <a href="{{ social[1] }}" title="Work"><i class="fa-solid fa-briefcase"></i></a>
@@ -92,7 +91,7 @@
       <a href="https://twitter.com/{{ social[1] }}" title="X"><i class="fa-brands fa-x-twitter"></i></a>
     {% when 'youtube_id' %}
       <a href="https://youtube.com/@{{ social[1] }}" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-    {% when 'zotero_username' %}
+    {% when 'zotero_username' %>
       <a href="https://www.zotero.org/{{ social[1] }}" title="Zotero"><i class="ai ai-zotero"></i></a>
     {% else %}
       <a href="{{ social[1].url }}" title="{{ social[1].title }}">
