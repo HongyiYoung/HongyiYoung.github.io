@@ -16,7 +16,7 @@ description: > # the ">" symbol means to ignore newlines until "footer_text:"
 
 footer_text: >
   More information can be seen on my <a href="https://vinyyang.github.io" target="_blank">Personal Homepage</a>.
-keywords: SWU, CS, Undergraduatee # add your own keywords or leave empty
+keywords: SWU, CS, Undergraduate # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🐣 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 

@@ -1,8 +1,8 @@
 {
   "basics": {
     "name": "Hongyi Yang",
-    "email": "yhy520@email.swu.edu.cn",
-    "phone": "+86 18102203701",
+    "email": "<a href='#' onclick='openEmailModal(event)' title='Click and Copy !' class='contact-icon'>Click and Copy!</a>",
+    "phone": "<a href='#' onclick='openPhoneModal(event)' title='Click and Contact !' class='contact-icon'>Click and Contact !</a>",
     "summary": "A SWU student majoring in CS, interested in CV, NLP, and AI-related work. Research experience in Computer Vision and Embodied Systems."
   },
   "education": [
