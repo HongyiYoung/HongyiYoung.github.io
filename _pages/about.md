@@ -39,8 +39,7 @@ latest_posts:
   </div>
   <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 15px; border-radius: 10px; text-align: center; min-width: 120px;">
     <div style="font-size: 24px; font-weight: bold;">20/123</div>
-    <div style="font-size: 10px; opacity: 0.8;">Top 10.63%</div>
-    <div style="font-size: 14px;">Rank</div>
+    <div style="font-size: 14px;">Rank 10.63%</div>
   </div>
   <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 15px; border-radius: 10px; text-align: center; min-width: 120px;">
     <div style="font-size: 24px; font-weight: bold;">451</div>
