@@ -383,8 +383,8 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-️-won-provincial-second-prize-in-the-national-mathematical-contest-in-modeling",
-          title: '🎖️ Won Provincial Second Prize in the National Mathematical Contest in Modeling!',
+            },},{id: "news-️-won-second-prize-provincial-level-in-the-national-mathematical-contest-in-modeling",
+          title: '🎖️ Won Second Prize (Provincial Level) in the National Mathematical Contest in Modeling!...',
           description: "",
           section: "News",},{id: "news-awarded-the-national-scholarship-by-the-ministry-of-education-of-china",
           title: '🌟 Awarded the National Scholarship by the Ministry of Education of China!',
@@ -392,8 +392,8 @@ ninja.data = [{
           section: "News",},{id: "news-achieved-finalist-in-the-mathematical-contest-in-modeling-mcm-by-comap",
           title: '🎯 Achieved Finalist in the Mathematical Contest in Modeling (MCM) by COMAP!',
           description: "",
-          section: "News",},{id: "news-won-provincial-first-prize-in-the-national-college-student-electronic-design-competition",
-          title: '🏆 Won Provincial First Prize in the National College Student Electronic Design Competition!...',
+          section: "News",},{id: "news-won-first-prize-provincial-level-in-the-national-college-student-electronic-design-competition",
+          title: '🏆 Won First Prize (Provincial Level) in the National College Student Electronic Design...',
           description: "",
           section: "News",},{id: "projects-autonomous-driving-perception-system",
           title: 'Autonomous Driving Perception System',
