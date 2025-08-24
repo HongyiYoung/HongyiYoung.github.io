@@ -413,8 +413,8 @@ ninja.data = [{
           window.open("mailto:%79%68%79%35%32%30@%65%6D%61%69%6C.%73%77%75.%65%64%75.%63%6E", "_blank");
         },
       },{
-        id: 'social-wechat_qr',
-        title: 'Wechat_qr',
+        id: 'social-WeChat',
+        title: 'Wechat',
         section: 'Socials',
         handler: () => {
           window.open("", "_blank");
