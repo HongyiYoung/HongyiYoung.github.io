@@ -53,7 +53,7 @@ rss_icon: true # RSS图标
 # x_username: # your X handle
 # youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 # zotero_username: # your zotero username
-custom_social: # can be any name here other than the ones already defined above
-  logo: PersonalPage.png # can be png, svg, jpg
-  title: Custom Social
-  url: https://vinyyang.github.io
+# custom_social: # can be any name here other than the ones already defined above
+#   logo: PersonalPage.png # can be png, svg, jpg
+#   title: Custom Social
+#   url: https://vinyyang.github.io

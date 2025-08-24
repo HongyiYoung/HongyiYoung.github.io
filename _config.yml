@@ -649,6 +649,6 @@ jsonresume:
 
 contact_info:
   email: "yhy520@email.swu.edu.cn"
-  wechat_qr: "https://hongyiyang.online/images/wechat.png"
-  qq_qr: "https://hongyiyang.online/images/qq.png"
-  email_qr: "https://hongyiyang.online/images/email.png"
+  wechat_qr: "/assets/img/wechat.png"
+  qq_qr: "/assets/img/qq.png"
+  email_qr: "/assets/img/email.png"
