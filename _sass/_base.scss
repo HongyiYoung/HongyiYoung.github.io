@@ -469,6 +469,28 @@ ul.task-list input[type="checkbox"] {
   .wechat-modal > img {
     width: 100%;
   }
+  
+  /* Enhanced Mobile Modal Styles */
+  .contact-modal-overlay {
+    padding: 5px !important;
+  }
+  
+  .contact-modal-box {
+    width: 98vw !important;
+    max-width: 320px;
+    margin: 10vh auto !important;
+    border-radius: 8px;
+  }
+  
+  .contact-qrcode {
+    max-width: 180px !important;
+    margin: 5px auto !important;
+  }
+  
+  .copy-button {
+    font-size: 0.8rem !important;
+    padding: 6px 10px !important;
+  }
 }
 
 // Footer
@@ -734,9 +756,6 @@ footer.sticky-bottom {
 
     li {
       margin-bottom: 1rem;
-
-      .preview {
-      }
 
       .abbr {
         margin-bottom: 0.5rem;
@@ -1421,5 +1440,145 @@ figure.cover {
   /* mouse over link */
   a.cover-link:hover {
     color: #23212d !important;
+  }
+}
+
+/* Mobile Responsive Optimization */
+/* Contact Icons Mobile Adaptation */
+@media (max-width: 768px) {
+  .contact-icons {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0;
+    padding: 10px;
+  }
+  
+  .contact-icons a {
+    font-size: 1.3em;
+    padding: 10px;
+    margin: 0 2px;
+    border-radius: 50%;
+    background: rgba(var(--global-theme-color-rgb), 0.1);
+    transition: all 0.3s ease;
+    min-width: 45px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .contact-icons a:hover {
+    transform: scale(1.1);
+    background: rgba(var(--global-theme-color-rgb), 0.2);
+  }
+}
+
+/* Contact Modals Mobile Adaptation */
+@media (max-width: 768px) {
+  .contact-modal-overlay {
+    padding: 10px;
+  }
+  
+  .contact-modal-box {
+    width: 95vw !important;
+    max-width: 350px;
+    margin: 15vh auto !important;
+    padding: 15px !important;
+  }
+  
+  .contact-modal-header {
+    padding: 15px 10px !important;
+    margin-bottom: 10px;
+  }
+  
+  .contact-modal-title {
+    font-size: 1.1rem !important;
+  }
+  
+  .contact-modal-body {
+    padding: 10px !important;
+  }
+  
+  .contact-qrcode {
+    max-width: 200px !important;
+    height: auto !important;
+    margin: 10px auto !important;
+  }
+  
+  .copy-button {
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+  }
+  
+  .contact-modal-close {
+    font-size: 1.5rem !important;
+    padding: 5px 10px !important;
+  }
+}
+
+/* Typography and Spacing Mobile Optimization */
+@media (max-width: 576px) {
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Navigation Bar Mobile */
+  .navbar-brand {
+    font-size: 1.2rem !important;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Profile Section Mobile */
+  .profile-container {
+    text-align: center;
+    padding: 20px 10px;
+  }
+  
+  .profile img {
+    max-width: 150px;
+    margin-bottom: 15px;
+  }
+  
+  /* Social Icons in Header Mobile */
+  .navbar-brand.social {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .navbar-brand.social a {
+    font-size: 1.1em;
+    padding: 8px;
   }
 }

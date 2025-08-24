@@ -4,7 +4,7 @@
 
 # 中文社交媒体配置
 email: yhy520@email.swu.edu.cn # 邮箱地址
-wechat_qr: wechat.png # 微信二维码文件名 (保存到 assets/img/ 目录)
+WeChat: wechat.png # 微信二维码文件名 (保存到 assets/img/ 目录)
 qq_qr: qq.png # QQ二维码文件名 (保存到 assets/img/ 目录)
 
 # 学术平台

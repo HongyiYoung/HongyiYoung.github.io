@@ -1,7 +1,10 @@
-<!-- filepath: c:\AcademicPage\_includes\social.liquid -->
 {% for social in site.data.socials %}
   {% case social[0] %}
-    {% when 'acm_id' %}
+    {% when '    {% when 'unsplash_id' %}
+      <a href="https://unsplash.com/@{{ social[1] }}" title="Unsplash" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-unsplash"></i></a>
+    {% when 'WeChat' %}
+      <a href="#" onclick="openWeChatModal(event)" title="WeChat" class="contact-icon"><i class="fa-brands fa-weixin"></i></a>
+    {% when 'whatsapp_number' %>d' %}
       <a href="https://dl.acm.org/profile/{{ social[1] }}/" title="ACM DL" rel="external nofollow noopener" target="_blank"><i class="ai ai-acm"></i></a>
     {% when 'blogger_url' %}
       <a href="{{ social[1] }}" title="Blogger" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-blogger-b"></i></a>
@@ -12,7 +15,7 @@
     {% when 'discord_id' %}
       <a href="https://discord.com/users/{{ social[1] }}" title="Discord" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-discord"></i></a>
     {% when 'email' %}
-      <a href="#" onclick="openEmailModal(event)" title="邮箱"><i class="fa-solid fa-envelope"></i></a>
+      <a href="#" onclick="openEmailModal(event)" title="Email" class="contact-icon"><i class="fa-solid fa-envelope"></i></a>
     {% when 'facebook_id' %}
       <a href="https://facebook.com/{{ social[1] }}" title="Facebook" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-facebook"></i></a>
     {% when 'flickr_id' %}
@@ -31,7 +34,7 @@
       <a href="https://instagram.com/{{ social[1] }}" title="Instagram" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-instagram"></i></a>
     {% when 'kaggle_id' %}
       <a href="https://www.kaggle.com/{{ social[1] }}" title="Kaggle" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-kaggle"></i></a>
-    {% when 'keybase_username' %>
+    {% when 'keybase_username' %}
       <a href="https://keybase.io/{{ social[1] }}" title="Keybase" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-keybase"></i></a>
     {% when 'lastfm_id' %}
       <a href="https://www.last.fm/user/{{ social[1] }}" title="Last FM" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-lastfm"></i></a>
@@ -54,7 +57,7 @@
     {% when 'publons_id' %}
       <a href="https://publons.com/a/{{ social[1] }}/" title="Publons" rel="external nofollow noopener" target="_blank"><i class="ai ai-publons"></i></a>
     {% when 'qq_qr' %}
-      <a href="#" onclick="openQQModal(event)" title="QQ"><i class="fa-brands fa-qq"></i></a>
+      <a href="#" onclick="openQQModal(event)" title="QQ" class="contact-icon"><i class="fa-brands fa-qq"></i></a>
     {% when 'quora_username' %}
       <a href="https://www.quora.com/profile/{{ social[1] }}" title="Quora" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-quora"></i></a>
     {% when 'research_gate_profile' %}
@@ -75,10 +78,10 @@
       <a href="https://www.strava.com/athletes/{{ social[1] }}" title="Strava" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-strava"></i></a>
     {% when 'telegram_username' %}
       <a href="https://telegram.me/{{ social[1] }}" title="telegram" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-    {% when 'unsplash_id' %}
+    {% when 'unsplash_id' %>
       <a href="https://unsplash.com/@{{ social[1] }}" title="Unsplash" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-unsplash"></i></a>
     {% when 'wechat_qr' %}
-      <a href="#" onclick="openWeChatModal(event)" title="微信"><i class="fa-brands fa-weixin"></i></a>
+      <a href="#" onclick="openWeChatModal(event)" title="WeChat" class="contact-icon"><i class="fa-brands fa-weixin"></i></a>
     {% when 'whatsapp_number' %}
       <a href="https://wa.me/{{ social[1] }}" title="whatsapp" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
     {% when 'wikidata_id' %}
