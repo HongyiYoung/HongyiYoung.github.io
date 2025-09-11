@@ -383,8 +383,8 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-️-won-second-prize-provincial-level-in-the-national-mathematical-contest-in-modeling",
-          title: '🎖️ Won Second Prize (Provincial Level) in the National Mathematical Contest in Modeling!...',
+            },},{id: "news-️-won-second-prize-provincial-level-in-the-china-undergraduate-mathematical-contest-in-modeling",
+          title: '🎖️ Won Second Prize (Provincial Level) in the China Undergraduate Mathematical Contest in...',
           description: "",
           section: "News",},{id: "news-awarded-the-national-scholarship-by-the-ministry-of-education-of-china",
           title: '🌟 Awarded the National Scholarship by the Ministry of Education of China!',
