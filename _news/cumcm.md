@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-🎖️ Won **Second Prize (Provincial Level)** in the [National Mathematical Contest in Modeling](https://www.mcm.edu.cn/){:target="\_blank"}!
+🎖️ Won **Second Prize (Provincial Level)** in the [China Undergraduate Mathematical Contest in Modeling](https://www.mcm.edu.cn/){:target="\_blank"}!
