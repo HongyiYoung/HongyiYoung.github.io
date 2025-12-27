@@ -65,6 +65,9 @@ fi
 # 4. 发布部署 (Deploy)
 echo -e "\n${GREEN}[3/3] 正在发布到 $DEPLOY_BRANCH 分支...${QC}"
 
+# 获取远程仓库地址
+REMOTE_URL=$(git remote get-url origin)
+
 # 进入构建目录
 cd "$BUILD_DIR" || exit
 
@@ -75,6 +78,9 @@ git init
 git checkout -b "$DEPLOY_BRANCH"
 git add .
 git commit -m "Deploy: $COMMIT_MSG"
+
+# 添加远程仓库
+git remote add origin "$REMOTE_URL"
 
 # 强制推送到远程部署分支
 # 注意：这会覆盖远程 main 分支的历史
