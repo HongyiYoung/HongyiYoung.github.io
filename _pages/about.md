@@ -53,7 +53,7 @@ latest_posts:
 
 Hi there! I'm **Hongyi Yang**, an undergraduate student majoring in **Computer Science and Technology** at Southwest University (2023-Present). I maintain excellent academic performance and am passionately exploring Artificial Intelligence and its real-world applications.
 
-My research journey focuses on **Visualization** and **AI**, under the supervision of Assistant Professor **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}** (Qu Jingwei). 
+My research journey focuses on **Visualization** and **AI**, under the supervision of Associate Professor **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}** (Qu Jingwei). 
 
 In the field of visualization, addressing the visual clutter and crossings in traditional leader-line generation, I **independently** proposed a novel **Aesthetic-Driven Leader Line Generation** framework (Draft for CVPR2026). I modeled the generation process as a **Markov Decision Process (MDP)** and developed a **Leader-Line Agent (LeLA)** using **Maskable PPO** (Deep Reinforcement Learning). By designing comprehensive state vectors (congestion, conflict risk) and translating complex aesthetic rules into cost functions, combined with a **Style Unification Algorithm** for refinement, my model effectively minimizes crossings. Experiments on the SWU-AMIL dataset showed a **57.1% reduction in Aesthetic Arrangement Cost** and a drop in occlusion rate to **0.57%**. User studies further confirmed that my method significantly lowers mental load and improves information retrieval accuracy (**82.7%**).
 
