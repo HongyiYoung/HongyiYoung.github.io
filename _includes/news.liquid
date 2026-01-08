@@ -8,7 +8,12 @@
       {% endif %}
     >
       <table class="table table-sm table-borderless">
-        {% assign news = site.news | reverse %}
+        {% assign news_all = site.news | reverse %}
+        {% if page.lang == 'zh' %}
+          {% assign news = news_all | where: 'lang', 'zh' %}
+        {% else %}
+          {% assign news = news_all | where_exp: "item", "item.lang != 'zh'" %}
+        {% endif %}
         {% if include.limit and page.announcements.limit %}
           {% assign news_limit = page.announcements.limit %}
         {% else %}

@@ -2,7 +2,7 @@
   <!-- Nav Bar -->
   <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
     <div class="container">
-      {% if page.permalink != '/' %}
+
         <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
           {% if site.title == 'blank' %}
             {% if site.first_name %}
@@ -20,10 +20,7 @@
             {{- site.title -}}
           {% endif %}
         </a>
-      {% elsif site.enable_navbar_social %}
-        <!-- Social Icons -->
-        <div class="navbar-brand social">{% include social.liquid %}</div>
-      {% endif %}
+
       <!-- Navbar Toggle -->
       <button
         class="navbar-toggler collapsed ml-auto"
@@ -42,15 +39,21 @@
 
       <div class="collapse navbar-collapse text-right" id="navbarNav">
         <ul class="navbar-nav ml-auto flex-nowrap">
-          {% for page in site.pages %}
-            {% if page.permalink == '/' %} {% assign about_title = page.title %} {% endif %}
-          {% endfor %}
+          {% if page.lang == 'zh' %}
+            {% assign about_title = '关于' %}
+            {% assign about_link = '/ch/' | relative_url %}
+          {% else %}
+            {% for p in site.pages %}
+              {% if p.permalink == '/' %} {% assign about_title = p.title %} {% endif %}
+            {% endfor %}
+            {% assign about_link = '/' | relative_url %}
+          {% endif %}
 
           <!-- About -->
-          <li class="nav-item {% if page.permalink == '/' %}active{% endif %}">
-            <a class="nav-link" href="{{ '/' | relative_url }}">
+          <li class="nav-item {% if page.permalink == '/' or page.permalink == '/ch/' %}active{% endif %}">
+            <a class="nav-link" href="{{ about_link }}">
               {{- about_title }}
-              {% if page.permalink == '/' %}
+              {% if page.permalink == '/' or page.permalink == '/ch/' %}
                 <span class="sr-only">(current)</span>
               {% endif %}
             </a>
@@ -60,6 +63,11 @@
           {% assign sorted_pages = site.pages | sort: 'nav_order' %}
           {% for p in sorted_pages %}
             {% if p.nav and p.autogen == null %}
+              {% if page.lang == 'zh' %}
+                {% unless p.lang == 'zh' %}{% continue %}{% endunless %}
+              {% else %}
+                {% if p.lang == 'zh' %}{% continue %}{% endif %}
+              {% endif %}
               {% if p.dropdown %}
                 {% assign has_active_child = false %}
                 {% for child in p.children %}
@@ -125,6 +133,8 @@
               </button>
             </li>
           {% endif %}
+          <!-- Language Toggle -->
+
           {% if site.enable_darkmode %}
             <!-- Toogle theme mode -->
             <li class="toggle-container">

@@ -1,0 +1,96 @@
+
+<!-- Custom Styles from _sass/_custom.scss Inlined for Safety -->
+<style>
+/* Stat Cards */
+.stat-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.stat-card {
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 130px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 1 1 calc(50% - 15px); /* Default to 2 columns */
+  max-width: calc(50% - 5px);
+}
+
+@media (min-width: 768px) {
+  .stat-card {
+    flex: 1 1 calc(25% - 15px); /* 4 columns on desktop */
+    max-width: none;
+  }
+}
+
+/* Mobile Profile Fix */
+@media (max-width: 768px) {
+  .profile.float-right, .profile.float-left {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 auto 20px auto;
+    text-align: center;
+  }
+  .profile.float-right img, .profile.float-left img {
+      max-width: 200px;
+      margin: 0 auto;
+  }
+  /* Fix stat cards container flex on mobile if needed */
+  .stat-cards-container {
+      justify-content: space-between; /* Better spacing for 2x2 */
+  }
+}
+
+/* Contact Note Badges Fix */
+.contact-note span {
+  display: inline-block !important;
+  margin: 5px !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 14px;
+}
+
+.stat-card-blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.stat-card-pink { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.stat-card-cyan { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.stat-card-green { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+
+/* Language Switcher */
+.lang-switcher-header {
+  margin-bottom: 2rem;
+}
+.lang-switcher-header a {
+  transition: color 0.2s ease;
+}
+.lang-switcher-header a:hover {
+  text-decoration: underline;
+}
+
+/* Profile Info in Header */
+.profile-info-header {
+  font-weight: 600; 
+  font-family: 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif; 
+  color: var(--global-text-color); 
+  margin: 0; 
+  line-height: 1.4;
+}
+.profile-info-header p {
+  margin-bottom: 0;
+}
+</style>

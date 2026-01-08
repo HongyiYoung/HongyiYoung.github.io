@@ -1,9 +1,9 @@
 {
   "basics": {
     "name": "Hongyi Yang",
-    "email": "<a href='#' onclick='openEmailModal(event)' title='Click and Copy !' class='contact-icon'>Click and Copy!</a>",
-    "phone": "<a href='#' onclick='openPhoneModal(event)' title='Click and Contact !' class='contact-icon'>Click and Contact !</a>",
-    "summary": "A SWU student majoring in CS, interested in CV, NLP, and AI-related work. Research experience in Computer Vision and Embodied Systems."
+    "email": "yhy520@email.swu.edu.cn",
+    "phone": "Contact Me",
+    "summary": "A SWU student majoring in CS, interested in Visualization, CV, LLM, and AI-related work. Research experience in Computer Vision and Embodied Systems."
   },
   "education": [
     {
@@ -14,7 +14,10 @@
       "startDate": "2023-09",
       "endDate": "2027-06",
       "location": "Chongqing, China",
-      "courses": ["Major in Computer Science", "Research experience in CV and Embodied Systems"]
+      "courses": [
+        "Major in Computer Science",
+        "Research experience in CV and Embodied Systems"
+      ]
     }
   ],
   "work": [
@@ -34,6 +37,12 @@
     }
   ],
   "awards": [
+    {
+      "title": "National Scholarship",
+      "date": "2025-12",
+      "awarder": "Ministry of Education of the People's Republic of China",
+      "url": "http://www.moe.gov.cn/srcsite/A05/s7505/202512/t20251225_1424488.html"
+    },
     {
       "title": "National College Student Electronic Design Competition - Provincial First Prize",
       "date": "2025-09",
@@ -63,22 +72,42 @@
     {
       "name": "Programming Languages",
       "level": "Advanced",
-      "keywords": ["Python (Familiar)", "C++ (Familiar)", "R (Proficient)", "LaTeX (Proficient)"]
+      "keywords": [
+        "Python (Familiar)",
+        "C++ (Familiar)",
+        "R (Proficient)",
+        "LaTeX (Proficient)"
+      ]
     },
     {
       "name": "Artificial Intelligence",
       "level": "Intermediate",
-      "keywords": ["Computer Vision", "Natural Language Processing", "Machine Learning", "Deep Learning"]
+      "keywords": [
+        "Computer Vision",
+        "Natural Language Processing",
+        "Machine Learning",
+        "Deep Learning"
+      ]
     },
     {
       "name": "Autonomous Systems",
       "level": "Intermediate",
-      "keywords": ["Autonomous Driving", "Robotics", "2D Semantic Segmentation", "Model Training & Optimization"]
+      "keywords": [
+        "Autonomous Driving",
+        "Robotics",
+        "2D Semantic Segmentation",
+        "Model Training & Optimization"
+      ]
     },
     {
       "name": "Embodied AI",
       "level": "Beginner",
-      "keywords": ["Robotics", "Human-Computer Interaction", "Reinforcement Learning", "Multi-modal Learning"]
+      "keywords": [
+        "Robotics",
+        "Human-Computer Interaction",
+        "Reinforcement Learning",
+        "Multi-modal Learning"
+      ]
     }
   ],
   "languages": [
@@ -98,15 +127,29 @@
   "interests": [
     {
       "name": "Traditional Arts",
-      "keywords": ["Chinese Calligraphy (4 years)", "Regular Script", "Clerical Script", "Running Script"]
+      "keywords": [
+        "Chinese Calligraphy (4 years)",
+        "Regular Script",
+        "Clerical Script",
+        "Running Script"
+      ]
     },
     {
       "name": "Sports & Games",
-      "keywords": ["Table Tennis", "Fitness", "Chinese Chess", "Strategic Games"]
+      "keywords": [
+        "Table Tennis",
+        "Fitness",
+        "Chinese Chess",
+        "Strategic Games"
+      ]
     },
     {
       "name": "Travel & Culture",
-      "keywords": ["Visited 20+ provinces and regions in China", "Traditional Chinese Arts", "Outdoor Activities"]
+      "keywords": [
+        "Visited 20+ provinces and regions in China",
+        "Traditional Chinese Arts",
+        "Outdoor Activities"
+      ]
     }
   ]
 }

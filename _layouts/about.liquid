@@ -5,13 +5,15 @@ layout: default
   <header class="post-header">
     <h1 class="post-title">
       {% if site.title == 'blank' %}
-        <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
-        {{ site.last_name }}
+        {% if page.lang == 'zh' %}
+          <span class="font-weight-bold">杨弘毅</span> <a href="{{ page.url | replace_first: '/ch', '' | relative_url }}" style="text-decoration: none; color: #007bff; font-weight: normal;">Hongyi Yang</a>
+        {% else %}
+          <span class="font-weight-bold">{{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}</span> <a href="{{ '/ch' | append: page.url | relative_url }}" style="text-decoration: none; color: #007bff;">杨弘毅</a>
+        {% endif %}
       {% else %}
         {{ site.title }}
       {% endif %}
     </h1>
-    <p class="desc">{{ page.subtitle }}</p>
   </header>
 
   <article>
@@ -43,7 +45,9 @@ layout: default
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
       <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+        <a href="{{ '/news/' | relative_url }}" style="color: inherit">
+          {% if page.lang == 'zh' %}新闻{% else %}news{% endif %}
+        </a>
       </h2>
       {% include news.liquid limit=true %}
     {% endif %}
@@ -51,7 +55,9 @@ layout: default
     <!-- Latest posts -->
     {% if page.latest_posts and page.latest_posts.enabled %}
       <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
+        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">
+          {% if page.lang == 'zh' %}最新文章{% else %}latest posts{% endif %}
+        </a>
       </h2>
       {% include latest_posts.liquid %}
     {% endif %}
@@ -59,7 +65,9 @@ layout: default
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
+        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">
+          {% if page.lang == 'zh' %}精选论文{% else %}selected publications{% endif %}
+        </a>
       </h2>
       {% include selected_papers.liquid %}
     {% endif %}

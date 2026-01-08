@@ -1,7 +1,13 @@
 ---
 layout: default
 ---
-{% unless site.data.resume %}
+{% if page.lang == 'zh' %}
+  {% assign resume_data = site.data.resume_zh %}
+{% else %}
+  {% assign resume_data = site.data.resume %}
+{% endif %}
+
+{% unless resume_data %}
   <div class="post">
     <header class="post-header">
       <h1 class="post-title">
@@ -127,7 +133,15 @@ layout: default
 
     <article>
       <div class="cv">
-        {% for data in site.data.resume %}
+        {% if page.lang == 'zh' %}
+          {% assign resume_data = site.data.resume_zh %}
+          {% assign ui_text = site.data.ui_text.zh %}
+        {% else %}
+          {% assign resume_data = site.data.resume %}
+          {% assign ui_text = site.data.ui_text.en %}
+        {% endif %}
+
+        {% for data in resume_data %}
           {% if site.jsonresume and site.jsonresume.size > 0 %}
             {% unless site.jsonresume contains data[0] %}
               {% continue %}
@@ -136,7 +150,7 @@ layout: default
           {% if data[0] == 'meta' or data[1].size == 0 %} {% continue %} {% endif %}
           <a class="anchor" id="{{ data[0] }}"></a>
           <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">{{ data[0] | capitalize }}</h3>
+            <h3 class="card-title font-weight-medium">{{ ui_text.cv[data[0]] | default: data[0] | capitalize }}</h3>
             <div>
               {% case data[0] %}
                 {% when 'basics' %}

@@ -1,10 +1,10 @@
 {% for social in site.data.socials %}
   {% case social[0] %}
-    {% when '    {% when 'unsplash_id' %}
+    {% when 'unsplash_id' %}
       <a href="https://unsplash.com/@{{ social[1] }}" title="Unsplash" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-unsplash"></i></a>
     {% when 'WeChat' %}
       <a href="#" onclick="openWeChatModal(event)" title="WeChat" class="contact-icon"><i class="fa-brands fa-weixin"></i></a>
-    {% when 'whatsapp_number' %>d' %}
+    {% when 'acm_id' %}
       <a href="https://dl.acm.org/profile/{{ social[1] }}/" title="ACM DL" rel="external nofollow noopener" target="_blank"><i class="ai ai-acm"></i></a>
     {% when 'blogger_url' %}
       <a href="{{ social[1] }}" title="Blogger" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-blogger-b"></i></a>

@@ -1,0 +1,45 @@
+en:
+  cv:
+    basics: Basics
+    education: Education
+    work: Work
+    volunteer: Volunteer
+    projects: Projects
+    awards: Awards
+    certificates: Certificates
+    skills: Skills
+    languages: Languages
+    interests: Interests
+    references: References
+  fields:
+    name: Name
+    email: Email
+    phone: Phone
+    website: Website
+    location: Location
+    url: URL
+  general:
+    present: Present
+
+zh:
+  cv:
+    basics: 基本信息
+    education: 教育经历
+    work: 工作经历
+    volunteer: 志愿服务
+    projects: 项目经历
+    awards: 获奖情况
+    certificates: 证书
+    skills: 技能专长
+    languages: 语言能力
+    interests: 兴趣爱好
+    references: 推荐人
+  fields:
+    name: 姓名
+    email: 邮箱
+    phone: 电话
+    website: 网站
+    location: 地点
+    url: 链接
+  general:
+    present: 至今

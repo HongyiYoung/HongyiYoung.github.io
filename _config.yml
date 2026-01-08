@@ -13,10 +13,11 @@ contact_note: >
   <span style="background: #fff3e0; color: #ef6c00; padding: 5px 12px; border-radius: 20px; font-weight: bold;">📝 CET-6: 470</span>
   <br><br><strong style="color: #666; font-weight: bold;">✨ Dream high, reach the sky. ✨</strong>
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
+  Hongyi Yang's academic homepage. Undergraduate student at Southwest University taking Computer Science and Technology. Research interests include Computer Vision, Natural Language Processing, and Embodied AI.
 
 footer_text: >
   More information can be seen on my <a href="https://vinyyang.github.io" target="_blank">Personal Homepage</a>.
-keywords: SWU, CS, Undergraduate # add your own keywords or leave empty
+keywords: Hongyi Yang, SWU, CS, Computer Vision, NLP, Embodied AI, Autonomous Driving # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🐣 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
@@ -65,9 +66,9 @@ max_width: 930px
 # -----------------------------------------------------------------------------
 # Display links to the page with a preview object on social media.
 # see https://schema.org/docs/faq.html for more information
-serve_og_meta: false # Include Open Graph meta tags in the HTML head
-serve_schema_org: false # Include Schema.org in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+serve_og_meta: true # Include Open Graph meta tags in the HTML head
+serve_schema_org: true # Include Schema.org in the HTML head
+og_image: prof_pic.jpg # The site-wide (default for all links) Open Graph preview image
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -632,6 +633,8 @@ third_party_libraries:
 jekyll_get_json:
   - data: resume
     json: assets/json/resume.json # it can also be an url
+  - data: resume_zh
+    json: assets/json/resume_zh.json
 
 jsonresume:
   - basics
