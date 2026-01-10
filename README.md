@@ -98,3 +98,14 @@
 
 ### 手动部署
 如果你不使用脚本，也可以通过 Git 手动推送。通常建议将源码保存在 `source` 分支，而 `main` 分支仅用于存放 `_site` 生成的静态文件（如果使用 GitHub Pages 的话）。或者利用 GitHub Actions 自动构建（取决于你的 `.github/workflows` 配置）。
+
+### 7. 国内访问优化 (China Accessibility)
+由于 GitHub 统计图服务 (`vercel.app`) 在国内访问不稳，我们在 **`_config.yml`** 中提供了镜像配置：
+```yaml
+# 默认使用官方源 (需科学上网或 DNS 正常)
+repo_stats_url: "https://github-readme-stats.vercel.app"
+
+# 若国内无法访问，可尝试寻找自建镜像，例如:
+# repo_stats_url: "https://github-readme-stats.lxzxl.cn"
+```
+如果图片加载失败，请检查此配置。修改 `_config.yml` 后需重启本地服务生效。

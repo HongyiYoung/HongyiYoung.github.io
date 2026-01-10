@@ -39,6 +39,14 @@ repo_trophies:
   theme_light: flat # https://github.com/ryo-ma/github-profile-trophy
   theme_dark: gitdimmed # https://github.com/ryo-ma/github-profile-trophy
 
+# Service Providers (Configurable for China accessibility)
+# Default (Global): https://github-readme-stats.vercel.app
+# Mirror (China): https://github-readme-stats.linonetwo.io (Unstable)
+repo_stats_url: "https://github-readme-stats.vercel.app"
+
+# Default (Global): https://github-profile-trophy.vercel.app
+repo_trophies_url: "https://github-profile-trophy.vercel.app"
+
 # -----------------------------------------------------------------------------
 # RSS Feed
 # -----------------------------------------------------------------------------
@@ -385,6 +393,7 @@ enable_google_analytics: false # enables google analytics
 enable_cronitor_analytics: false # enables cronitor RUM analytics
 enable_pirsch_analytics: false # enables Pirsch analytics (https://pirsch.io/)
 enable_openpanel_analytics: false # enables Openpanel analytics (https://openpanel.dev/)
+enable_51la_analytics: true # enables 51.la analytics
 enable_google_verification: false # enables google site verification
 enable_bing_verification: false # enables bing site verification
 enable_masonry: true # enables automatic project cards arrangement
