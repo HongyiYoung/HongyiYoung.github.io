@@ -3,7 +3,7 @@ layout: page
 permalink: /ch/repositories/
 title: 仓库
 description: 
-nav: true
+nav: false
 nav_order: 4
 lang: zh
 ---
