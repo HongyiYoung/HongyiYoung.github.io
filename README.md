@@ -56,7 +56,11 @@
 
 **注意**：JSON 值中请勿包含 HTML 标签。网站会自动格式化数据，并处理邮箱/电话的隐私保护弹窗。
 
-### 4. 修改样式 (Styles)
+### 4. 更新论文 (Publications)
+论文列表由 `_bibliography/papers.bib` 驱动，我们在原版基础上进行了增强设计：
+- **酷炫 Intro 弹窗**：在 `_includes/intros/` 目录下，新建与论文 bib key 同名的 Markdown 文件（例如 `yang2026vlm3d.md`，中文则为 `yang2026vlm3d_zh.md`）。在里面放入图文内容，页面上会自动生成一个 "Intro" 按钮，点击即可弹出深浅色自适应的酷炫模态框展示这些介绍！
+
+### 5. 修改样式 (Styles)
 - **自定义样式**：在 **`_sass/_custom.scss`** 中添加或修改样式。
 - **全局配置**：通用设置（标题、描述、SEO等）在 **`_config.yml`** 中。
 
@@ -76,11 +80,13 @@
   - **界面文本 (Labels)**: 简历中的固定标签（如 "Education" vs "教育经历"）由 **`_data/ui_text.yml`** 管理。如果需要修改这些标题，请编辑该文件。
 - **新闻 (News)**:
   - 英文新闻：无后缀或自定义，例如 `2025-01-01-news.md`
-  - 中文新闻：建议文件名以 `_zh.md` 结尾，例如 `2025-01-01-news_zh.md`，并在 Front Matter 中设置 `lang: zh` (虽然不是必须，但有助于区分)。
+  - 中文新闻：建议文件名以 `_zh.md` 结尾，例如 `2025-01-01-news_zh.md`，并在 Front Matter 中设置 `lang: zh`。
 - **项目 (Projects)**:
   - 中文项目：新建项目文件时，务必在头部添加 `lang: zh`，这样它们才会出现在中文版项目列表中。
+- **论文 (Publications)**:
+  - 中文介绍：对于带有 Intro 介绍的论文，请在 `_includes/intros/` 添加带 `_zh.md` 后缀的翻译文件（如 `key_zh.md`），系统会自动在中文模式下加载它。
 
-### 6. 移动端适配 (Mobile Responsiveness)
+### 7. 移动端适配 (Mobile Responsiveness)
 针对手机端（特别是小屏设备如 iPhone 12/13/14 等）的特殊适配样式主要位于 **`_sass/_custom.scss`** 和 **`_includes/custom_styles.liquid`**。
 - **Profile 布局**：在屏幕宽度 < 768px 时，强制头像与个人信息垂直堆叠 (`float: none`)。
 - **Stat Cards**：在移动端强制显示为 2x2 网格，防止挤压。
@@ -99,7 +105,7 @@
 ### 手动部署
 如果你不使用脚本，也可以通过 Git 手动推送。通常建议将源码保存在 `source` 分支，而 `main` 分支仅用于存放 `_site` 生成的静态文件（如果使用 GitHub Pages 的话）。或者利用 GitHub Actions 自动构建（取决于你的 `.github/workflows` 配置）。
 
-### 7. 国内访问优化 (China Accessibility)
+### 8. 国内访问优化 (China Accessibility)
 由于 GitHub 统计图服务 (`vercel.app`) 在国内访问不稳，我们在 **`_config.yml`** 中提供了镜像配置：
 ```yaml
 # 默认使用官方源 (需科学上网或 DNS 正常)
