@@ -50,11 +50,11 @@ latest_posts:
   </div>
 </div>
 
-I'm **Hongyi Yang**, an undergraduate in **Computer Science** at Southwest University (2023–Present), supervised by Assoc. Prof. **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}**. My research experience includes **Multimodal Large Models**, **Computer Vision**, **Visualization**, **Virtual Reality**, and **Human-Computer Interaction**. My research interests focus on **Multimodal Large Models**, **Computer Vision**, **Agents**, and **Reinforcement Learning**, backed by experience in **Computer Vision** and **Embedded Development**.
+I'm **Hongyi Yang**, an undergraduate in Computer Science at Southwest University (2023–Present), supervised by Assoc. Prof. **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}**. My research experience includes Multimodal Large Models, Computer Vision, Visualization, Virtual Reality, and Human-Computer Interaction. My research interests focus on Multimodal Large Models, Computer Vision, Agents, and Reinforcement Learning, backed by experience in Computer Vision and Embedded Development.
 
 #### Research
 
-1.**Aesthetics-Driven Leader Line Generation in Label Layouts** (2025.08-Precent, 1st author, submitted to IEEE VIS, **CCF-A**)
+1.**Aesthetics-Driven Leader Line Generation in Label Layouts** (2025.08–Present, 1st author, submitted to IEEE VIS, **CCF-A**)
 
 In view management tasks, mainstream approaches primarily focus on label placement, neglecting the aesthetics of leader lines that serve as visual bridges. This work achieves leader line layout generation in complex scenarios by proposing a **Deep Reinforcement Learning**-based framework. We utilize the PPO algorithm for intelligent obstacle avoidance and dynamic generation of leader lines, while introducing a style-unified post-processing mechanism to ensure overall visual consistency. Experiments demonstrate that this method reduces the aesthetic cost of generated leader lines by 57.1% compared to baselines on the SWU-AMIL dataset, and it outperforms commercial layouts in user studies.
 
@@ -68,9 +68,9 @@ Addressing the challenge of stripping annotations from images, we employ a **GAN
 
 #### Awards
 
-1.**Honorary Awards**: **National Scholarship** (2024, 2025), **Merit Student of SWU** (2024, 2025), **Outstanding Student Cadre of SWU** (2024)
+1.**Honorary Awards**: National Scholarship (2024, 2025), Merit Student of SWU (2024, 2025), Outstanding Student Cadre of SWU (2024)
 
-2.**Competition Awards**: **MCM Finalist** (2025), **National Undergraduate Electronics Design Contest Provincial 1st Prize** (2025), **Lanqiao Cup National Software and Information Technology Professionals Competition National 3rd Prize** (2025), **National Invention Patent (1st author)** (2025), etc.
+2.**Competition Awards**: MCM Finalist (2025), National Undergraduate Electronics Design Contest Provincial 1st Prize (2025), Lanqiao Cup National Software and Information Technology Professionals Competition National 3rd Prize (2025), National Invention Patent (1st author) (2025), etc.
 
 #### Internship
 
