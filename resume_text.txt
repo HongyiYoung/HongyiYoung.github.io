@@ -1,0 +1,9 @@
+﻿python : Traceback (most recent call last):
+所在位置 行:1 字符: 1
++ python -c "from pypdf import PdfReader; r=PdfReader('简历-西南大学-杨弘毅.pdf' ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 1, in <module>
+UnicodeEncodeError: 'gbk' codec can't encode character '\uf06c' in position 66: illegal multibyte sequence
