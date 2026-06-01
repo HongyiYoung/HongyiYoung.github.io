@@ -3,7 +3,7 @@ _site
 .sass-cache
 .jekyll-cache
 .jekyll-metadata
-.DS_store
+.DS_Store
 .ruby-version
 .tweet-cache
 Gemfile.lock
@@ -12,3 +12,11 @@ node_modules/
 vendor
 .idea
 admin_data.js
+
+# Extra standard ignores
+.vscode/
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+*.bak
