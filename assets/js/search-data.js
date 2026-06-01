@@ -16,6 +16,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/publications/";
           },
+        },{id: "nav-论文",
+          title: "论文",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/ch/publications/";
+          },
         },{id: "nav-projects",
           title: "projects",
           description: "",
@@ -23,12 +30,12 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/projects/";
           },
-        },{id: "nav-repositories",
-          title: "repositories",
-          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+        },{id: "nav-项目",
+          title: "项目",
+          description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/repositories/";
+            window.location.href = "/ch/projects/";
           },
         },{id: "nav-cv",
           title: "cv",
@@ -36,6 +43,13 @@ ninja.data = [{
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
+          },
+        },{id: "nav-简历",
+          title: "简历",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/ch/cv/";
           },
         },{id: "post-a-post-with-plotly-js",
         
@@ -383,28 +397,80 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-️-won-second-prize-provincial-level-in-the-china-undergraduate-mathematical-contest-in-modeling",
-          title: '🎖️ Won Second Prize (Provincial Level) in the China Undergraduate Mathematical Contest in...',
+            },},{id: "news-️-honored-as-merit-student-and-outstanding-student-cadre-at-southwest-university",
+          title: '🎖️ Honored as Merit Student and Outstanding Student Cadre at Southwest University!',
+          description: "",
+          section: "News",},{id: "news-️-荣获-西南大学三好学生-及-西南大学优秀学生干部",
+          title: '🎖️ 荣获 西南大学三好学生 及 西南大学优秀学生干部！',
+          description: "",
+          section: "News",},{id: "news-won-second-prize-provincial-level-in-the-china-undergraduate-mathematical-contest-in-modeling",
+          title: '🏆 Won Second Prize (Provincial Level) in the China Undergraduate Mathematical Contest in...',
+          description: "",
+          section: "News",},{id: "news-在全国大学生数学建模竞赛中荣获省级二等奖",
+          title: '🏆 在全国大学生数学建模竞赛中荣获省级二等奖！',
           description: "",
           section: "News",},{id: "news-awarded-the-national-scholarship-by-the-ministry-of-education-of-china",
           title: '🌟 Awarded the National Scholarship by the Ministry of Education of China!',
           description: "",
+          section: "News",},{id: "news-荣获中国教育部颁发的国家奖学金",
+          title: '🌟 荣获中国教育部颁发的国家奖学金！',
+          description: "",
           section: "News",},{id: "news-achieved-finalist-in-the-mathematical-contest-in-modeling-mcm-by-comap",
-          title: '🎯 Achieved Finalist in the Mathematical Contest in Modeling (MCM) by COMAP!',
+          title: '🏆 Achieved Finalist in the Mathematical Contest in Modeling (MCM) by COMAP!',
+          description: "",
+          section: "News",},{id: "news-在-comap-举办的美国大学生数学建模竞赛-mcm-中获得-finalist-特等奖提名",
+          title: '🏆 在 COMAP 举办的美国大学生数学建模竞赛 (MCM) 中获得 Finalist (特等奖提名)！',
+          description: "",
+          section: "News",},{id: "news-won-third-prize-national-level-in-the-blue-bridge-cup-national-software-and-it-talent-competition",
+          title: '🏅 Won Third Prize (National Level) in the Blue Bridge Cup National Software...',
+          description: "",
+          section: "News",},{id: "news-荣获-蓝桥杯全国软件和信息技术专业人才大赛国家级三等奖",
+          title: '🏅 荣获 蓝桥杯全国软件和信息技术专业人才大赛国家级三等奖！',
           description: "",
           section: "News",},{id: "news-won-first-prize-provincial-level-in-the-national-college-student-electronic-design-competition",
-          title: '🏆 Won First Prize (Provincial Level) in the National College Student Electronic Design...',
+          title: '🏅 Won First Prize (Provincial Level) in the National College Student Electronic Design...',
+          description: "",
+          section: "News",},{id: "news-在全国大学生电子设计竞赛中荣获省级一等奖",
+          title: '🏅 在全国大学生电子设计竞赛中荣获省级一等奖！',
+          description: "",
+          section: "News",},{id: "news-granted-one-national-invention-patent-in-china",
+          title: '📜 Granted one National Invention Patent in China!',
+          description: "",
+          section: "News",},{id: "news-获批-国家发明专利-一项",
+          title: '📜 获批 国家发明专利 一项！',
+          description: "",
+          section: "News",},{id: "news-️-honored-as-merit-student-at-southwest-university",
+          title: '🎖️ Honored as Merit Student at Southwest University!',
+          description: "",
+          section: "News",},{id: "news-️-荣获-西南大学三好学生",
+          title: '🎖️ 荣获 西南大学三好学生！',
+          description: "",
+          section: "News",},{id: "news-awarded-the-national-scholarship-by-the-ministry-of-education-of-china",
+          title: '🌟 Awarded the National Scholarship by the Ministry of Education of China!',
+          description: "",
+          section: "News",},{id: "news-荣获中国教育部颁发的国家奖学金",
+          title: '🌟 荣获中国教育部颁发的国家奖学金！',
           description: "",
           section: "News",},{id: "projects-autonomous-driving-perception-system",
           title: 'Autonomous Driving Perception System',
           description: "Deep learning-based 2D semantic segmentation and 3D object detection for intelligent vehicles",
           section: "Projects",handler: () => {
               window.location.href = "/projects/autonomous_driving_2024/";
+            },},{id: "projects-自动驾驶感知系统",
+          title: '自动驾驶感知系统',
+          description: "基于深度学习的智能车辆 2D 语义分割与 3D 目标检测",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/autonomous_driving_2024_zh/";
             },},{id: "projects-autonomous-targeting-vision-system",
           title: 'Autonomous Targeting Vision System',
           description: "Computer vision system and hardware design",
           section: "Projects",handler: () => {
               window.location.href = "/projects/electronic_design_2025/";
+            },},{id: "projects-自主瞄准视觉系统",
+          title: '自主瞄准视觉系统',
+          description: "计算机视觉系统与硬件设计",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/electronic_design_2025_zh/";
             },},{
         id: 'social-email',
         title: 'email',
