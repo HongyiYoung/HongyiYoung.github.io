@@ -6,4 +6,4 @@ related_posts: false
 lang: zh
 ---
 
-🏆 在[全国大学生电子设计竞赛](https://nuedc.xjtu.edu.cn/){:target="\_blank"}中荣获**省级一等奖**！
+🏅 在[全国大学生电子设计竞赛](https://nuedc.xjtu.edu.cn/){:target="_blank"}中荣获**省级一等奖**！

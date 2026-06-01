@@ -7,7 +7,7 @@ importance: 2
 category: work
 lang: zh
 github: # Add your GitHub repository link here
-tags: [计算机视觉, 深度学习, 自动驾驶, 语义分割, 3D目标检测]
+tags: [计算机视觉, 深度学习, 自动驾驶, 语义分割, 3D 目标检测]
 ---
 
 ## 项目概览

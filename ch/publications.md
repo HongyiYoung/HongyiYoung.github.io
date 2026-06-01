@@ -4,7 +4,7 @@ permalink: /ch/publications/
 title: 论文
 description: 
 nav: true
-nav_order: 3
+nav_order: 2
 lang: zh
 ---
 

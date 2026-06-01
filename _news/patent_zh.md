@@ -6,4 +6,4 @@ related_posts: false
 lang: zh
 ---
 
-📜 获授 **国家发明专利** 一项！
+📜 获批 **国家发明专利** 一项！

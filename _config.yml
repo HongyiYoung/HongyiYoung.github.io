@@ -7,11 +7,7 @@ first_name: Hongyi
 middle_name:
 last_name: Yang
 contact_note: >
-  <span style="background: #e3f2fd; color: #1565c0; padding: 5px 12px; border-radius: 20px; font-weight: bold; margin-right: 10px;">🎯 GPA: 4.10/5.00</span>
-  <span style="background: #fce4ec; color: #c2185b; padding: 5px 12px; border-radius: 20px; font-weight: bold; margin-right: 10px;">🏆 Rank: 2/123</span>
-  <span style="background: #e8f5e8; color: #2e7d32; padding: 5px 12px; border-radius: 20px; font-weight: bold; margin-right: 10px;">📚 CET-4: 551</span>
-  <span style="background: #fff3e0; color: #ef6c00; padding: 5px 12px; border-radius: 20px; font-weight: bold;">📝 CET-6: 570</span>
-  <br><br><strong style="color: #666; font-weight: bold;">✨ Dream high, reach the sky. ✨</strong>
+  <strong style="color: #666; font-weight: bold;">✨ Dream high, reach the sky. ✨</strong>
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Hongyi Yang's academic homepage. Undergraduate student at Southwest University taking Computer Science and Technology. Research interests include Computer Vision, Natural Language Processing, and Embodied AI.
 
@@ -204,6 +200,9 @@ exclude:
   - vendor
   - "*.pdf"
   - "证件照白底一寸.jpg"
+  - admin.html
+  - admin_data.js
+  - sync_admin.ps1
 keep_files:
   - CNAME
   - .nojekyll
@@ -331,11 +330,17 @@ filtered_bibtex_keywords:
     pdf,
     poster,
     preview,
+    preview_content,
     selected,
     slides,
     supp,
     video,
     website,
+    button_order,
+    title_zh,
+    abstract_zh,
+    note_zh,
+    preview_content_zh,
   ]
 
 # Maximum number of authors to be shown for each publication (more authors are visible on click)

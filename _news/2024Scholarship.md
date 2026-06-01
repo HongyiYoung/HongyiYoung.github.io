@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-🌟 Awarded the **National Scholarship** by the [Ministry of Education of China](http://www.moe.gov.cn/srcsite/A05/s7505/202412/t20241230_1172663.html){:target="\_blank"}!
+🌟 Awarded the **National Scholarship** by the [Ministry of Education of China](http://www.moe.gov.cn/srcsite/A05/s7505/202412/t20241230_1172663.html){:target="_blank"}!

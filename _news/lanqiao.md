@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-🏅 Won **Third Prize (National Level)** in the [Blue Bridge Cup National Software and IT Talent Competition](https://dasai.lanqiao.cn/){:target="\_blank"}!
+🏅 Won **Third Prize (National Level)** in the [Blue Bridge Cup National Software and IT Talent Competition](https://dasai.lanqiao.cn/){:target="_blank"}!

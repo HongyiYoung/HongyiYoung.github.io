@@ -6,4 +6,4 @@ related_posts: false
 lang: zh
 ---
 
-🌟 荣获[中国教育部](http://www.moe.gov.cn/srcsite/A05/s7505/202412/t20241230_1172663.html){:target="\_blank"}颁发的**国家奖学金**！
+🌟 荣获[中国教育部](http://www.moe.gov.cn/srcsite/A05/s7505/202412/t20241230_1172663.html){:target="_blank"}颁发的**国家奖学金**！

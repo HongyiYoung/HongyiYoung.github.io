@@ -192,6 +192,15 @@
           {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
         </a>
       {% endif %}
+      {% if site.active_lang == site.default_lang %}
+        {% assign intro_path = "intros/" | append: entry.key | append: ".md" %}
+      {% else %}
+        {% assign intro_path = "intros/" | append: entry.key | append: "_zh.md" %}
+      {% endif %}
+      {% capture intro_exists %}{% file_exists _includes/{{ intro_path }} %}{% endcapture %}
+      {% if entry.preview_content or intro_exists == 'true' %}
+        <a class="btn btn-sm z-depth-0" role="button" data-toggle="modal" data-target="#modal-{{ entry.key }}">Intro</a>
+      {% endif %}
       {% if entry.abstract %}
         <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
       {% endif %}
@@ -359,6 +368,55 @@
         {% highlight bibtex %}
         {{- entry.bibtex | hideCustomBibtex -}}
         {% endhighlight %}
+      </div>
+    {% endif %}
+
+    {% if entry.preview_content or intro_exists == 'true' %}
+      <style>
+        #modal-{{ entry.key }} .modal-content {
+          background-color: var(--global-card-bg-color) !important;
+          color: var(--global-text-color) !important;
+        }
+        #modal-{{ entry.key }} .modal-header {
+          border-bottom: 1px solid var(--global-divider-color) !important;
+        }
+        #modal-{{ entry.key }} .close {
+          color: var(--global-text-color) !important;
+          text-shadow: none !important;
+          opacity: 0.8 !important;
+        }
+        #modal-{{ entry.key }} .modal-body img {
+          max-width: 100%;
+          height: auto;
+        }
+      </style>
+      <div class="modal fade" id="modal-{{ entry.key }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel-{{ entry.key }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel-{{ entry.key }}">Intro: {{ entry.title }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+              {% if intro_exists == 'true' %}
+                {% capture intro_content %}{% include {{ intro_path }} %}{% endcapture %}
+                {{ intro_content | markdownify }}
+              {% else %}
+                {% if site.active_lang == site.default_lang %}
+                  {{ entry.preview_content | markdownify }}
+                {% else %}
+                  {% if entry.preview_content_zh %}
+                    {{ entry.preview_content_zh | markdownify }}
+                  {% else %}
+                    {{ entry.preview_content | markdownify }}
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
       </div>
     {% endif %}
 

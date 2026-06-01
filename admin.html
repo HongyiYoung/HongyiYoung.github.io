@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学术主页管理面板</title>
+<style>
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --border: #30363d;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --danger: #f85149;
+  --success: #3fb950;
+  --warning: #d29922;
+  --radius: 8px;
+  --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--font); background: var(--bg-primary); color: var(--text-primary); display:flex; height:100vh; overflow:hidden; }
+
+/* Sidebar */
+.sidebar { width:220px; background:var(--bg-secondary); border-right:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; }
+.sidebar-header { padding:20px 16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:16px; color:var(--accent); }
+.sidebar-header p { font-size:12px; color:var(--text-secondary); margin-top:4px; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:12px 16px; cursor:pointer; border-left:3px solid transparent; transition:all .2s; color:var(--text-secondary); font-size:14px; }
+.nav-item:hover { background:var(--bg-tertiary); color:var(--text-primary); }
+.nav-item.active { background:var(--bg-tertiary); color:var(--accent); border-left-color:var(--accent); }
+.nav-item .emoji { font-size:18px; width:24px; text-align:center; }
+.sidebar-footer { margin-top:auto; padding:12px 16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-secondary); }
+
+/* Main */
+.main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+.toolbar { display:flex; align-items:center; justify-content:space-between; padding:12px 24px; border-bottom:1px solid var(--border); background:var(--bg-secondary); }
+.toolbar h2 { font-size:18px; }
+.toolbar-actions { display:flex; gap:8px; }
+.content { flex:1; overflow-y:auto; padding:24px; }
+
+/* Buttons */
+.btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--bg-tertiary); color:var(--text-primary); cursor:pointer; font-size:13px; font-family:var(--font); transition:all .2s; }
+.btn:hover { border-color:var(--text-secondary); }
+.btn-primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent-hover); }
+.btn-danger { background:var(--danger); border-color:var(--danger); color:#fff; }
+.btn-danger:hover { opacity:.85; }
+.btn-success { background:var(--success); border-color:var(--success); color:#fff; }
+.btn-sm { padding:5px 10px; font-size:12px; }
+
+/* Forms */
+.form-group { margin-bottom:16px; }
+.form-group label { display:block; font-size:13px; color:var(--text-secondary); margin-bottom:6px; font-weight:500; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-row-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; }
+input[type="text"], input[type="date"], input[type="number"], select, textarea {
+  width:100%; padding:8px 12px; background:var(--bg-primary); border:1px solid var(--border); border-radius:var(--radius);
+  color:var(--text-primary); font-size:13px; font-family:var(--font); transition:border-color .2s;
+}
+input:focus, textarea:focus, select:focus { outline:none; border-color:var(--accent); }
+textarea { min-height:120px; resize:vertical; }
+
+/* Cards */
+.card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px; }
+.card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.card-title { font-size:15px; font-weight:600; }
+.card-meta { font-size:12px; color:var(--text-secondary); margin-top:4px; }
+.card-actions { display:flex; gap:6px; flex-shrink:0; }
+.badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; }
+.badge-blue { background:#1f6feb33; color:var(--accent); }
+.badge-green { background:#23863633; color:var(--success); }
+
+/* Modal */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:100; }
+.modal-overlay.show { display:flex; }
+.modal { background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; width:90%; max-width:700px; max-height:85vh; display:flex; flex-direction:column; }
+.modal-header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid var(--border); }
+.modal-header h3 { font-size:16px; }
+.modal-close { background:none; border:none; color:var(--text-secondary); font-size:20px; cursor:pointer; padding:4px; }
+.modal-close:hover { color:var(--text-primary); }
+.modal-body { padding:20px; overflow-y:auto; flex:1; }
+.modal-footer { display:flex; justify-content:flex-end; gap:8px; padding:16px 20px; border-top:1px solid var(--border); }
+
+/* Export Modal */
+.export-content { background:var(--bg-primary); border:1px solid var(--border); border-radius:var(--radius); padding:12px; font-family:'Cascadia Code','Fira Code',monospace; font-size:12px; white-space:pre-wrap; word-break:break-all; max-height:400px; overflow-y:auto; color:var(--text-secondary); }
+.export-tabs { display:flex; gap:0; margin-bottom:12px; }
+.export-tab { padding:8px 16px; cursor:pointer; border:1px solid var(--border); background:var(--bg-tertiary); color:var(--text-secondary); font-size:13px; }
+.export-tab:first-child { border-radius:var(--radius) 0 0 var(--radius); }
+.export-tab:last-child { border-radius:0 var(--radius) var(--radius) 0; }
+.export-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* Toast */
+.toast { position:fixed; bottom:24px; right:24px; padding:12px 20px; background:var(--success); color:#fff; border-radius:var(--radius); font-size:13px; z-index:200; opacity:0; transform:translateY(10px); transition:all .3s; }
+.toast.show { opacity:1; transform:translateY(0); }
+
+/* Checkbox */
+.checkbox-label { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; }
+.checkbox-label input { width:16px; height:16px; accent-color:var(--accent); }
+
+/* Empty state */
+.empty-state { text-align:center; padding:48px; color:var(--text-secondary); }
+.empty-state .emoji { font-size:48px; margin-bottom:12px; }
+.empty-state p { margin-bottom:16px; }
+
+/* Section */
+.section-title { font-size:14px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+
+/* Split View */
+.split-view { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
+.split-pane { display:flex; flex-direction:column; }
+.split-pane textarea { flex:1; min-height:300px; resize:vertical; }
+.md-preview { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius); padding:16px; font-size:13px; line-height:1.7; overflow-y:auto; flex:1; min-height:300px; }
+.md-preview h1,.md-preview h2,.md-preview h3,.md-preview h4 { margin:12px 0 6px; color:var(--accent); }
+.md-preview strong { color:#79c0ff; }
+.md-preview li { margin-left:16px; margin-bottom:4px; }
+.md-preview a { color:var(--accent); text-decoration:underline; }
+
+/* Rich Editor */
+.editor-toolbar { display:flex; gap:2px; padding:6px; background:var(--bg-tertiary); border:1px solid var(--border); border-bottom:none; border-radius:var(--radius) var(--radius) 0 0; flex-wrap:wrap; }
+.editor-toolbar button { background:none; border:1px solid transparent; color:var(--text-secondary); padding:4px 8px; cursor:pointer; border-radius:4px; font-size:13px; font-family:var(--font); }
+.editor-toolbar button:hover { background:var(--bg-primary); border-color:var(--border); color:var(--text-primary); }
+.rich-editor { background:var(--bg-primary); border:1px solid var(--border); border-radius:0 0 var(--radius) var(--radius); padding:12px; min-height:200px; max-height:400px; overflow-y:auto; font-size:13px; line-height:1.7; color:var(--text-primary); outline:none; }
+.rich-editor:focus { border-color:var(--accent); }
+.rich-editor img { max-width:100%; height:auto; border-radius:4px; margin:8px 0; border:1px solid var(--border); }
+.rich-editor b,.rich-editor strong { color:#79c0ff; }
+
+/* Button Config */
+.btn-config-list { display:flex; flex-wrap:wrap; gap:6px; padding:8px 0; }
+.btn-config-item { display:flex; align-items:center; gap:4px; padding:4px 10px; background:var(--bg-tertiary); border:1px solid var(--border); border-radius:16px; font-size:12px; cursor:grab; user-select:none; transition:all .2s; }
+.btn-config-item.enabled { border-color:var(--accent); background:#1f6feb22; }
+.btn-config-item .drag-handle { cursor:grab; color:var(--text-secondary); }
+.btn-config-item input[type=checkbox] { width:14px; height:14px; accent-color:var(--accent); margin:0; }
+.btn-config-item.dragging { opacity:0.5; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h1>🎓 学术主页管理</h1>
+    <p>本地 CMS 工具</p>
+  </div>
+  <div class="nav-item active" data-tab="about"><span class="emoji">📝</span>关于页面</div>
+  <div class="nav-item" data-tab="pubs"><span class="emoji">📄</span>论文管理</div>
+  <div class="nav-item" data-tab="news"><span class="emoji">📰</span>新闻管理</div>
+  <div class="nav-item" data-tab="projects"><span class="emoji">🔬</span>项目管理</div>
+  <div class="nav-item" data-tab="cv"><span class="emoji">📋</span>简历管理</div>
+  <div class="sidebar-footer">数据自动保存至 localStorage<br>上次保存: <span id="lastSaved">--</span></div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="toolbar">
+    <h2 id="pageTitle">📝 关于页面</h2>
+    <div class="toolbar-actions">
+      <button class="btn btn-success" onclick="showGlobalChanges()">📝 查看所有中文修改</button>
+      <button class="btn" onclick="importData()">📥 导入数据</button>
+      <button class="btn btn-primary" onclick="exportCurrent()">📤 导出当前模块</button>
+    </div>
+  </div>
+  <div class="content" id="contentArea"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modalTitle">标题</h3><button class="modal-close" onclick="closeModal()">&times;</button></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="admin_data.js" onerror="console.log('admin_data.js 未找到，使用内置默认数据。请先运行 sync_admin.ps1')"></script>
+<script>
+// ============================================================
+// Data Store
+// ============================================================
+const STORE_KEY = 'academic_admin_data';
+let store = loadStore();
+
+function defaultStore() {
+  return {
+    about: {
+      gpa:'4.10/5.00', rank:'2/123', cet4:'551', cet6:'570',
+      content_en: `I'm **Hongyi Yang**, an undergraduate in **Computer Science** at Southwest University (2023–Present), supervised by Assoc. Prof. **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}**. My research focuses on **Visualization** and **AI**.
+
+#### Research
+
+- **Aesthetic-Driven Leader-Line Generation** (1st author, submitted to **IEEE VIS**, CCF-A): Proposed a DRL-based framework using Maskable PPO to generate aesthetic leader lines. Achieved **57.1% reduction** in arrangement cost and **0.57%** occlusion rate on the SWU-AMIL dataset.
+- **VLM-based 3D Annotation Layout Evaluation** (2026–Present): First to apply Vision-Language Models for automated 3D annotation layout assessment, with a five-dimensional quantitative evaluation framework and LoRA fine-tuning for efficient deployment.
+- **GAN-based Annotation Stripping & Background Reconstruction** (2024–2025): Developed a multi-task GAN for simultaneous background repair and annotation mask prediction, significantly improving dataset construction efficiency.
+
+#### Internship
+
+**Chongqing Zhongke Automotive Software Innovation Center** (2024): Led autonomous driving perception algorithm R&D. Benchmarked 10+ segmentation models, deployed CCNet (mIoU 44.54) on ROS with NVIDIA IsaacSim simulation and 3D object detection.
+
+#### Awards
+
+**National Scholarship** (2024, 2025) · **MCM Finalist** (2025, top 2%) · **Electronics Design Contest Provincial 1st Prize** (2025) · **Blue Bridge Cup National 3rd Prize** (2025) · **National Invention Patent** (2025) · **Merit Student of SWU** (2024, 2025)
+
+#### Skills
+
+Python, C/C++, R, LaTeX · PyTorch, mmsegmentation · ROS, NVIDIA IsaacSim · STM32 embedded development`,
+      content_zh: `我是**杨弘毅**，西南大学计算机科学与技术专业本科生（2023至今），师从**[瞿经纬](https://jingweiqu.github.io/ch/index.html){:target="_blank"}**副教授。研究方向为**可视化**与**人工智能**。
+
+#### 科研经历
+
+- **审美驱动的标签引导线生成**（第一作者，已投 **IEEE VIS**，CCF-A）：提出基于深度强化学习（Maskable PPO）的引导线生成框架，在 SWU-AMIL 数据集上排列成本降低 **57.1%**，遮挡率仅 **0.57%**。
+- **基于 VLM 的 3D 注记布局评价**（2026至今）：首次将视觉语言模型应用于 3D 注记布局自动评价，构建五维量化评价体系，通过 LoRA 微调实现高效部署。
+- **基于 GAN 的布局注记剥离与背景重建**（2024–2025）：开发多任务 GAN 实现注记的精准剥离与背景修复，显著提升数据集构建效率。
+
+#### 实习经历
+
+**重庆中科汽车软件创新中心**（2024）：主导自动驾驶感知算法研发，评估 10+ 分割模型，部署 CCNet（mIoU 44.54）于 ROS 系统，结合 NVIDIA IsaacSim 仿真与 3D 目标检测。
+
+#### 获奖情况
+
+**国家奖学金**（2024, 2025）· **美赛 Finalist 特等奖提名**（2025, 前2%）· **电赛省级一等奖**（2025）· **蓝桥杯国家级三等奖**（2025）· **国家发明专利**（2025）· **西南大学三好学生**（2024, 2025）
+
+#### 技术技能
+
+Python, C/C++, R, LaTeX · PyTorch, mmsegmentation · ROS, NVIDIA IsaacSim · STM32 嵌入式开发`
+    },
+    pubs: [
+      {type:'inproceedings',key:'yang2025leaderline',abbr:'VIS',title:'Aesthetic-Driven Leader-Line Generation for Label Placement',author:'Yang*, Hongyi and Qu, Jingwei',year:'2025',note:'Under review at IEEE VIS (CCF-A)',abstract:'Addressing visual clutter in leader-line generation, we propose a DRL-based framework modeling the process as an MDP. A Leader-Line Agent (LeLA) using Maskable PPO achieves intelligent obstacle avoidance and aesthetic generation. On the SWU-AMIL dataset, Aesthetic Arrangement Cost is reduced by 57.1% with occlusion rate dropping to 0.57%. User studies confirm significant reduction in mental load and 82.7% information retrieval accuracy.',preview_content:'**Problem**: Traditional leader-line generation methods suffer from visual clutter and crossings, lacking aesthetic consideration.<br><br>**Method**: We model the leader-line generation as a **Markov Decision Process (MDP)** and develop a **Leader-Line Agent (LeLA)** using **Maskable PPO**.<br><br>**Results**: 57.1% reduction in Aesthetic Arrangement Cost, occlusion rate 0.57%, 82.7% information retrieval accuracy.<br><br>**My Contribution**: Independently designed the framework, implemented the algorithm, drew all figures, and wrote the paper draft.',pdf:'_CVPR_26___Aesthetic_Driven_Leader_Line_Generation_for_Label_Placement (14).pdf',selected:true,bibtex_show:true},
+      {type:'inproceedings',key:'yang2026vlm3d',abbr:'In Progress',title:'VLM-based 3D Annotation Layout Evaluation',author:'Yang, Hongyi and Qu, Jingwei',year:'2026',note:'Ongoing research project',abstract:'First to apply Vision-Language Models for automated 3D annotation layout assessment. Constructed annotated layout datasets in 3D scenes based on the PartNet dataset. Established a five-dimensional quantitative evaluation framework covering readability, unambiguity, compactness, alignment, and aesthetics.',preview_content:'**Problem**: No evaluation paradigm exists for 3D annotation layouts in visualization and VR domains.<br><br>**Method**: First to apply VLM for automated 3D annotation layout assessment with a five-dimensional evaluation framework and LoRA fine-tuning.<br><br>**My Contribution**: Dataset construction, code implementation, method discussion and validation.',selected:true,bibtex_show:true},
+      {type:'inproceedings',key:'yang2024gan',abbr:'Completed',title:'GAN-based Annotation Stripping and Background Reconstruction',author:'Yang, Hongyi and Qu, Jingwei',year:'2025',note:'Completed research project (2024.12 - 2025.07)',abstract:'Developed a multi-task GAN architecture for automated annotation stripping from visualization images. Simultaneously predicts repaired backgrounds and annotation masks with weighted loss functions optimized for fine linear features.',preview_content:'**Problem**: Automated stripping of redundant annotations is challenging due to fine linear features.<br><br>**Method**: Multi-task GAN with weighted loss functions, image differencing, OCR and graph algorithms.<br><br>**My Contribution**: Literature review, method selection, code implementation, model training and testing.',selected:true,bibtex_show:true}
+    ],
+    news: [
+      {date:'2024-12-27',prefix:'2024Scholarship',content_en:'🌟 Awarded the **National Scholarship** by the Ministry of Education of China!',content_zh:'🌟 荣获中国教育部颁发的**国家奖学金**！'},
+      {date:'2025-12-27',prefix:'2025Scholarship',content_en:'🌟 Awarded the **National Scholarship** by the Ministry of Education of China!',content_zh:'🌟 荣获中国教育部颁发的**国家奖学金**！'},
+      {date:'2025-09-01',prefix:'Electronic',content_en:'🏅 Won **Provincial First Prize** in the National Undergraduate Electronics Design Contest!',content_zh:'🏅 获得**全国大学生电子设计竞赛省级一等奖**！'},
+      {date:'2025-01-28',prefix:'finalist',content_en:'🎉 Achieved **Finalist** in the Mathematical Contest in Modeling (MCM/ICM)!',content_zh:'🎉 在**美国大学生数学建模竞赛 (MCM/ICM)** 中获得 **Finalist（特等奖提名）**！'},
+      {date:'2024-11-01',prefix:'cumcm',content_en:'📊 Won **Provincial Second Prize** in the National Mathematical Contest in Modeling!',content_zh:'📊 获得**全国大学生数学建模竞赛省级二等奖**！'},
+      {date:'2025-07-15',prefix:'lanqiao',content_en:'🏅 Won **Third Prize (National Level)** in the Blue Bridge Cup!',content_zh:'🏅 获得**蓝桥杯全国软件和信息技术专业人才大赛 国家级三等奖**！'},
+      {date:'2025-09-15',prefix:'patent',content_en:'📜 Granted one **National Invention Patent** in China!',content_zh:'📜 获授**国家发明专利**一项！'},
+      {date:'2025-10-01',prefix:'honors',content_en:'🎓 Honored as **Merit Student** (2024, 2025) and **Outstanding Student Cadre** (2024) at Southwest University!',content_zh:'🎓 荣获**西南大学三好学生**（2024, 2025）及**西南大学优秀学生干部**（2024）！'}
+    ],
+    awards: [
+      {title:'National Scholarship',title_zh:'国家奖学金',date:'2025-12',awarder:"Ministry of Education of the People's Republic of China",awarder_zh:'中华人民共和国教育部',url:'http://www.moe.gov.cn/srcsite/A05/s7505/202512/t20251225_1424488.html'},
+      {title:'National College Student Electronic Design Competition - Provincial First Prize',title_zh:'全国大学生电子设计竞赛 - 省级一等奖',date:'2025-09',awarder:'National College Student Electronic Design Competition Organizing Committee',awarder_zh:'全国大学生电子设计竞赛组委会',url:'https://nuedc.xjtu.edu.cn/'},
+      {title:'Mathematical Contest in Modeling (MCM) - Finalist',title_zh:'美国大学生数学建模竞赛 (MCM) - Finalist (特等奖提名)',date:'2025-01',awarder:'Consortium for Mathematics and Its Applications (COMAP)',awarder_zh:'美国数学及其应用联合会 (COMAP)',url:'https://www.comap.com/contests/mcm-icm'},
+      {title:'National Scholarship',title_zh:'国家奖学金',date:'2024-12',awarder:"Ministry of Education of the People's Republic of China",awarder_zh:'中华人民共和国教育部',url:'http://www.moe.gov.cn/srcsite/A05/s7505/202412/t20241230_1172663.html'},
+      {title:'National Mathematical Contest in Modeling - Provincial Second Prize',title_zh:'全国大学生数学建模竞赛 - 省级二等奖',date:'2024-11',awarder:'China Society for Industrial and Applied Mathematics',awarder_zh:'中国工业与应用数学学会',url:'https://www.mcm.edu.cn/'},
+      {title:'Blue Bridge Cup - National Third Prize',title_zh:'蓝桥杯全国软件和信息技术专业人才大赛 - 国家级三等奖',date:'2025-07',awarder:'Blue Bridge Cup Organizing Committee',awarder_zh:'蓝桥杯组委会',url:'https://dasai.lanqiao.cn/'},
+      {title:'National Invention Patent',title_zh:'国家发明专利',date:'2025-09',awarder:'China National Intellectual Property Administration',awarder_zh:'国家知识产权局',url:''},
+      {title:'Merit Student of Southwest University',title_zh:'西南大学三好学生',date:'2025-10',awarder:'Southwest University',awarder_zh:'西南大学',url:'https://swu.edu.cn'},
+      {title:'Outstanding Student Cadre of Southwest University',title_zh:'西南大学优秀学生干部',date:'2024-10',awarder:'Southwest University',awarder_zh:'西南大学',url:'https://swu.edu.cn'}
+    ],
+    projects: [],
+    cv: {
+      basics: {name:'Hongyi Yang',name_zh:'杨弘毅',email:'yhy520@email.swu.edu.cn',phone:'Contact Me',
+        summary:'A SWU student majoring in CS. Research experience includes Multimodal Large Models, Computer Vision, Visualization, VR, and HCI. Research interests focus on Multimodal Large Models, Computer Vision, Agents, and Reinforcement Learning, backed by experience in CV and Embedded Development.',
+        summary_zh:'西南大学计算机科学与技术专业本科生。研究经历为多模态大模型、计算机视觉、可视化、虚拟现实与人机交互等，研究兴趣为多模态大模型、计算机视觉、智能体、强化学习等，有计算机视觉、嵌入式开发经验。'},
+      education: [{institution:'Southwest University',area:'Computer Science',studyType:'Bachelor',startDate:'2023-09',endDate:'2027-06'}],
+      work: [{name:'Chongqing Zhongke Automotive Software Innovation Center',position:'Autonomous Driving Algorithm R&D Intern',startDate:'2024-07',endDate:'2024-08'}],
+      skills: [
+        {name:'Programming Languages',keywords:['Python (Familiar)','C++ (Familiar)','R (Proficient)','LaTeX (Proficient)']},
+        {name:'Artificial Intelligence',keywords:['Computer Vision','Natural Language Processing','Machine Learning','Deep Learning']},
+        {name:'Autonomous Systems',keywords:['Autonomous Driving','Robotics','2D Semantic Segmentation','Model Training & Optimization']},
+        {name:'Embodied AI',keywords:['Robotics','Human-Computer Interaction','Reinforcement Learning','Multi-modal Learning']}
+      ],
+      languages: [{language:'Chinese',fluency:'Native speaker'},{language:'Cantonese',fluency:'Native speaker'},{language:'English',fluency:'Fluent'}],
+      interests: [
+        {name:'Traditional Arts',keywords:['Chinese Calligraphy (4 years)','Regular Script','Clerical Script','Running Script']},
+        {name:'Sports & Games',keywords:['Table Tennis','Fitness','Chinese Chess','Strategic Games']},
+        {name:'Travel & Culture',keywords:['Visited 20+ provinces and regions in China','Traditional Chinese Arts','Outdoor Activities']}
+      ]
+    }
+  };
+}
+
+function loadStore() {
+  // 优先使用 sync_admin.ps1 生成的实时文件数据
+  if (window.PRELOADED_RAW) {
+    try {
+      const parsed = parsePreloadedData(window.PRELOADED_RAW);
+      // 保存到 localStorage 以备后续编辑
+      localStorage.setItem(STORE_KEY, JSON.stringify(parsed));
+      return parsed;
+    } catch(e) { console.error('解析预加载数据失败:', e); }
+  }
+  try { const d = JSON.parse(localStorage.getItem(STORE_KEY)); return d || defaultStore(); }
+  catch { return defaultStore(); }
+}
+
+// ============================================================
+// 从真实文件内容解析数据
+// ============================================================
+function parsePreloadedData(raw) {
+  const data = defaultStore();
+
+  // 解析 About 页面 —— 提取 frontmatter 之后的正文
+  function extractBody(md) {
+    const m = md.match(/^---[\s\S]*?---\s*(.*)$/s);
+    return m ? m[1].trim() : md;
+  }
+  function extractStatCards(body) {
+    const gpa = body.match(/stat-value\">([^<]*)<\/div>\s*<div class=\"stat-label\">GPA/)?.[1] || '4.10/5.00';
+    const rank = body.match(/stat-value\">([^<]*)<\/div>\s*<div class=\"stat-label\">(Rank|排名)/)?.[1] || '2/123';
+    const cet4 = body.match(/stat-value\">([^<]*)<\/div>\s*<div class=\"stat-label\">CET-4/)?.[1] || '551';
+    const cet6 = body.match(/stat-value\">([^<]*)<\/div>\s*<div class=\"stat-label\">CET-6/)?.[1] || '570';
+    return { gpa, rank, cet4, cet6 };
+  }
+  function extractTextContent(body) {
+    // 移除 stat-cards HTML 块（使用 div 计数法精确匹配）
+    let result = body;
+    const startIdx = result.indexOf('<div class="stat-cards-container">');
+    if (startIdx !== -1) {
+      let depth = 0, i = startIdx;
+      while (i < result.length) {
+        if (result.substring(i).startsWith('<div')) { depth++; i = result.indexOf('>', i) + 1; }
+        else if (result.substring(i).startsWith('</div>')) { depth--; if (depth === 0) { i += 6; break; } else { i += 6; } }
+        else { i++; }
+      }
+      result = result.substring(0, startIdx) + result.substring(i);
+    }
+    // 移除中文包裹 div
+    result = result.replace(/<div id="content-zh"[^>]*markdown="1">/g, '');
+    result = result.replace(/<\/div>\s*$/g, '');
+    return result.trim();
+  }
+
+  if (raw.about_en) {
+    const body = extractBody(raw.about_en);
+    const stats = extractStatCards(body);
+    data.about.gpa = stats.gpa;
+    data.about.rank = stats.rank;
+    data.about.cet4 = stats.cet4;
+    data.about.cet6 = stats.cet6;
+    data.about.content_en = extractTextContent(body);
+  }
+  if (raw.about_zh) {
+    const body = extractBody(raw.about_zh);
+    data.about.content_zh = extractTextContent(body);
+  }
+
+  // 解析 publications
+  if (raw.bib) {
+    data.pubs = parseBib(raw.bib);
+    if (raw.intros && Array.isArray(raw.intros)) {
+      raw.intros.forEach(intro => {
+        const match = intro.name.match(/^(.+?)(_zh)?\.md$/);
+        if (match) {
+          const key = match[1];
+          const isZh = !!match[2];
+          const pub = data.pubs.find(p => p.key === key);
+          if (pub) {
+            if (isZh) {
+              pub.preview_content_zh = intro.content;
+            } else {
+              pub.preview_content = intro.content;
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // 解析 news —— 按文件名配对中英文
+  if (raw.news && raw.news.length) {
+    const newsMap = {};
+    raw.news.forEach(f => {
+      const isZh = f.name.endsWith('_zh.md');
+      const prefix = f.name.replace(/_zh\.md$/, '').replace(/\.md$/, '');
+      if (!newsMap[prefix]) newsMap[prefix] = { prefix, date:'', content_en:'', content_zh:'' };
+      // 提取日期
+      const dateMatch = f.content.match(/date:\s*(\d{4}-\d{2}-\d{2})/);
+      if (dateMatch) newsMap[prefix].date = dateMatch[1];
+      // 提取正文（frontmatter 之后）
+      const bodyMatch = f.content.match(/^---[\s\S]*?---\s*(.*)$/s);
+      const content = bodyMatch ? bodyMatch[1].trim() : '';
+      if (isZh) newsMap[prefix].content_zh = content;
+      else newsMap[prefix].content_en = content;
+    });
+    data.news = Object.values(newsMap).sort((a,b) => a.date > b.date ? -1 : 1);
+  }
+
+  // 解析 resume.json + resume_zh.json
+  if (raw.resume_en) {
+    const r = raw.resume_en;
+    if (r.basics) {
+      data.cv.basics.name = r.basics.name || '';
+      data.cv.basics.email = r.basics.email || '';
+      data.cv.basics.phone = r.basics.phone || '';
+      data.cv.basics.summary = r.basics.summary || '';
+    }
+    if (r.education) data.cv.education = r.education;
+    if (r.work) data.cv.work = r.work;
+    if (r.skills) data.cv.skills = r.skills;
+    if (r.languages) data.cv.languages = r.languages;
+    if (r.interests) data.cv.interests = r.interests;
+    if (r.awards) {
+      data.awards = r.awards.map(a => ({
+        title: a.title||'', title_zh: '', date: a.date||'',
+        awarder: a.awarder||'', awarder_zh: '', url: a.url||''
+      }));
+    }
+  }
+  if (raw.resume_zh) {
+    const r = raw.resume_zh;
+    if (r.basics) {
+      data.cv.basics.name_zh = r.basics.name || '';
+      data.cv.basics.summary_zh = r.basics.summary || '';
+    }
+    if (r.awards && data.awards.length) {
+      r.awards.forEach((a, i) => {
+        if (data.awards[i]) {
+          data.awards[i].title_zh = a.title || '';
+          data.awards[i].awarder_zh = a.awarder || '';
+        }
+      });
+    }
+  }
+
+  // 解析 projects（配对中英文文件）
+  if (raw.projects && raw.projects.length) {
+    const projMap = {};
+    raw.projects.forEach(f => {
+      const isZh = f.name.endsWith('_zh.md');
+      const prefix = f.name.replace(/_zh\.md$/, '').replace(/\.md$/, '');
+      if (!projMap[prefix]) projMap[prefix] = { title:'', title_zh:'', description:'', description_zh:'', img:'', category:'', content:'', content_zh:'', filename: prefix };
+      const fm = f.content.match(/^---([\s\S]*?)---/s)?.[1] || '';
+      const body = f.content.match(/^---[\s\S]*?---\s*(.*)$/s)?.[1]?.trim() || '';
+      if (isZh) {
+        projMap[prefix].title_zh = fm.match(/title:\s*(.*)/)?.[1]?.trim() || '';
+        projMap[prefix].description_zh = fm.match(/description:\s*(.*)/)?.[1]?.trim() || '';
+        projMap[prefix].content_zh = body;
+      } else {
+        projMap[prefix].title = fm.match(/title:\s*(.*)/)?.[1]?.trim() || '';
+        projMap[prefix].description = fm.match(/description:\s*(.*)/)?.[1]?.trim() || '';
+        projMap[prefix].img = (fm.match(/img:\s*(.*)/)?.[1]?.trim() || '').replace(/^assets\/img\//, '');
+        projMap[prefix].category = fm.match(/category:\s*(.*)/)?.[1]?.trim() || '';
+        projMap[prefix].content = body;
+      }
+    });
+    data.projects = Object.values(projMap);
+  }
+
+  return data;
+}
+
+function saveStore() {
+  localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  document.getElementById('lastSaved').textContent = new Date().toLocaleTimeString('zh-CN');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ============================================================
+// Navigation
+// ============================================================
+let currentTab = 'about';
+const titles = { about:'📝 关于页面', pubs:'📄 论文管理', news:'📰 新闻管理', projects:'🔬 项目管理', cv:'📋 简历 & 奖项' };
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    currentTab = item.dataset.tab;
+    document.getElementById('pageTitle').textContent = titles[currentTab];
+    render();
+  });
+});
+
+// ============================================================
+// Modal
+// ============================================================
+function openModal(title, bodyHtml, footerHtml) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalFooter').innerHTML = footerHtml;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+// ============================================================
+// Render Router
+// ============================================================
+function render() {
+  const area = document.getElementById('contentArea');
+  switch(currentTab) {
+    case 'about': renderAbout(area); break;
+    case 'pubs': renderPubs(area); break;
+    case 'news': renderNews(area); break;
+    case 'projects': renderProjects(area); break;
+    case 'cv': renderCV(area); break;
+  }
+}
+
+// ============================================================
+// About Module
+// ============================================================
+function renderAbout(el) {
+  const d = store.about;
+  el.innerHTML = `
+    <div class="section-title">成绩数据（stat-cards）</div>
+    <div class="form-row-4">
+      <div class="form-group"><label>GPA</label><input type="text" id="ab_gpa" value="${esc(d.gpa)}" onchange="saveAbout()"></div>
+      <div class="form-group"><label>排名</label><input type="text" id="ab_rank" value="${esc(d.rank)}" onchange="saveAbout()"></div>
+      <div class="form-group"><label>CET-4</label><input type="text" id="ab_cet4" value="${esc(d.cet4)}" onchange="saveAbout()"></div>
+      <div class="form-group"><label>CET-6</label><input type="text" id="ab_cet6" value="${esc(d.cet6)}" onchange="saveAbout()"></div>
+    </div>
+    <div class="section-title">英文自我介绍（左侧预览 · 右侧编辑）</div>
+    <div class="split-view">
+      <div class="split-pane"><div class="md-preview" id="ab_preview_en"></div></div>
+      <div class="split-pane"><textarea id="ab_en" oninput="updateAboutPreview('en')" onchange="saveAbout()">${esc(d.content_en)}</textarea></div>
+    </div>
+    <div class="section-title" style="margin-top:20px">中文自我介绍（左侧预览 · 右侧编辑）
+      <button class="btn btn-sm" onclick="showZhChanges()" style="float:right;margin-top:-4px">📝 查看中文修改 → 生成英文翻译提示</button>
+    </div>
+    <div class="split-view">
+      <div class="split-pane"><div class="md-preview" id="ab_preview_zh"></div></div>
+      <div class="split-pane"><textarea id="ab_zh" oninput="updateAboutPreview('zh')" onchange="saveAbout()">${esc(d.content_zh)}</textarea></div>
+    </div>
+  `;
+  // 保存基线（首次加载时的内容，用于变更追踪）
+  if (!store.about._baseline_zh) {
+    store.about._baseline_zh = d.content_zh;
+    store.about._baseline_en = d.content_en;
+  }
+  updateAboutPreview('en');
+  updateAboutPreview('zh');
+}
+function updateAboutPreview(lang) {
+  const src = document.getElementById('ab_' + lang);
+  const prev = document.getElementById('ab_preview_' + lang);
+  if (src && prev) prev.innerHTML = renderMd(src.value);
+}
+function saveAbout() {
+  store.about = {
+    gpa: gv('ab_gpa'), rank: gv('ab_rank'), cet4: gv('ab_cet4'), cet6: gv('ab_cet6'),
+    content_en: gv('ab_en'), content_zh: gv('ab_zh'),
+    _baseline_zh: store.about._baseline_zh || '',
+    _baseline_en: store.about._baseline_en || ''
+  };
+  saveStore();
+}
+
+function showZhChanges() {
+  const baseline = store.about._baseline_zh || '';
+  const current = gv('ab_zh') || store.about.content_zh || '';
+  if (baseline === current) {
+    toast('中文内容未变更');
+    return;
+  }
+  // 简单行级 diff
+  const oldLines = baseline.split('\n');
+  const newLines = current.split('\n');
+  let diffText = '━━ 中文 About 页面变更记录 ━━\n';
+  diffText += '请根据以下中文修改，对应更新英文版本。\n\n';
+  diffText += '【当前英文内容】\n' + (store.about.content_en || gv('ab_en')) + '\n\n';
+  diffText += '【中文修改前】\n' + baseline + '\n\n';
+  diffText += '【中文修改后】\n' + current + '\n\n';
+  // 高亮变更行
+  diffText += '【变更摘要】\n';
+  const maxLen = Math.max(oldLines.length, newLines.length);
+  let changeCount = 0;
+  for (let i = 0; i < maxLen; i++) {
+    const o = oldLines[i] || '';
+    const n = newLines[i] || '';
+    if (o !== n) {
+      changeCount++;
+      if (o && n) diffText += `第${i+1}行 修改:\n  旧: ${o}\n  新: ${n}\n`;
+      else if (!o) diffText += `第${i+1}行 新增: ${n}\n`;
+      else diffText += `第${i+1}行 删除: ${o}\n`;
+    }
+  }
+  diffText += `\n共 ${changeCount} 处变更。`;
+
+  openModal('📝 中文变更 → 英文翻译提示',
+    `<div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">复制以下内容发给 AI 助手，即可自动更新英文版本</div>
+    <div class="export-content" id="zh_diff_content">${esc(diffText)}</div>`,
+    `<button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('zh_diff_content').textContent).then(()=>toast('已复制！粘贴给我即可'))">\ud83d\udccb 复制全部</button>
+    <button class="btn btn-success" onclick="store.about._baseline_zh=gv('ab_zh')||store.about.content_zh;store.about._baseline_en=gv('ab_en')||store.about.content_en;saveStore();closeModal();toast('基线已重置')">\u2705 标记为已同步</button>
+    <button class="btn" onclick="closeModal()">关闭</button>`
+  );
+}
+
+// ============================================================
+// Publications Module
+// ============================================================
+function renderPubs(el) {
+  let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div class="section-title" style="margin:0;border:0;padding:0">论文列表 (${store.pubs.length})</div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn" onclick="importBib()">📥 导入 .bib</button>
+      <button class="btn btn-primary" onclick="addPub()">+ 添加论文</button>
+    </div>
+  </div>`;
+  if (!store.pubs.length) {
+    html += `<div class="empty-state"><div class="emoji">📄</div><p>暂无论文，点击上方按钮添加或导入</p></div>`;
+  } else {
+    store.pubs.forEach((p, i) => {
+      html += `<div class="card"><div class="card-header">
+        <div><span class="badge badge-blue">${esc(p.abbr||'')}</span> <span class="card-title" style="margin-left:8px">${esc(p.title)}</span>
+        <div class="card-meta">${esc(p.author)} · ${p.year} ${p.note?'· '+esc(p.note):''}</div></div>
+        <div class="card-actions">
+          <button class="btn btn-sm" onclick="editPub(${i})">✏️ 编辑</button>
+          <button class="btn btn-sm btn-danger" onclick="delPub(${i})">🗑️</button>
+        </div></div></div>`;
+    });
+  }
+  el.innerHTML = html;
+}
+
+// All available button types for publications
+const BTN_TYPES = [
+  {id:'abs',label:'Abs',field:'abstract',hint:'摘要内容'},
+  {id:'intro',label:'Intro',field:'preview_content',hint:'详情内容(富文本)'},
+  {id:'bib',label:'Bib',field:'bibtex_show',hint:'显示BibTeX',isBool:true},
+  {id:'pdf',label:'PDF',field:'pdf',hint:'PDF文件名'},
+  {id:'doi',label:'DOI',field:'doi',hint:'DOI号'},
+  {id:'arxiv',label:'arXiv',field:'arxiv',hint:'arXiv ID'},
+  {id:'code',label:'Code',field:'code',hint:'代码仓库链接'},
+  {id:'slides',label:'Slides',field:'slides',hint:'幻灯片文件名'},
+  {id:'website',label:'Website',field:'website',hint:'网站链接'},
+  {id:'html',label:'HTML',field:'html',hint:'HTML链接'},
+  {id:'supp',label:'Supp',field:'supp',hint:'补充材料'},
+  {id:'video',label:'Video',field:'video',hint:'视频链接'},
+  {id:'poster',label:'Poster',field:'poster',hint:'海报文件名'},
+  {id:'blog',label:'Blog',field:'blog',hint:'博客链接'},
+];
+
+function getButtonOrder(p) {
+  if (p.button_order) return p.button_order.split(',').map(s=>s.trim());
+  return BTN_TYPES.map(b=>b.id);
+}
+
+function pubForm(p={}) {
+  const btnOrder = getButtonOrder(p);
+  // Build ordered button config items
+  let btnConfigHtml = '';
+  const ordered = btnOrder.map(id => BTN_TYPES.find(b=>b.id===id)).filter(Boolean);
+  // Add any missing buttons
+  BTN_TYPES.forEach(b => { if (!ordered.find(x=>x.id===b.id)) ordered.push(b); });
+  ordered.forEach(b => {
+    const val = b.isBool ? p[b.field] : (p[b.field]||'');
+    const enabled = b.isBool ? !!val : !!val;
+    btnConfigHtml += `<div class="btn-config-item ${enabled?'enabled':''}" draggable="true" data-btn-id="${b.id}">
+      <span class="drag-handle">⠿</span>
+      <input type="checkbox" id="btnchk_${b.id}" ${enabled?'checked':''} onchange="toggleBtnItem(this)">
+      <span>${b.label}</span>
+    </div>`;
+  });
+
+  return `
+    <div class="form-row"><div class="form-group"><label>类型</label><select id="pf_type"><option ${p.type==='article'?'selected':''}>article</option><option ${p.type==='inproceedings'?'selected':''}>inproceedings</option></select></div>
+    <div class="form-group"><label>Key</label><input type="text" id="pf_key" value="${esc(p.key||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>标签 (abbr)</label><input type="text" id="pf_abbr" value="${esc(p.abbr||'')}" placeholder="如 VIS, CVPR"></div>
+    <div class="form-group"><label>年份</label><input type="text" id="pf_year" value="${esc(p.year||'')}"></div></div>
+    <div class="form-group"><label>标题</label><input type="text" id="pf_title" value="${esc(p.title||'')}"></div>
+    <div class="form-group"><label>标题（中文）</label><input type="text" id="pf_title_zh" value="${esc(p.title_zh||'')}" placeholder="中文标题"></div>
+    <div class="form-group"><label>作者</label><input type="text" id="pf_author" value="${esc(p.author||'')}" placeholder="Yang*, Hongyi and Qu, Jingwei"></div>
+    <div class="form-row"><div class="form-group"><label>Journal / Booktitle</label><input type="text" id="pf_journal" value="${esc(p.journal||p.booktitle||'')}"></div>
+    <div class="form-group"><label>备注 (note)</label><input type="text" id="pf_note" value="${esc(p.note||'')}" placeholder="如 Under review at IEEE VIS"></div></div>
+    <div class="form-group"><label>备注（中文）</label><input type="text" id="pf_note_zh" value="${esc(p.note_zh||'')}" placeholder="如 在审 IEEE VIS"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="pf_selected" ${p.selected?'checked':''}> 精选显示在首页</label></div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px">📋 按钮配置（勾选启用 · 拖拽排序 · 从左到右）</div>
+    <div class="btn-config-list" id="btnConfigList">${btnConfigHtml}</div>
+
+    <div id="btnFieldsArea"></div>
+
+    <div class="section-title" style="margin-top:16px">📝 摘要 (Abs 按钮内容)</div>
+    <div class="form-group"><textarea id="pf_abs" rows="3">${esc(p.abstract||'')}</textarea></div>
+    <div class="form-group"><label>摘要（中文）</label><textarea id="pf_abs_zh" rows="3">${esc(p.abstract_zh||'')}</textarea></div>
+
+    <div class="section-title">🖼️ Intro 内容（英文 / 所见即所得）</div>
+    <div class="form-group">
+      <div class="editor-toolbar">
+        <button type="button" onclick="editorCmd('bold')" title="加粗"><b>B</b></button>
+        <button type="button" onclick="editorCmd('italic')" title="斜体"><i>I</i></button>
+        <button type="button" onclick="editorCmd('insertUnorderedList')" title="列表">☰</button>
+        <button type="button" onclick="editorCmd('formatBlock','H4')" title="标题">H4</button>
+        <button type="button" onclick="insertEditorImage()" title="插入图片">🖼️ 插入图片</button>
+        <input type="file" id="pf_img_input" accept="image/*" style="display:none" onchange="handleEditorFile(this)">
+      </div>
+      <div id="pf_intro" class="rich-editor" contenteditable="true">${p.preview_content||''}</div>
+      <div style="font-size:11px;color:var(--text-secondary);margin-top:4px">💡 支持 Ctrl+V 直接粘贴截图，且<strong>粘贴图片会自动同步到中文版</strong>！</div>
+    </div>
+    
+    <div class="section-title">🖼️ Intro 内容（中文版）</div>
+    <div class="form-group">
+      <div id="pf_intro_zh" class="rich-editor" contenteditable="true" style="min-height:100px">${p.preview_content_zh||''}</div>
+      <div style="font-size:11px;color:var(--text-secondary);margin-top:4px">💡 同样支持直接粘贴截图并双向同步到英文版。</div>
+    </div>
+
+    <div class="section-title" style="margin-top:12px">🔗 按钮链接字段</div>
+    <div class="form-row"><div class="form-group"><label>PDF 文件名</label><input type="text" id="pf_pdf" value="${esc(p.pdf||'')}"></div>
+    <div class="form-group"><label>DOI</label><input type="text" id="pf_doi" value="${esc(p.doi||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>arXiv ID</label><input type="text" id="pf_arxiv" value="${esc(p.arxiv||'')}"></div>
+    <div class="form-group"><label>代码链接</label><input type="text" id="pf_code" value="${esc(p.code||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>Slides</label><input type="text" id="pf_slides" value="${esc(p.slides||'')}"></div>
+    <div class="form-group"><label>网站链接</label><input type="text" id="pf_website" value="${esc(p.website||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>HTML</label><input type="text" id="pf_html" value="${esc(p.html||'')}"></div>
+    <div class="form-group"><label>Supp</label><input type="text" id="pf_supp" value="${esc(p.supp||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>Video</label><input type="text" id="pf_video" value="${esc(p.video||'')}"></div>
+    <div class="form-group"><label>Poster</label><input type="text" id="pf_poster" value="${esc(p.poster||'')}"></div></div>
+    <div class="form-group"><label>Blog</label><input type="text" id="pf_blog" value="${esc(p.blog||'')}"></div>
+    `;
+}
+
+function getPubFromForm() {
+  // Read button order from drag config
+  const orderEls = document.querySelectorAll('#btnConfigList .btn-config-item');
+  const btnOrder = Array.from(orderEls).map(el => el.dataset.btnId).join(',');
+  const introEl = document.getElementById('pf_intro');
+  return {
+    type: gv('pf_type'), key: gv('pf_key'), abbr: gv('pf_abbr'), title: gv('pf_title'),
+    title_zh: gv('pf_title_zh'),
+    author: gv('pf_author'), year: gv('pf_year'), note: gv('pf_note'), note_zh: gv('pf_note_zh'),
+    abstract: gv('pf_abs'), abstract_zh: gv('pf_abs_zh'),
+    preview_content: introEl ? introEl.innerHTML : '',
+    preview_content_zh: document.getElementById('pf_intro_zh') ? document.getElementById('pf_intro_zh').innerHTML : '',
+    journal: gv('pf_journal'), pdf: gv('pf_pdf'), doi: gv('pf_doi'), arxiv: gv('pf_arxiv'),
+    code: gv('pf_code'), website: gv('pf_website'), slides: gv('pf_slides'),
+    html: gv('pf_html'), supp: gv('pf_supp'), video: gv('pf_video'),
+    poster: gv('pf_poster'), blog: gv('pf_blog'),
+    selected: document.getElementById('pf_selected').checked,
+    bibtex_show: document.getElementById('btnchk_bib')?.checked || false,
+    button_order: btnOrder
+  };
+}
+
+function addPub() {
+  openModal('添加论文', pubForm(), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="savePub(-1)">添加</button>`);
+  initRichEditor();
+  initBtnDrag();
+}
+function editPub(i) {
+  openModal('编辑论文', pubForm(store.pubs[i]), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="savePub(${i})">保存</button>`);
+  initRichEditor();
+  initBtnDrag();
+}
+function savePub(i) {
+  const p = getPubFromForm();
+  if (!p.key) p.key = p.author.split(',')[0].replace(/[^a-zA-Z]/g,'').toLowerCase() + p.year + p.title.split(' ')[0].toLowerCase();
+  if (i < 0) store.pubs.push(p); else store.pubs[i] = p;
+  saveStore(); closeModal(); render(); toast('论文已保存');
+}
+function delPub(i) { if(confirm('确定删除这篇论文？')) { store.pubs.splice(i,1); saveStore(); render(); toast('已删除'); } }
+
+// ============================================================
+// News Module
+// ============================================================
+function renderNews(el) {
+  let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div class="section-title" style="margin:0;border:0;padding:0">新闻列表 (${store.news.length})</div>
+    <button class="btn btn-primary" onclick="addNews()">+ 添加新闻</button>
+  </div>`;
+  if (!store.news.length) {
+    html += `<div class="empty-state"><div class="emoji">📰</div><p>暂无新闻</p></div>`;
+  } else {
+    store.news.forEach((n, i) => {
+      html += `<div class="card"><div class="card-header">
+        <div><span class="badge badge-green">${esc(n.date||'')}</span>
+        <div class="card-meta" style="margin-top:6px">${esc(n.content_en||n.content_zh||'')}</div></div>
+        <div class="card-actions">
+          <button class="btn btn-sm" onclick="editNews(${i})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="delNews(${i})">🗑️</button>
+        </div></div></div>`;
+    });
+  }
+  el.innerHTML = html;
+}
+
+function newsForm(n={}) {
+  return `
+    <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="nf_date" value="${esc(n.date||'')}"></div>
+    <div class="form-group"><label>文件名前缀</label><input type="text" id="nf_prefix" value="${esc(n.prefix||'')}" placeholder="如 scholarship2025"></div></div>
+    <div class="form-group"><label>英文内容（支持 Markdown）</label><textarea id="nf_en" rows="3">${esc(n.content_en||'')}</textarea></div>
+    <div class="form-group"><label>中文内容（支持 Markdown）</label><textarea id="nf_zh" rows="3">${esc(n.content_zh||'')}</textarea></div>`;
+}
+function getNewsFromForm() {
+  return { date: gv('nf_date'), prefix: gv('nf_prefix'), content_en: gv('nf_en'), content_zh: gv('nf_zh') };
+}
+function addNews() { openModal('添加新闻', newsForm(), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveNews(-1)">添加</button>`); }
+function editNews(i) { openModal('编辑新闻', newsForm(store.news[i]), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveNews(${i})">保存</button>`); }
+function saveNews(i) { const n=getNewsFromForm(); if(i<0) store.news.push(n); else store.news[i]=n; saveStore(); closeModal(); render(); toast('新闻已保存'); }
+function delNews(i) { if(confirm('确定删除？')) { store.news.splice(i,1); saveStore(); render(); } }
+
+// ============================================================
+// Awards Module
+// ============================================================
+function renderAwards(el) {
+  let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div class="section-title" style="margin:0;border:0;padding:0">奖项列表 (${store.awards.length})</div>
+    <button class="btn btn-primary" onclick="addAward()">+ 添加奖项</button>
+  </div>`;
+  if (!store.awards.length) {
+    html += `<div class="empty-state"><div class="emoji">🏆</div><p>暂无奖项</p></div>`;
+  } else {
+    store.awards.forEach((a, i) => {
+      html += `<div class="card"><div class="card-header">
+        <div><span class="card-title">${esc(a.title)}</span>
+        <div class="card-meta">${esc(a.date)} · ${esc(a.awarder)} ${a.title_zh?'· '+esc(a.title_zh):''}</div></div>
+        <div class="card-actions">
+          <button class="btn btn-sm" onclick="moveAward(${i}, -1)" ${i===0?'disabled':''} title="上移">🔼</button>
+          <button class="btn btn-sm" onclick="moveAward(${i}, 1)" ${i===store.awards.length-1?'disabled':''} title="下移">🔽</button>
+          <button class="btn btn-sm" onclick="editAward(${i})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="delAward(${i})">🗑️</button>
+        </div></div></div>`;
+    });
+  }
+  el.innerHTML = html;
+}
+function awardForm(a={}) {
+  return `
+    <div class="form-row"><div class="form-group"><label>英文标题</label><input type="text" id="af_title" value="${esc(a.title||'')}"></div>
+    <div class="form-group"><label>中文标题</label><input type="text" id="af_title_zh" value="${esc(a.title_zh||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>日期 (YYYY-MM)</label><input type="text" id="af_date" value="${esc(a.date||'')}" placeholder="2025-09"></div>
+    <div class="form-group"><label>链接 URL</label><input type="text" id="af_url" value="${esc(a.url||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>颁发机构（英文）</label><input type="text" id="af_awarder" value="${esc(a.awarder||'')}"></div>
+    <div class="form-group"><label>颁发机构（中文）</label><input type="text" id="af_awarder_zh" value="${esc(a.awarder_zh||'')}"></div></div>`;
+}
+function getAwardFromForm() {
+  return { title:gv('af_title'), title_zh:gv('af_title_zh'), date:gv('af_date'), url:gv('af_url'), awarder:gv('af_awarder'), awarder_zh:gv('af_awarder_zh') };
+}
+function addAward() { openModal('添加奖项', awardForm(), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveAward(-1)">添加</button>`); }
+function editAward(i) { openModal('编辑奖项', awardForm(store.awards[i]), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveAward(${i})">保存</button>`); }
+function saveAward(i) { const a=getAwardFromForm(); if(i<0) store.awards.push(a); else store.awards[i]=a; saveStore(); closeModal(); render(); toast('奖项已保存'); }
+function delAward(i) { if(confirm('确定删除？')) { store.awards.splice(i,1); saveStore(); render(); } }
+function moveAward(i, dir) {
+  if (i+dir < 0 || i+dir >= store.awards.length) return;
+  const temp = store.awards[i];
+  store.awards[i] = store.awards[i+dir];
+  store.awards[i+dir] = temp;
+  saveStore();
+  render();
+}
+
+// ============================================================
+// Projects Module
+// ============================================================
+function renderProjects(el) {
+  let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div class="section-title" style="margin:0;border:0;padding:0">项目列表 (${store.projects.length})</div>
+    <button class="btn btn-primary" onclick="addProject()">+ 添加项目</button>
+  </div>`;
+  if (!store.projects.length) {
+    html += `<div class="empty-state"><div class="emoji">🔬</div><p>暂无项目</p></div>`;
+  } else {
+    store.projects.forEach((p, i) => {
+      html += `<div class="card"><div class="card-header">
+        <div><span class="card-title">${esc(p.title)}</span>
+        <div class="card-meta">${esc(p.category||'')} · ${esc(p.description||'').substring(0,80)}...</div></div>
+        <div class="card-actions">
+          <button class="btn btn-sm" onclick="editProject(${i})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="delProject(${i})">🗑️</button>
+        </div></div></div>`;
+    });
+  }
+  el.innerHTML = html;
+}
+function projectForm(p={}) {
+  return `
+    <div class="form-row"><div class="form-group"><label>标题（英文）</label><input type="text" id="pjf_title" value="${esc(p.title||'')}"></div>
+    <div class="form-group"><label>标题（中文）</label><input type="text" id="pjf_title_zh" value="${esc(p.title_zh||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label>分类</label><input type="text" id="pjf_cat" value="${esc(p.category||'')}" placeholder="如 research"></div>
+    <div class="form-group"><label>图片路径</label><input type="text" id="pjf_img" value="${esc(p.img||'')}" placeholder="如 autonomous_driving_2024/cover.jpg"></div></div>
+    <div class="form-row"><div class="form-group"><label>描述（英文）</label><textarea id="pjf_desc" rows="2">${esc(p.description||'')}</textarea></div>
+    <div class="form-group"><label>描述（中文）</label><textarea id="pjf_desc_zh" rows="2">${esc(p.description_zh||'')}</textarea></div></div>
+    <div class="section-title" style="margin-top:12px">英文正文 (Markdown)</div>
+    <div class="form-group"><textarea id="pjf_content" rows="8">${esc(p.content||'')}</textarea></div>
+    <div class="section-title">中文正文 (Markdown)</div>
+    <div class="form-group"><textarea id="pjf_content_zh" rows="8">${esc(p.content_zh||'')}</textarea></div>`;
+}
+function getProjectFromForm() {
+  return { title:gv('pjf_title'), title_zh:gv('pjf_title_zh'), category:gv('pjf_cat'), img:gv('pjf_img'), description:gv('pjf_desc'), description_zh:gv('pjf_desc_zh'), content:gv('pjf_content'), content_zh:gv('pjf_content_zh') };
+}
+function addProject() { openModal('添加项目', projectForm(), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveProject(-1)">添加</button>`); }
+function editProject(i) { openModal('编辑项目', projectForm(store.projects[i]), `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveProject(${i})">保存</button>`); }
+function saveProject(i) { const p=getProjectFromForm(); if(i<0) store.projects.push(p); else store.projects[i]=p; saveStore(); closeModal(); render(); toast('项目已保存'); }
+function delProject(i) { if(confirm('确定删除？')) { store.projects.splice(i,1); saveStore(); render(); } }
+
+// ============================================================
+// CV Module
+// ============================================================
+function renderCV(el) {
+  const c = store.cv;
+  // Awards cards
+  let awardsHtml = '';
+  if (store.awards.length) {
+    store.awards.forEach((a, i) => {
+      awardsHtml += `<div class="card"><div class="card-header">
+        <div><span class="card-title">${esc(a.title)}</span>
+        <div class="card-meta">${esc(a.date)} · ${esc(a.awarder)} ${a.title_zh?'· '+esc(a.title_zh):''}</div></div>
+        <div class="card-actions">
+          <button class="btn btn-sm" onclick="editAward(${i})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="delAward(${i})">🗑️</button>
+        </div></div></div>`;
+    });
+  } else {
+    awardsHtml = '<div style="color:var(--text-secondary);font-size:13px">暂无奖项</div>';
+  }
+
+  el.innerHTML = `
+    <div class="section-title">📄 简历 PDF 上传</div>
+    <div class="form-row" style="margin-bottom:20px">
+      <div class="form-group">
+        <label>英文简历 (cv_english.pdf)</label>
+        <input type="file" id="cv_pdf_en" accept=".pdf" onchange="handleCVPdf('en')" style="font-size:12px">
+      </div>
+      <div class="form-group">
+        <label>中文简历 (cv_chinese.pdf)</label>
+        <input type="file" id="cv_pdf_zh" accept=".pdf" onchange="handleCVPdf('zh')" style="font-size:12px">
+      </div>
+    </div>
+
+    <div class="section-title">基本信息</div>
+    <div class="form-row"><div class="form-group"><label>姓名（英文）</label><input type="text" id="cv_name" value="${esc(c.basics.name)}" onchange="saveCV()"></div>
+    <div class="form-group"><label>姓名（中文）</label><input type="text" id="cv_name_zh" value="${esc(c.basics.name_zh||'')}" onchange="saveCV()"></div></div>
+    <div class="form-row"><div class="form-group"><label>邮箱</label><input type="text" id="cv_email" value="${esc(c.basics.email)}" onchange="saveCV()"></div>
+    <div class="form-group"><label>电话</label><input type="text" id="cv_phone" value="${esc(c.basics.phone||'')}" onchange="saveCV()"></div></div>
+    <div class="form-group"><label>个人简介（英文）</label><textarea id="cv_summary" rows="3" onchange="saveCV()">${esc(c.basics.summary||'')}</textarea></div>
+    <div class="form-group"><label>个人简介（中文）</label><textarea id="cv_summary_zh" rows="3" onchange="saveCV()">${esc(c.basics.summary_zh||'')}</textarea></div>
+
+    <div class="section-title" style="margin-top:24px">🏆 奖项管理 (${store.awards.length})</div>
+    ${awardsHtml}
+    <button class="btn btn-sm btn-primary" onclick="addAward()" style="margin-top:8px">+ 添加奖项</button>
+
+    <div class="section-title" style="margin-top:24px">技能</div>
+    <div id="cv_skills_area"></div>
+    <button class="btn btn-sm" onclick="addCVSkill()" style="margin-top:8px">+ 添加技能类别</button>
+
+    <div class="section-title" style="margin-top:24px">语言能力</div>
+    <div id="cv_langs_area"></div>
+    <button class="btn btn-sm" onclick="addCVLang()" style="margin-top:8px">+ 添加语言</button>
+  `;
+  renderCVSkills();
+  renderCVLangs();
+}
+function renderCVSkills() {
+  const area = document.getElementById('cv_skills_area');
+  if (!area) return;
+  area.innerHTML = (store.cv.skills||[]).map((s,i) =>
+    `<div class="card"><div class="card-header"><div><span class="card-title">${esc(s.name)}</span><div class="card-meta">${(s.keywords||[]).join(', ')}</div></div>
+    <div class="card-actions"><button class="btn btn-sm btn-danger" onclick="store.cv.skills.splice(${i},1);saveStore();renderCV(document.getElementById('contentArea'))">🗑️</button></div></div></div>`
+  ).join('');
+}
+function addCVSkill() {
+  openModal('添加技能类别', `
+    <div class="form-group"><label>类别名</label><input type="text" id="cs_name" placeholder="如 编程语言"></div>
+    <div class="form-group"><label>关键词（逗号分隔）</label><input type="text" id="cs_kw" placeholder="Python, C++, R"></div>`,
+    `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="
+      store.cv.skills=store.cv.skills||[];
+      store.cv.skills.push({name:gv('cs_name'),keywords:gv('cs_kw').split(',').map(s=>s.trim()).filter(Boolean)});
+      saveStore();closeModal();renderCV(document.getElementById('contentArea'));toast('已添加');">添加</button>`);
+}
+function renderCVLangs() {
+  const area = document.getElementById('cv_langs_area');
+  if (!area) return;
+  area.innerHTML = (store.cv.languages||[]).map((l,i) =>
+    `<div class="card"><div class="card-header"><div><span class="card-title">${esc(l.language)}</span><div class="card-meta">${esc(l.fluency)}</div></div>
+    <div class="card-actions"><button class="btn btn-sm btn-danger" onclick="store.cv.languages.splice(${i},1);saveStore();renderCV(document.getElementById('contentArea'))">🗑️</button></div></div></div>`
+  ).join('');
+}
+function addCVLang() {
+  openModal('添加语言', `
+    <div class="form-row"><div class="form-group"><label>语言</label><input type="text" id="cl_lang" placeholder="如 Chinese"></div>
+    <div class="form-group"><label>熟练度</label><input type="text" id="cl_flu" placeholder="如 Native speaker"></div></div>`,
+    `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="
+      store.cv.languages=store.cv.languages||[];
+      store.cv.languages.push({language:gv('cl_lang'),fluency:gv('cl_flu')});
+      saveStore();closeModal();renderCV(document.getElementById('contentArea'));toast('已添加');">添加</button>`);
+}
+function saveCV() {
+  store.cv.basics = {
+    name: gv('cv_name'), name_zh: gv('cv_name_zh'), email: gv('cv_email'), phone: gv('cv_phone'),
+    summary: gv('cv_summary'), summary_zh: gv('cv_summary_zh')
+  };
+  saveStore();
+}
+
+function handleCVPdf(lang) {
+  const input = document.getElementById('cv_pdf_' + lang);
+  const file = input.files[0];
+  if (!file) return;
+  const filename = lang === 'en' ? 'cv_english.pdf' : 'cv_chinese.pdf';
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    // Store in memory for download
+    const blob = new Blob([e.target.result], {type: 'application/pdf'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('已下载 ' + filename + '，请将其移动到 assets/pdf/ 目录');
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ============================================================
+// BibTeX Parser & Generator
+// ============================================================
+function parseBib(text) {
+  const entries = []; const re = /@(\w+)\s*\{([^,]*),/g; let m;
+  while ((m = re.exec(text)) !== null) {
+    const type = m[1], key = m[2].trim();
+    let depth = 1, start = m.index + m[0].length, i = start;
+    while (i < text.length && depth > 0) { if (text[i]==='{') depth++; else if (text[i]==='}') depth--; i++; }
+    const body = text.substring(start, i - 1);
+    const fields = {}; fields.type = type; fields.key = key;
+    const fre = /(\w+)\s*=\s*(?:\{((?:[^{}]|\{[^{}]*\})*)\}|"([^"]*)"|(\w+))/g; let fm;
+    while ((fm = fre.exec(body)) !== null) {
+      fields[fm[1]] = fm[2] !== undefined ? fm[2] : (fm[3] !== undefined ? fm[3] : fm[4]);
+    }
+    if (fields.selected) fields.selected = fields.selected === 'true';
+    if (fields.bibtex_show) fields.bibtex_show = fields.bibtex_show === 'true';
+    entries.push(fields);
+  }
+  return entries;
+}
+
+function genBib(pubs) {
+  let out = '---\n---\n\n';
+  pubs.forEach(p => {
+    out += `@${p.type||'inproceedings'}{${p.key},\n`;
+    const fields = ['abbr','title','title_zh','author','abstract','abstract_zh','preview_content','preview_content_zh','year','journal','booktitle','note','note_zh','doi','arxiv','pdf','code','slides','website','html','supp','video','poster','blog','preview','button_order'];
+    fields.forEach(f => { if (p[f]) out += `  ${f}={${p[f]}},\n`; });
+    if (p.bibtex_show) out += `  bibtex_show={true},\n`;
+    if (p.selected) out += `  selected={true},\n`;
+    out += `}\n\n`;
+  });
+  return out;
+}
+
+// ============================================================
+// Export Functions
+// ============================================================
+function exportCurrent() {
+  switch(currentTab) {
+    case 'about': exportAbout(); break;
+    case 'pubs': exportPubs(); break;
+    case 'news': exportNews(); break;
+    case 'awards': exportAwards(); break;
+    case 'projects': exportProjects(); break;
+    case 'cv': exportCV(); break;
+  }
+}
+
+function exportAbout() {
+  const d = store.about;
+  const cards = `<div class="stat-cards-container">
+  <div class="stat-card stat-card-blue"><div class="stat-value">${d.gpa}</div><div class="stat-label">GPA</div></div>
+  <div class="stat-card stat-card-pink"><div class="stat-value">${d.rank}</div><div class="stat-label">Rank Top 2%</div></div>
+  <div class="stat-card stat-card-cyan"><div class="stat-value">${d.cet4}</div><div class="stat-label">CET-4</div></div>
+  <div class="stat-card stat-card-green"><div class="stat-value">${d.cet6}</div><div class="stat-label">CET-6</div></div>
+</div>`;
+  const en = `---
+layout: about
+title: about
+permalink: /
+subtitle: <a href='#'>Affiliated with</a> Southwest University.
+profile:
+  align: right
+  image: prof_pic.jpg
+  image_circular: false
+  more_info: >
+    <div class="profile-info-header">
+    <p>
+    🏛️ College of Computer and Information Science<br>
+    🎓 Southwest University<br>
+    📍 Chongqing, China
+    </p>
+    </div>
+selected_papers: true
+social: true
+announcements:
+  enabled: true
+  scrollable: true
+  limit: 5
+latest_posts:
+  enabled: false
+  scrollable: true
+  limit: 3
+---
+
+${cards}
+
+${d.content_en}`;
+
+  const zh = `---
+layout: about
+title: 关于
+permalink: /ch/
+subtitle: <a href='#'>隶属</a> 西南大学.
+profile:
+  align: right
+  image: prof_pic.jpg
+  image_circular: false
+  more_info: >
+    <div class="profile-info-header">
+    <p>
+    🏛️ 计算机与信息科学学院<br>
+    🎓 西南大学<br>
+    📍 中国重庆, 400715
+    </p>
+    </div>
+selected_papers: true
+social: true
+announcements:
+  enabled: true
+  scrollable: true
+  limit: 5
+latest_posts:
+  enabled: false
+  scrollable: true
+  limit: 3
+lang: zh
+---
+
+${cards.replace('Rank Top 2%','排名 前2%')}
+
+<div id="content-zh" class="lang-content" markdown="1">
+
+${d.content_zh}
+
+</div>`;
+
+  showExport([{name:'about.md (_pages/about.md)',content:en},{name:'index.md (ch/index.md)',content:zh}]);
+}
+
+function exportPubs() {
+  const files = [];
+  const pubsCopy = JSON.parse(JSON.stringify(store.pubs));
+  
+  // Extract intros into separate files and remove them from the bibtex
+  pubsCopy.forEach(p => {
+    if (p.preview_content && p.preview_content.trim() !== '') {
+      files.push({ name: `_includes/intros/${p.key}.md`, content: p.preview_content });
+    }
+    if (p.preview_content_zh && p.preview_content_zh.trim() !== '') {
+      files.push({ name: `_includes/intros/${p.key}_zh.md`, content: p.preview_content_zh });
+    }
+    delete p.preview_content;
+    delete p.preview_content_zh;
+  });
+
+  files.unshift({name:'papers.bib (_bibliography/papers.bib)', content:genBib(pubsCopy)});
+  showExport(files);
+}
+
+function exportNews() {
+  const files = [];
+  store.news.forEach(n => {
+    const prefix = n.prefix || 'news_' + n.date;
+    if (n.content_en) {
+      files.push({name:`${prefix}.md`, content:`---\nlayout: post\ndate: ${n.date} 08:00:00-0400\ninline: true\nrelated_posts: false\n---\n\n${n.content_en}\n`});
+    }
+    if (n.content_zh) {
+      files.push({name:`${prefix}_zh.md`, content:`---\nlayout: post\ndate: ${n.date} 08:00:00-0400\ninline: true\nrelated_posts: false\nlang: zh\n---\n\n${n.content_zh}\n`});
+    }
+  });
+  showExport(files);
+}
+
+function exportAwards() {
+  const en = store.awards.map(a => ({title:a.title,date:a.date,awarder:a.awarder,url:a.url}));
+  const zh = store.awards.map(a => ({title:a.title_zh||a.title,date:a.date,awarder:a.awarder_zh||a.awarder,url:a.url}));
+  showExport([
+    {name:'resume.json (awards 部分)',content:JSON.stringify(en,null,2)},
+    {name:'resume_zh.json (awards 部分)',content:JSON.stringify(zh,null,2)}
+  ]);
+}
+
+function exportProjects() {
+  const files = [];
+  store.projects.forEach(p => {
+    const base = (p.filename || p.title||'project').toLowerCase().replace(/[^a-z0-9]+/g,'_');
+    files.push({
+      name: base + '.md',
+      content: `---\nlayout: page\ntitle: ${p.title}\ndescription: ${p.description||''}\nimg: ${p.img?'assets/img/'+p.img:''}\nimportance: 1\ncategory: ${p.category||'research'}\n---\n\n${p.content||''}\n`
+    });
+    if (p.title_zh || p.content_zh) {
+      files.push({
+        name: base + '_zh.md',
+        content: `---\nlayout: page\ntitle: ${p.title_zh||p.title}\ndescription: ${p.description_zh||p.description||''}\nimg: ${p.img?'assets/img/'+p.img:''}\nimportance: 1\ncategory: ${p.category||'research'}\nlang: zh\n---\n\n${p.content_zh||''}\n`
+      });
+    }
+  });
+  showExport(files);
+}
+
+function exportCV() {
+  const c = store.cv;
+  const en = { basics:{name:c.basics.name,email:c.basics.email,phone:c.basics.phone,summary:c.basics.summary}, skills:c.skills, languages:c.languages, interests:c.interests, awards: store.awards.map(a=>({title:a.title,date:a.date,awarder:a.awarder,url:a.url})) };
+  const zh = { basics:{name:c.basics.name_zh,email:c.basics.email,phone:c.basics.phone,summary:c.basics.summary_zh}, skills:c.skills, languages:c.languages, interests:c.interests, awards: store.awards.map(a=>({title:a.title_zh||a.title,date:a.date,awarder:a.awarder_zh||a.awarder,url:a.url})) };
+  showExport([
+    {name:'resume.json',content:JSON.stringify(en,null,2)},
+    {name:'resume_zh.json',content:JSON.stringify(zh,null,2)}
+  ]);
+}
+
+function showExport(files) {
+  let tabs = files.map((f,i) => `<span class="export-tab ${i===0?'active':''}" onclick="switchExportTab(this,${i})">${f.name}</span>`).join('');
+  let body = `<div class="export-tabs">${tabs}</div>`;
+  files.forEach((f,i) => { body += `<div class="export-content" id="exp_${i}" style="${i>0?'display:none':''}">${esc(f.content)}</div>`; });
+  openModal('导出文件', body, files.map((f,i) =>
+    `<button class="btn btn-sm" onclick="copyExport(${i})">📋 复制 ${f.name.split(' ')[0]}</button>`
+  ).join('') + `<button class="btn" onclick="closeModal()">关闭</button>`);
+  window._exportFiles = files;
+}
+
+function switchExportTab(el, idx) {
+  el.parentElement.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.export-content').forEach((c,i) => c.style.display = i===idx?'':'none');
+}
+
+function copyExport(i) {
+  navigator.clipboard.writeText(window._exportFiles[i].content).then(() => toast('已复制到剪贴板！'));
+}
+
+// ============================================================
+// Import
+// ============================================================
+
+
+function importData() {
+  openModal('导入数据', `
+    <div class="form-group"><label>选择导入类型</label><select id="imp_type">
+      <option value="bib">papers.bib（论文）</option>
+      <option value="resume_en">resume.json（简历英文）</option>
+      <option value="resume_zh">resume_zh.json（简历中文）</option>
+    </select></div>
+    <div class="form-group"><label>粘贴文件内容</label><textarea id="imp_content" rows="12" placeholder="将文件内容粘贴到此处..."></textarea></div>`,
+    `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="doImport()">导入</button>`);
+}
+
+function doImport() {
+  const type = gv('imp_type'), content = gv('imp_content');
+  try {
+    if (type === 'bib') {
+      const pubs = parseBib(content);
+      store.pubs = pubs;
+      toast(`成功导入 ${pubs.length} 篇论文`);
+    } else if (type === 'resume_en') {
+      const j = JSON.parse(content);
+      if (j.basics) { store.cv.basics.name = j.basics.name||''; store.cv.basics.email = j.basics.email||''; store.cv.basics.summary = j.basics.summary||''; }
+      if (j.awards) store.awards = j.awards.map(a => ({title:a.title,date:a.date,awarder:a.awarder,url:a.url||'',title_zh:'',awarder_zh:''}));
+      if (j.skills) store.cv.skills = j.skills;
+      if (j.languages) store.cv.languages = j.languages;
+      if (j.interests) store.cv.interests = j.interests;
+      toast('简历数据已导入');
+    } else if (type === 'resume_zh') {
+      const j = JSON.parse(content);
+      if (j.basics) { store.cv.basics.name_zh = j.basics.name||''; store.cv.basics.summary_zh = j.basics.summary||''; }
+      if (j.awards) store.awards.forEach((a,i) => { if(j.awards[i]) { a.title_zh=j.awards[i].title||''; a.awarder_zh=j.awards[i].awarder||''; }});
+      toast('中文简历数据已导入');
+    }
+    saveStore(); closeModal(); render();
+  } catch(e) { toast('导入失败: ' + e.message); }
+}
+
+function importBib() {
+  openModal('导入 papers.bib', `
+    <div class="form-group"><label>粘贴 .bib 文件内容</label><textarea id="imp_bib" rows="15" placeholder="@article{...}\n@inproceedings{...}"></textarea></div>`,
+    `<button class="btn" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="
+      const pubs=parseBib(gv('imp_bib'));store.pubs=pubs;saveStore();closeModal();render();toast('导入 '+pubs.length+' 篇论文');">导入</button>`);
+}
+
+// ============================================================
+// Utilities
+// ============================================================
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function gv(id) { const el=document.getElementById(id); return el?el.value:''; }
+
+// ============================================================
+// Markdown Renderer (simple)
+// ============================================================
+function renderMd(text) {
+  if (!text) return '';
+  let html = text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/^#### (.*)/gm, '<h4>$1</h4>')
+    .replace(/^### (.*)/gm, '<h3>$1</h3>')
+    .replace(/^## (.*)/gm, '<h2>$1</h2>')
+    .replace(/^# (.*)/gm, '<h1>$1</h1>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)(?:\{[^}]*\})?/g, '<a href="$2">$1</a>')
+    .replace(/^- (.*)/gm, '<li>$1</li>')
+    .replace(/· /g, ' · ');
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/((?:<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>');
+  // Paragraphs
+  html = html.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+  return '<p>' + html + '</p>';
+}
+
+// ============================================================
+// Rich Editor Helpers
+// ============================================================
+function editorCmd(cmd, val) {
+  document.execCommand(cmd, false, val || null);
+}
+
+function insertEditorImage() {
+  window._activeEditorId = document.activeElement.id === 'pf_intro_zh' ? 'pf_intro_zh' : 'pf_intro';
+  document.getElementById('pf_img_input')?.click();
+}
+
+function handleEditorFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = `<img src="${e.target.result}" style="max-width:100%">`;
+    document.getElementById('pf_intro')?.focus();
+    document.execCommand('insertHTML', false, img);
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function initRichEditor() {
+  const editor = document.getElementById('pf_intro');
+  if (!editor) return;
+  editor.addEventListener('paste', function(e) {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (let item of items) {
+      if (item.type.startsWith('image/')) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          document.execCommand('insertHTML', false, `<img src="${ev.target.result}" style="max-width:100%">`);
+        };
+        reader.readAsDataURL(file);
+        return;
+      }
+    }
+  });
+}
+
+// ============================================================
+// Button Drag & Drop
+// ============================================================
+function toggleBtnItem(checkbox) {
+  const item = checkbox.closest('.btn-config-item');
+  item.classList.toggle('enabled', checkbox.checked);
+}
+
+function initBtnDrag() {
+  const list = document.getElementById('btnConfigList');
+  if (!list) return;
+  let dragEl = null;
+  list.querySelectorAll('.btn-config-item').forEach(item => {
+    item.addEventListener('dragstart', function(e) {
+      dragEl = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      dragEl = null;
+    });
+    item.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (dragEl && dragEl !== this) {
+        const rect = this.getBoundingClientRect();
+        const mid = rect.left + rect.width / 2;
+        if (e.clientX < mid) {
+          list.insertBefore(dragEl, this);
+        } else {
+          list.insertBefore(dragEl, this.nextSibling);
+        }
+      }
+    });
+  });
+}
+
+// Init
+if (window.PRELOADED_RAW) {
+  document.querySelector('.sidebar-footer').innerHTML = '✅ 已从文件同步最新数据<br>同步时间: ' + new Date().toLocaleTimeString('zh-CN');
+}
+// 保存全局基线快照（用于变更追踪）
+if (!localStorage.getItem('admin_baseline')) {
+  localStorage.setItem('admin_baseline', JSON.stringify(store));
+}
+render();
+
+// ============================================================
+// 全局变更追踪
+// ============================================================
+function showGlobalChanges() {
+  let baseline;
+  try { baseline = JSON.parse(localStorage.getItem('admin_baseline')); }
+  catch { toast('无基线数据'); return; }
+  if (!baseline) { toast('无基线数据，请重新同步'); return; }
+
+  let report = '━━ 全站中文内容变更报告 ━━\n';
+  report += '请根据以下中文修改，对应更新英文版本。\n\n';
+  let totalChanges = 0;
+
+  function diffField(section, label, oldVal, newVal, enVal) {
+    oldVal = oldVal || ''; newVal = newVal || '';
+    if (oldVal === newVal) return '';
+    totalChanges++;
+    let d = `--- [${section}] ${label} ---\n`;
+    if (enVal) d += `当前英文: ${enVal}\n`;
+    d += `中文修改前: ${oldVal.substring(0,200)}${oldVal.length>200?'...':''}\n`;
+    d += `中文修改后: ${newVal.substring(0,200)}${newVal.length>200?'...':''}\n\n`;
+    return d;
+  }
+
+  // About
+  report += diffField('关于页面', '中文简介', baseline.about?.content_zh, store.about?.content_zh, store.about?.content_en);
+
+  // Publications
+  (store.pubs||[]).forEach((p, i) => {
+    const bp = baseline.pubs?.[i] || {};
+    report += diffField(`论文: ${p.title||p.key}`, '中文标题', bp.title_zh, p.title_zh, p.title);
+    report += diffField(`论文: ${p.title||p.key}`, '中文摘要', bp.abstract_zh, p.abstract_zh, p.abstract);
+    report += diffField(`论文: ${p.title||p.key}`, '中文备注', bp.note_zh, p.note_zh, p.note);
+    report += diffField(`论文: ${p.title||p.key}`, '中文Intro', bp.preview_content_zh, p.preview_content_zh, '');
+  });
+
+  // Projects
+  (store.projects||[]).forEach((p, i) => {
+    const bp = baseline.projects?.[i] || {};
+    report += diffField(`项目: ${p.title||p.filename}`, '中文标题', bp.title_zh, p.title_zh, p.title);
+    report += diffField(`项目: ${p.title||p.filename}`, '中文描述', bp.description_zh, p.description_zh, p.description);
+    report += diffField(`项目: ${p.title||p.filename}`, '中文正文', bp.content_zh, p.content_zh, '');
+  });
+
+  // CV
+  report += diffField('简历', '中文姓名', baseline.cv?.basics?.name_zh, store.cv?.basics?.name_zh, store.cv?.basics?.name);
+  report += diffField('简历', '中文简介', baseline.cv?.basics?.summary_zh, store.cv?.basics?.summary_zh, store.cv?.basics?.summary);
+
+  // Awards
+  (store.awards||[]).forEach((a, i) => {
+    const ba = baseline.awards?.[i] || {};
+    report += diffField('奖项', `中文标题: ${a.title}`, ba.title_zh, a.title_zh, a.title);
+    report += diffField('奖项', `中文颁发机构: ${a.title}`, ba.awarder_zh, a.awarder_zh, a.awarder);
+  });
+
+  // News
+  (store.news||[]).forEach((n, i) => {
+    const bn = baseline.news?.[i] || {};
+    report += diffField(`新闻: ${n.date}`, '中文内容', bn.content_zh, n.content_zh, n.content_en);
+  });
+
+  if (totalChanges === 0) {
+    toast('所有中文内容未变更');
+    return;
+  }
+
+  report += `\n━━ 共 ${totalChanges} 处变更 ━━`;
+
+  openModal('📝 全站中文变更报告 (' + totalChanges + ' 处)',
+    `<div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">复制以下内容发给 AI 助手，即可自动更新英文版本</div>
+    <div class="export-content" id="global_diff_content">${esc(report)}</div>`,
+    `<button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('global_diff_content').textContent).then(()=>toast('已复制！粘贴给我即可'))">📋 复制全部</button>
+    <button class="btn btn-success" onclick="localStorage.setItem('admin_baseline',JSON.stringify(store));closeModal();toast('基线已重置！当前状态已保存为新基线')">✅ 标记为已同步</button>
+    <button class="btn" onclick="closeModal()">关闭</button>`
+  );
+}
+</script>
+</body>
+</html>
