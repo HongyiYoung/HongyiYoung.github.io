@@ -11,7 +11,7 @@ qq_qr: qq.png # QQ二维码文件名 (保存到 assets/img/ 目录)
 # scholar_userid: qc6CJjYAAAAJ # Google Scholar ID
 # inspirehep_id: 1010907 # Inspire HEP author ID
 # rss_icon: true # RSS图标
-cv_pdf: cv_english.pdf # 个人简历 PDF 文件名
+cv_pdf: cv_chinese.pdf # 个人简历 PDF 文件名
 
 # 注释掉的国际社交媒体平台
 # acm_id: # your dl.acm.org/profile/id

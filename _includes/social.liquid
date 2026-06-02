@@ -98,28 +98,23 @@
       <a href="https://www.zotero.org/{{ social[1] }}" title="Zotero" rel="external nofollow noopener" target="_blank"><i class="ai ai-zotero"></i></a>
     {% when 'cv_pdf' %}
       <style>
-        .cv-icon-container {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 3.5rem;
-          height: 3.5rem;
-          border: 2px solid var(--global-text-color);
-          border-radius: 12px;
-          text-decoration: none;
-          transition: all 0.2s ease-in-out;
-          vertical-align: super; /* align nicely with 4rem icons */
-          margin: 0 0.2rem;
+        .contact-icons .cv-icon-svg {
+          width: 1em;
+          height: 1em;
+          vertical-align: -0.125em;
+          margin-bottom: 0 !important; /* Override the default SVG margin in _base.scss */
+          transition-property: all 0.2s ease-in-out;
+          color: var(--global-text-color);
         }
-        .cv-icon-container i {
-          font-size: 2.2rem !important;
-        }
-        .cv-icon-container:hover {
-          border-color: var(--global-theme-color) !important;
+        .contact-icons a:hover .cv-icon-svg {
+          color: var(--global-theme-color);
         }
       </style>
-      <a href="{{ '/assets/pdf/' | append: social[1] | relative_url }}" title="CV" target="_blank" class="cv-icon-container">
-        <i class="ai ai-cv"></i>
+      <a href="{{ '/assets/pdf/' | append: social[1] | relative_url }}" title="CV" target="_blank" class="contact-icon">
+        <svg class="cv-icon-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="64" width="512" height="384" rx="64" ry="64" fill="currentColor" />
+          <text x="256" y="260" font-family="Arial, sans-serif" font-weight="900" font-size="240" fill="var(--global-bg-color)" text-anchor="middle" dominant-baseline="central">CV</text>
+        </svg>
       </a>
   {% endcase %}
 {% endfor %}
