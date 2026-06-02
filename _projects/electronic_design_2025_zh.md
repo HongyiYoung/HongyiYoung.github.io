@@ -191,7 +191,7 @@ def send_coordinates(x, y):
 
 {% include figure.liquid loading="eager" path="assets/img/electronic_design_2025/team_photo.png" title="Project Team" class="img-fluid rounded z-depth-1" %}
 
-该项目已成功实施并测试，达到了所有目标规格。该系统随后应用于 **2025 年全国大学生电子设计竞赛**，荣获 **省级一等奖**。
+该项目已成功实施并测试，达到了所有目标规格。该系统随后应用于 **2025 年全国大学生电子设计竞赛**，荣获 **省部级一等奖**。
 
 **主要贡献：**
 

@@ -3,7 +3,7 @@
     "name": "Hongyi Yang",
     "email": "yhy520@email.swu.edu.cn",
     "phone": "Contact Me",
-    "summary": "A SWU student majoring in CS. Research experience includes Multimodal Large Models, Computer Vision, Visualization, VR, and HCI. Research interests focus on Multimodal Large Models, Computer Vision, Agents, and Reinforcement Learning, backed by experience in CV and Embedded Development."
+    "summary": "A SWU student majoring in CS. Research experience includes Multimodal Large Models, Computer Vision, Visualization, VR, and HCI. Research interests focus on Multimodal Large Models, Computer Vision, Agents, and Reinforcement Learning, with development experience in Multimodal Large Models, Computer Vision, and Embedded Development."
   },
   "education": [
     {
@@ -59,7 +59,7 @@
       "title": "National Invention Patent",
       "date": "2025-09",
       "awarder": "China National Intellectual Property Administration",
-      "url": ""
+      "url": "https://cponline.cnipa.gov.cn/"
     },
     {
       "title": "Blue Bridge Cup - National Third Prize",
@@ -86,6 +86,12 @@
       "url": "https://www.mcm.edu.cn/"
     },
     {
+      "title": "Merit Student of Southwest University",
+      "date": "2024-10",
+      "awarder": "Southwest University",
+      "url": "https://swu.edu.cn"
+    },
+    {
       "title": "Outstanding Student Cadre of Southwest University",
       "date": "2024-10",
       "awarder": "Southwest University",
@@ -107,30 +113,10 @@
       "name": "Artificial Intelligence",
       "level": "Intermediate",
       "keywords": [
-        "Computer Vision",
-        "Natural Language Processing",
-        "Machine Learning",
-        "Deep Learning"
-      ]
-    },
-    {
-      "name": "Autonomous Systems",
-      "level": "Intermediate",
-      "keywords": [
-        "Autonomous Driving",
-        "Robotics",
-        "2D Semantic Segmentation",
-        "Model Training & Optimization"
-      ]
-    },
-    {
-      "name": "Embodied AI",
-      "level": "Beginner",
-      "keywords": [
-        "Robotics",
-        "Human-Computer Interaction",
-        "Reinforcement Learning",
-        "Multi-modal Learning"
+        "MLLM",
+        "DL",
+        "CV",
+        "NLP"
       ]
     }
   ],
@@ -170,7 +156,7 @@
     {
       "name": "Travel & Culture",
       "keywords": [
-        "Visited 20+ provinces and regions in China",
+        "Visited 20+ provinces in China",
         "Traditional Chinese Arts",
         "Outdoor Activities"
       ]

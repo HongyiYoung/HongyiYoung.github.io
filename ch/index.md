@@ -9,12 +9,19 @@ profile:
   image: prof_pic.jpg
   image_circular: false
   more_info: >
-    <div class="profile-info-header">
-    <p>
-    🏛️ 计算机与信息科学学院<br>
-    🎓 西南大学<br>
-    📍 中国重庆, 400715
-    </p>
+    <div class="profile-info-card">
+      <div class="profile-info-item">
+        <span class="profile-info-icon">🏛️</span>
+        <span>计算机与信息科学学院</span>
+      </div>
+      <div class="profile-info-item">
+        <span class="profile-info-icon">🎓</span>
+        <span>西南大学</span>
+      </div>
+      <div class="profile-info-item">
+        <span class="profile-info-icon">📍</span>
+        <span>中国重庆, 400715</span>
+      </div>
     </div>
 
 selected_papers: true
@@ -54,7 +61,7 @@ lang: zh
 
 <div id="content-zh" class="lang-content" markdown="1">
 
-我是**杨弘毅**，西南大学计算机科学与技术专业本科生（2023–至今），师从**[瞿经纬](https://jingweiqu.github.io/ch/index.html){:target="_blank"}**副教授。研究经历为多模态大模型、计算机视觉、可视化、虚拟现实与人机交互，研究兴趣为多模态大模型、计算机视觉、智能体、强化学习等，有计算机视觉、嵌入式开发经验。
+我是**杨弘毅**，西南大学计算机科学与技术专业本科生（2023–至今），师从**[瞿经纬](https://jingweiqu.github.io/ch/index.html){:target="_blank"}**副教授。研究经历为多模态大模型、计算机视觉、可视化、虚拟现实与人机交互，研究兴趣为多模态大模型、计算机视觉、智能体、强化学习等，有多模态大模型、计算机视觉、嵌入式等开发经验。
 
 #### 科研经历
 

@@ -1,6 +1,23 @@
 <!-- Metadata, OpenGraph and Schema.org -->
 {% include metadata.liquid %}
 
+{% if page.layout == 'about' %}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ '/assets/img/prof_pic-480.webp' | relative_url }}"
+    type="image/webp"
+    fetchpriority="high"
+  >
+  <link
+    rel="preload"
+    as="font"
+    href="{{ '/assets/fonts/ZhiMangXing-name-subset.woff2' | relative_url }}"
+    type="font/woff2"
+    crossorigin
+  >
+{% endif %}
+
 <!-- Bootstrap & MDB -->
 <link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url | bust_file_cache }}">
 <link

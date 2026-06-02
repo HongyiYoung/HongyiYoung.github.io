@@ -6,7 +6,7 @@ layout: default
     <h1 class="post-title">
       {% if site.title == 'blank' %}
         {% if page.lang == 'zh' %}
-          <span class="descr-info" style="font-family: LuXun; color: var(--global-text-color); margin-right: -0.6rem; margin-left: -0.4rem;">杨弘毅</span>
+          <span class="descr-info name-calligraphy" style="color: var(--global-text-color);">杨弘毅</span>
           <span style="font-size: 2rem; color: var(--global-text-color);"> ( </span>
           <a href="{{ page.url | replace_first: '/ch', '' | relative_url }}" style="text-decoration: none;">
             <span class="font-weight-bold" style="font-family: 'Fredoka'; color: var(--global-text-color);">Hongyi</span>
@@ -18,7 +18,7 @@ layout: default
           <span style="color: var(--global-text-color);"> {{ site.middle_name }} {{ site.last_name }} </span>
           <span style="font-size: 2rem; color: var(--global-text-color);"> ( </span>
           <a href="{{ '/ch' | append: page.url | relative_url }}" style="text-decoration: none;">
-            <span class="descr-info" style="font-family: LuXun; color: var(--global-text-color); margin-right: -0.6rem; margin-left: -0.4rem;">杨弘毅</span>
+            <span class="descr-info name-calligraphy" style="color: var(--global-text-color);">杨弘毅</span>
           </a>
           <span style="font-size: 2rem; color: var(--global-text-color);"> ) </span>
         {% endif %}
@@ -33,6 +33,7 @@ layout: default
       <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
         {% if page.profile.image %}
           {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
+          {% assign profile_image_fast_path = profile_image_path | replace: '.jpg', '-480.webp' | replace: '.jpeg', '-480.webp' | replace: '.png', '-480.webp' %}
           {% if page.profile.image_circular %}
             {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
           {% else %}
@@ -42,10 +43,9 @@ layout: default
           {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
       30vw, 95vw"{% endcapture %}
           {% capture profile_style %}aspect-ratio: auto 2228 / 3118; background-color: var(--global-bg-color);{% endcapture %}
-          {% capture profile_onerror %}let t=this; $('.responsive-img-srcset').remove(); setTimeout(()=>{t.src=t.src.split('?')[0]+'?'+Date.now()}, 2000);{% endcapture %}
           {%
-            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt="profile image"
-            cache_bust=true style=profile_style onerror=profile_onerror
+            include figure.liquid loading="eager" decoding="async" fetchpriority="high" path=profile_image_fast_path class=profile_image_class sizes=sizes alt="profile image"
+            avoid_scaling=true style=profile_style
           %}
         {% endif %}
         {% if page.profile.more_info %}

@@ -9,6 +9,12 @@
     >
       <table class="table table-sm table-borderless">
         {% assign news_all = site.news | reverse %}
+        {% if include.limit %}
+          {% assign news_featured = news_all | where: 'featured', true %}
+          {% if news_featured != empty %}
+            {% assign news_all = news_featured %}
+          {% endif %}
+        {% endif %}
         {% if page.lang == 'zh' %}
           {% assign news = news_all | where: 'lang', 'zh' %}
         {% else %}

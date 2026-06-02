@@ -9,12 +9,19 @@ profile:
   image: prof_pic.jpg
   image_circular: false
   more_info: >
-    <div class="profile-info-header">
-    <p>
-    🏛️ College of Computer and Information Science<br>
-    🎓 Southwest University<br>
-    📍 Chongqing, China
-    </p>
+    <div class="profile-info-card">
+      <div class="profile-info-item">
+        <span class="profile-info-icon">🏛️</span>
+        <span>College of Computer and Information Science</span>
+      </div>
+      <div class="profile-info-item">
+        <span class="profile-info-icon">🎓</span>
+        <span>Southwest University</span>
+      </div>
+      <div class="profile-info-item">
+        <span class="profile-info-icon">📍</span>
+        <span>Chongqing, China</span>
+      </div>
     </div>
 
 selected_papers: true
@@ -50,7 +57,7 @@ latest_posts:
   </div>
 </div>
 
-I'm **Hongyi Yang**, an undergraduate in Computer Science at Southwest University (2023–Present), supervised by Assoc. Prof. **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}**. My research experience includes Multimodal Large Models, Computer Vision, Visualization, Virtual Reality, and Human-Computer Interaction. My research interests focus on Multimodal Large Models, Computer Vision, Agents, and Reinforcement Learning, backed by experience in Computer Vision and Embedded Development.
+I'm **Hongyi Yang**, an undergraduate in Computer Science at Southwest University (2023–Present), supervised by Assoc. Prof. **[Jingwei Qu](https://jingweiqu.github.io/index.html){:target="_blank"}**. My research experience includes Multimodal Large Models, Computer Vision, Visualization, Virtual Reality, and Human-Computer Interaction. My research interests focus on Multimodal Large Models, Computer Vision, Agents, and Reinforcement Learning, with development experience in Multimodal Large Models, Computer Vision, and Embedded Development.
 
 #### Research
 

@@ -71,6 +71,12 @@
       {% elsif site.lazy_loading_images %}
         loading="lazy"
       {% endif %}
+      {% if include.decoding %}
+        decoding="{{ include.decoding }}"
+      {% endif %}
+      {% if include.fetchpriority %}
+        fetchpriority="{{ include.fetchpriority }}"
+      {% endif %}
       {% if include.onerror %}
         onerror="{{ include.onerror }}"
       {% else %}

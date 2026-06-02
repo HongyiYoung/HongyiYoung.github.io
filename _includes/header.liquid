@@ -127,13 +127,26 @@
           {% endfor %}
           {% if site.search_enabled %}
             <!-- Search -->
-            <li class="nav-item">
+            <li class="toggle-container search-toggle-container">
               <button id="search-toggle" title="Search" onclick="openSearchModal()">
                 <span class="nav-link"><i class="ti ti-search"></i></span>
               </button>
             </li>
           {% endif %}
           <!-- Language Toggle -->
+          {% if page.lang == 'zh' %}
+            {% assign language_toggle_url = page.url | replace_first: '/ch', '' | relative_url %}
+            {% assign language_toggle_label = 'EN' %}
+          {% else %}
+            {% if page.url == '/' %}
+              {% assign language_toggle_url = '/ch/' | relative_url %}
+            {% elsif page.url == '/cv/' or page.url == '/projects/' or page.url == '/publications/' or page.url == '/repositories/' %}
+              {% assign language_toggle_url = '/ch' | append: page.url | relative_url %}
+            {% else %}
+              {% assign language_toggle_url = '/ch/' | relative_url %}
+            {% endif %}
+            {% assign language_toggle_label = '中' %}
+          {% endif %}
 
           {% if site.enable_darkmode %}
             <!-- Toogle theme mode -->
@@ -145,6 +158,11 @@
               </button>
             </li>
           {% endif %}
+          <li class="toggle-container language-toggle-container">
+            <a class="language-toggle" href="{{ language_toggle_url }}" title="Change language / 切换语言" aria-label="Change language / 切换语言">
+              {{ language_toggle_label }}
+            </a>
+          </li>
         </ul>
       </div>
     </div>

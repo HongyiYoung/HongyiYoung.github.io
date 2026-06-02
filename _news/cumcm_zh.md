@@ -6,4 +6,4 @@ related_posts: false
 lang: zh
 ---
 
-🏆 在[全国大学生数学建模竞赛](https://www.mcm.edu.cn/){:target="_blank"}中荣获**省级二等奖**！
+🏆 在[全国大学生数学建模竞赛](https://www.mcm.edu.cn/){:target="_blank"}中荣获**省部级二等奖**！

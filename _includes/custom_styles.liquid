@@ -2,28 +2,47 @@
 <!-- Custom Styles from _sass/_custom.scss Inlined for Safety -->
 <style>
 @font-face {
-  font-family: 'LuXun';
-  src: url('{{ "/assets/fonts/LuXun.ttf" | relative_url }}') format('truetype');
+  font-family: 'ZhiMangXingNameSubset';
+  src: url('{{ "/assets/fonts/ZhiMangXing-name-subset.woff2" | relative_url }}') format('woff2');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
+  unicode-range: U+6768, U+5F18, U+6BC5;
+}
+
+.name-calligraphy {
+  font-family: 'ZhiMangXingNameSubset', 'STXingkai', 'KaiTi', 'Kaiti SC', cursive;
+  font-weight: 400;
+  display: inline-block;
+  margin-right: -0.36rem;
+  margin-left: -0.18rem;
+  transform: translateY(0.08em);
+  vertical-align: baseline;
 }
 
 /* Stat Cards */
 .stat-cards-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0;
+  gap: 12px;
+  margin: 22px 0;
   justify-content: center;
 }
 
 .stat-card {
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
+  --stat-card-accent: var(--global-theme-color);
+  --stat-card-bg: color-mix(in srgb, var(--stat-card-accent) 11%, var(--global-card-bg-color));
+  --stat-card-border: color-mix(in srgb, var(--stat-card-accent) 26%, var(--global-divider-color));
+  --stat-card-value-color: color-mix(in srgb, var(--stat-card-accent) 74%, var(--global-text-color));
+  background: var(--stat-card-bg);
+  border: 1px solid var(--stat-card-border);
+  color: var(--global-text-color);
+  padding: 1.05rem 1rem;
+  border-radius: 8px;
   text-align: center;
   min-width: 130px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   flex: 1 1 calc(50% - 15px); /* Default to 2 columns */
   max-width: calc(50% - 5px);
 }
@@ -60,23 +79,36 @@
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--stat-card-accent) 42%, var(--global-divider-color));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
 }
 
 .stat-value {
-  font-size: 24px;
-  font-weight: bold;
+  color: var(--stat-card-value-color);
+  font-size: 1.85rem;
+  font-weight: 750;
+  line-height: 1.1;
 }
 
 .stat-label {
-  font-size: 14px;
+  color: var(--global-text-color-light);
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  margin-top: 0.35rem;
 }
 
-.stat-card-blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-.stat-card-pink { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-.stat-card-cyan { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-.stat-card-green { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.stat-card-blue { --stat-card-accent: #5b75d6; }
+.stat-card-pink { --stat-card-accent: #d35f9f; }
+.stat-card-cyan { --stat-card-accent: #2f9cc5; }
+.stat-card-green { --stat-card-accent: #36a875; }
+
+html[data-theme="dark"] .stat-card {
+  --stat-card-bg: color-mix(in srgb, var(--stat-card-accent) 18%, var(--global-card-bg-color));
+  --stat-card-border: color-mix(in srgb, var(--stat-card-accent) 38%, var(--global-divider-color));
+  --stat-card-value-color: color-mix(in srgb, var(--stat-card-accent) 70%, #ffffff);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+}
 
 /* Language Switcher */
 .lang-switcher-header {
@@ -90,14 +122,40 @@
 }
 
 /* Profile Info in Header */
-.profile-info-header {
-  font-weight: 600; 
-  font-family: 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif; 
-  color: var(--global-text-color); 
-  margin: 0; 
-  line-height: 1.4;
+.profile-info-card {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--global-theme-color) 18%, var(--global-divider-color));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--global-theme-color) 5%, var(--global-card-bg-color));
+  color: var(--global-text-color);
+  font-family: 'SF Pro Display', 'Helvetica Neue', 'Arial', sans-serif;
 }
-.profile-info-header p {
-  margin-bottom: 0;
+.profile-info-item {
+  display: grid;
+  grid-template-columns: 1.9rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+.profile-info-icon {
+  display: inline-grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--global-theme-color) 12%, var(--global-bg-color));
+  font-size: 0.95rem;
+}
+html[data-theme="dark"] .profile-info-card {
+  border-color: color-mix(in srgb, var(--global-theme-color) 28%, var(--global-divider-color));
+  background: color-mix(in srgb, var(--global-theme-color) 9%, var(--global-card-bg-color));
+}
+html[data-theme="dark"] .profile-info-icon {
+  background: color-mix(in srgb, var(--global-theme-color) 16%, var(--global-bg-color));
 }
 </style>
