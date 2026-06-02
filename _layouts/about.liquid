@@ -33,7 +33,6 @@ layout: default
       <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
         {% if page.profile.image %}
           {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-          {% assign profile_image_fast_path = profile_image_path | replace: '.jpg', '-480.webp' | replace: '.jpeg', '-480.webp' | replace: '.png', '-480.webp' %}
           {% if page.profile.image_circular %}
             {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
           {% else %}
@@ -42,10 +41,11 @@ layout: default
           {% endif %}
           {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
       30vw, 95vw"{% endcapture %}
-          {% capture profile_style %}aspect-ratio: auto 2228 / 3118; background-color: var(--global-bg-color);{% endcapture %}
+          {% capture profile_style %}aspect-ratio: auto 800 / 1120; background-color: var(--global-bg-color);{% endcapture %}
+          {% capture profile_onerror %}this.onerror=null; this.style.display='none'; this.closest('figure').classList.add('profile-image-fallback');{% endcapture %}
           {%
-            include figure.liquid loading="eager" decoding="async" fetchpriority="high" path=profile_image_fast_path class=profile_image_class sizes=sizes alt="profile image"
-            avoid_scaling=true style=profile_style
+            include figure.liquid loading="eager" decoding="async" fetchpriority="high" path=profile_image_path class=profile_image_class sizes=sizes alt="profile image"
+            width="800" height="1120" avoid_scaling=true style=profile_style figure_class="profile-image-figure" onerror=profile_onerror
           %}
         {% endif %}
         {% if page.profile.more_info %}
