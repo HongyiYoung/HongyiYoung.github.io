@@ -29,9 +29,11 @@ layout: default
           {% endif %}
           {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
       30vw, 95vw"{% endcapture %}
+          {% capture profile_style %}min-height: 300px; background-color: var(--global-bg-color);{% endcapture %}
+          {% capture profile_onerror %}let t=this; $('.responsive-img-srcset').remove(); setTimeout(()=>{t.src=t.src.split('?')[0]+'?'+Date.now()}, 2000);{% endcapture %}
           {%
             include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt="profile image"
-            cache_bust=true
+            cache_bust=true style=profile_style onerror=profile_onerror
           %}
         {% endif %}
         {% if page.profile.more_info %}
