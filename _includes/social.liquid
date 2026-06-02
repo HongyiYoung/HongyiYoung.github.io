@@ -99,8 +99,8 @@
     {% when 'cv_pdf' %}
       <style>
         .contact-icons .cv-icon-svg {
-          width: 1em;
-          height: 1em;
+          width: 4.3rem !important;
+          height: 4.2rem !important;
           vertical-align: -0.125em;
           margin-bottom: 0 !important; /* Override the default SVG margin in _base.scss */
           transition-property: all 0.2s ease-in-out;
@@ -113,7 +113,7 @@
       <a href="{{ '/assets/pdf/' | append: social[1] | relative_url }}" title="CV" target="_blank" class="contact-icon">
         <svg class="cv-icon-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <rect x="0" y="64" width="512" height="384" rx="64" ry="64" fill="currentColor" />
-          <text x="256" y="260" font-family="Arial, sans-serif" font-weight="900" font-size="240" fill="var(--global-bg-color)" text-anchor="middle" dominant-baseline="central">CV</text>
+          <text x="256" y="260" font-family="Arial, sans-serif" font-weight="900" font-size="260" fill="var(--global-bg-color)" text-anchor="middle" dominant-baseline="central">CV</text>
         </svg>
       </a>
   {% endcase %}
