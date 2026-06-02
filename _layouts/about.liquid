@@ -6,9 +6,21 @@ layout: default
     <h1 class="post-title">
       {% if site.title == 'blank' %}
         {% if page.lang == 'zh' %}
-          <span class="font-weight-bold">杨弘毅</span> <a href="{{ page.url | replace_first: '/ch', '' | relative_url }}" style="text-decoration: none; color: #007bff; font-weight: normal;">Hongyi Yang</a>
+          <span class="descr-info" style="font-family: LuXun; color: var(--global-text-color); margin-right: -0.6rem; margin-left: -0.4rem;">杨弘毅</span>
+          <span style="font-size: 2rem; color: var(--global-text-color);"> ( </span>
+          <a href="{{ page.url | replace_first: '/ch', '' | relative_url }}" style="text-decoration: none;">
+            <span class="font-weight-bold" style="font-family: 'Cairo Play'; color: var(--global-text-color);">Hongyi</span>
+            <span style="color: var(--global-text-color);"> Yang </span>
+          </a>
+          <span style="font-size: 2rem; color: var(--global-text-color);"> ) </span>
         {% else %}
-          <span class="font-weight-bold">{{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}</span> <a href="{{ '/ch' | append: page.url | relative_url }}" style="text-decoration: none; color: #007bff;">杨弘毅</a>
+          <span class="font-weight-bold" style="font-family: 'Cairo Play'">{{ site.first_name }}</span>
+          <span style="color: var(--global-text-color);"> {{ site.middle_name }} {{ site.last_name }} </span>
+          <span style="font-size: 2rem; color: var(--global-text-color);"> ( </span>
+          <a href="{{ '/ch' | append: page.url | relative_url }}" style="text-decoration: none;">
+            <span class="descr-info" style="font-family: LuXun; color: var(--global-text-color); margin-right: -0.6rem; margin-left: -0.4rem;">杨弘毅</span>
+          </a>
+          <span style="font-size: 2rem; color: var(--global-text-color);"> ) </span>
         {% endif %}
       {% else %}
         {{ site.title }}
