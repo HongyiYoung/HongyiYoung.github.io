@@ -16,6 +16,6 @@ echo "📝 2/3: 提交更改..."
 git commit -m "$1"
 
 echo "📤 3/3: 推送到 GitHub..."
-git push origin main
+git push origin source
 
 echo "✅ 部署完成！"

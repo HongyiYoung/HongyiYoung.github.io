@@ -96,5 +96,30 @@
       <a href="https://youtube.com/@{{ social[1] }}" title="YouTube" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-youtube"></i></a>
     {% when 'zotero_username' %}
       <a href="https://www.zotero.org/{{ social[1] }}" title="Zotero" rel="external nofollow noopener" target="_blank"><i class="ai ai-zotero"></i></a>
+    {% when 'cv_pdf' %}
+      <style>
+        .cv-icon-container {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 3.5rem;
+          height: 3.5rem;
+          border: 2px solid var(--global-text-color);
+          border-radius: 12px;
+          text-decoration: none;
+          transition: all 0.2s ease-in-out;
+          vertical-align: super; /* align nicely with 4rem icons */
+          margin: 0 0.2rem;
+        }
+        .cv-icon-container i {
+          font-size: 2.2rem !important;
+        }
+        .cv-icon-container:hover {
+          border-color: var(--global-theme-color) !important;
+        }
+      </style>
+      <a href="{{ '/assets/pdf/' | append: social[1] | relative_url }}" title="CV" target="_blank" class="cv-icon-container">
+        <i class="ai ai-cv"></i>
+      </a>
   {% endcase %}
 {% endfor %}
