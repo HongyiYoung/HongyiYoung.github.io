@@ -15,6 +15,7 @@ def require(condition, message):
 
 
 layout = read("_layouts/about.liquid")
+head = read("_includes/head.liquid")
 header = read("_includes/header.liquid")
 custom = read("_sass/_custom.scss")
 inline_custom = read("_includes/custom_styles.liquid")
@@ -40,12 +41,17 @@ resume_en_data = json.loads(resume_en)
 resume_zh_data = json.loads(resume_zh)
 language_toggle_block = base_styles.split("\n\n.language-toggle {\n", 1)[1].split("\n}", 1)[0]
 
-require("profile_onerror" not in layout, "profile image should not have timestamp retry onerror")
+require("profile_onerror" in layout, "profile image should define a controlled fallback on load failure")
 require("cache_bust=true" not in layout, "profile image should not force cache-busted URLs")
 require('loading="eager"' in layout, "profile image should keep eager loading")
 require("fetchpriority=\"high\"" in layout, "profile image should request high fetch priority")
-require("profile_image_fast_path" in layout, "profile image should use an optimized profile image path")
-require("-480.webp" in layout, "profile image should use the generated 480w WebP asset")
+require("path=profile_image_path" in layout, "profile image should use the existing profile image path")
+require('width="800" height="1120"' in layout, "profile image should declare the real image dimensions")
+require('figure_class="profile-image-figure"' in layout, "profile image should have a scoped figure class")
+require("profile-image-fallback" in layout, "profile image should switch to the fallback presentation on error")
+require(".profile-image-figure.profile-image-fallback" in custom, "profile image fallback styles should be defined")
+require("prof_pic-480.webp" not in layout and "prof_pic-480.webp" not in head, "profile image should not preload a missing WebP asset")
+require("prof_pic.jpg" in head and "image/jpeg" in head, "profile image preload should target the existing JPEG asset")
 
 require("ZhiMangXingNameSubset" in custom, "custom stylesheet should define the expressive name font subset")
 require("ZhiMangXing-name-subset.woff2" in custom, "custom stylesheet should load the expressive WOFF2 subset")
@@ -313,8 +319,8 @@ for asset in ("assets/img/prof_pic.jpg", "assets/fonts/ZhiMangXing-name-subset.w
 
 if (ROOT / "_site").exists():
     require(
-        (ROOT / "_site/assets/img/prof_pic-480.webp").exists(),
-        "built site should contain the generated profile WebP asset",
+        (ROOT / "_site/assets/img/prof_pic.jpg").exists(),
+        "built site should contain the profile image asset",
     )
 
 print("Homepage asset checks passed.")
