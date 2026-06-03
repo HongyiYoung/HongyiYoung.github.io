@@ -213,8 +213,19 @@ for styles in (custom, inline_custom):
     require("linear-gradient(135deg" not in styles, "stat cards should avoid bright fixed gradients")
     require("var(--stat-card-bg)" in styles, "stat cards should use theme-aware custom properties")
     require("html[data-theme=\"dark\"]" in styles, "stat cards should define a dark-theme palette")
+    require("container-type: inline-size" in styles, "stat cards should size text against their own card width")
+    require("overflow: hidden" in styles, "stat cards should clip accidental overflow inside the card")
+    require("stat-value-wide" in styles, "stat cards should define a compact long-value variant")
+    require(
+        "font-size: 1.25rem" in styles and "clamp(1.2rem, 12cqw, 1.62rem)" in styles,
+        "long stat values should have a small fallback and card-relative responsive font size",
+    )
 
 for text in (about, zh_about):
+    require(
+        'class="stat-value stat-value-wide">4.10/5.00</div>' in text,
+        "GPA stat should use the compact long-value class to prevent card overflow",
+    )
     require("Merit Student" in text or "三好学生" in text, "homepage should mention merit student")
     require(
         "Outstanding Student Cadre" in text or "优秀学生干部" in text,

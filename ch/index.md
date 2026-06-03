@@ -42,7 +42,7 @@ lang: zh
 
 <div class="stat-cards-container">
   <div class="stat-card stat-card-blue">
-    <div class="stat-value">4.10/5.00</div>
+    <div class="stat-value stat-value-wide">4.10/5.00</div>
     <div class="stat-label">GPA</div>
   </div>
   <div class="stat-card stat-card-pink">

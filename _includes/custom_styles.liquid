@@ -40,7 +40,15 @@
   padding: 1.05rem 1rem;
   border-radius: 8px;
   text-align: center;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.35rem;
+  overflow: hidden;
+  min-width: 0;
   min-width: 130px;
+  min-height: 122px;
+  container-type: inline-size;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   flex: 1 1 calc(50% - 15px); /* Default to 2 columns */
@@ -84,18 +92,34 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
 }
 
-.stat-value {
+.stat-card .stat-value {
   color: var(--stat-card-value-color);
-  font-size: 1.85rem;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  font-size: 1.65rem;
+  font-size: clamp(1.35rem, 15cqw, 1.85rem);
   font-weight: 750;
   line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 }
 
-.stat-label {
+.stat-card .stat-value-wide {
+  font-size: 1.25rem;
+  font-size: clamp(1.2rem, 12cqw, 1.62rem);
+}
+
+.stat-card .stat-label {
+  width: 100%;
+  max-width: 100%;
   color: var(--global-text-color-light);
   font-size: 0.92rem;
   letter-spacing: 0;
-  margin-top: 0.35rem;
+  margin-top: 0;
 }
 
 .stat-card-blue { --stat-card-accent: #5b75d6; }
