@@ -367,6 +367,11 @@ require(
     "publication template should render all authors directly instead of a more-authors expander",
 )
 require(
+    ".author {\n        a {\n          color: var(--global-theme-color);\n          border-bottom: none;\n          text-decoration: none;" in base_styles
+    and "&:hover {\n            color: var(--global-theme-color);\n            border-bottom: none;\n            text-decoration: none;" in base_styles,
+    "linked publication authors should use color only, without dashed or hover underlines",
+)
+require(
     "https://bingyaohuang.github.io/" in coauthors,
     "Bingyao Huang should link to the configured personal homepage",
 )
