@@ -4,51 +4,76 @@ Jekyll::Hooks.register :site, :after_init do |site|
   require 'fileutils'
   require 'nokogiri'
   require 'open-uri'
+  require 'tempfile'
   require 'uri'
 
   font_file_types = ['otf', 'ttf', 'woff', 'woff2']
   image_file_types = ['.gif', '.jpg', '.jpeg', '.png', '.webp']
 
-  def download_and_change_rule_set_url(rule_set, rule, dest, dirname, config, file_types)
-    # check if the rule has a url
-    if rule_set[rule].include?('url(')
-      # get the file url
-      url = rule_set[rule].split('url(').last.split(')').first
+  def local_asset_path(config, dirname, file_name)
+    baseurl = config['baseurl'].to_s
+    if baseurl.empty?
+      File.join('/assets', 'libs', dirname, file_name)
+    else
+      File.join(baseurl, 'assets', 'libs', dirname, file_name)
+    end
+  end
 
-      # remove quotes from the url
-      if url.start_with?('"') || url.start_with?("'")
-        url = url[1..-2]
+  def normalize_asset_url(url, source_url = nil)
+    if url.start_with?('//')
+      "https:#{url}"
+    elsif url.start_with?('http://', 'https://')
+      url
+    else
+      URI.join(source_url || '', url).to_s
+    end
+  end
+
+  def extract_css_url(value)
+    match = value.match(/url\((['"]?)([^'")]+)\1\)/)
+    match && match[2]
+  end
+
+  def download_and_change_rule_set_url(rule_set, rule, dest, dirname, config, file_types, source_url = nil)
+    # check if the rule has a url
+    if rule_set[rule]&.include?('url(')
+      previous_rule = rule_set[rule]
+      changed_values = []
+      downloadable_values = 0
+      downloaded_values = 0
+
+      previous_rule.split(',').each do |source_part|
+        url = extract_css_url(source_part)
+        unless url
+          changed_values << source_part.strip
+          next
+        end
+
+        file_name = url.split('/').last.split('?').first
+        unless file_name.end_with?(*file_types)
+          changed_values << source_part.strip
+          next
+        end
+
+        downloadable_values += 1
+        absolute_url = normalize_asset_url(url, source_url)
+
+        begin
+          download_file(absolute_url, File.join(dest, file_name))
+          local_url = local_asset_path(config, dirname, file_name)
+          changed_values << source_part.sub(/url\((['"]?)([^'")]+)\1\)/, "url(#{local_url})").strip
+          downloaded_values += 1
+        rescue OpenURI::HTTPError, SocketError, SystemCallError => e
+          warn "Skipping unavailable font source #{absolute_url}: #{e.message}"
+        end
       end
 
-      file_name = url.split('/').last.split('?').first
+      if downloadable_values.positive? && downloaded_values.zero?
+        raise "Failed to download any usable font sources from #{previous_rule}"
+      end
 
-      # verify if the file is of the correct type
-      if file_name.end_with?(*file_types)
-        # fix the url if it is not an absolute url
-        unless url.start_with?('https://')
-          url = URI.join(url, url).to_s
-        end
-
-        # download the file
-        download_file(url, File.join(dest, file_name))
-
-        # change the url to the local file, considering baseurl
-        previous_rule = rule_set[rule]
-        if config['baseurl']
-          # add rest of the src attribute if it exists
-          if rule_set[rule].split(' ').length > 1
-            rule_set[rule] = "url(#{File.join(config['baseurl'], 'assets', 'libs', dirname, file_name)}) #{rule_set[rule].split(' ').last}"
-          else
-            rule_set[rule] = "url(#{File.join(config['baseurl'], 'assets', 'libs', dirname, file_name)})"
-          end
-        else
-          # add rest of the src attribute if it exists
-          if rule_set[rule].split(' ').length > 1
-            rule_set[rule] = "url(#{File.join('/assets', 'libs', dirname, file_name)}) #{rule_set[rule].split(' ').last}"
-          else
-            rule_set[rule] = "url(#{File.join('/assets', 'libs', dirname, file_name)})"
-          end
-        end
+      if downloaded_values.positive?
+        rule_set[rule] = changed_values.join(', ')
         puts "Changed #{previous_rule} to #{rule_set[rule]}"
       end
     end
@@ -67,19 +92,37 @@ Jekyll::Hooks.register :site, :after_init do |site|
     end
 
     # download the file if it doesn't exist
-    unless File.file?(dest)
+    unless File.file?(dest) && File.size?(dest)
+      FileUtils.rm_f(dest) if File.file?(dest) && !File.size?(dest)
       puts "Downloading #{url} to #{dest}"
-      File.open(dest, "wb") do |saved_file|
+      tmp_file = Tempfile.new(['download-3rd-party', File.extname(dest)], dir)
+      begin
         URI(url).open("rb") do |read_file|
-          saved_file.write(read_file.read)
+          tmp_file.write(read_file.read)
         end
+        tmp_file.close
+        FileUtils.mv(tmp_file.path, dest)
+      ensure
+        tmp_file.close unless tmp_file.closed?
+        tmp_file.unlink if File.exist?(tmp_file.path)
       end
 
       # check if the file was downloaded successfully
-      unless File.file?(dest)
+      unless File.file?(dest) && File.size?(dest)
         raise "Failed to download #{url} to #{dest}"
       end
     end
+  end
+
+  def replace_file_text(path, replacements)
+    return unless File.file?(path)
+
+    content = File.read(path)
+    updated = content.dup
+    replacements.each do |from, to|
+      updated = updated.gsub(from, to)
+    end
+    File.write(path, updated) if updated != content
   end
 
   def download_fonts(url, dest, file_types)
@@ -155,7 +198,7 @@ Jekyll::Hooks.register :site, :after_init do |site|
       # get the font-face rules
       css.each_rule_set do |rule_set|
         # check if the rule set has a url
-        download_and_change_rule_set_url(rule_set, 'src', File.join(dest, 'fonts'), File.join(lib_name, 'fonts'), config, file_types)
+        download_and_change_rule_set_url(rule_set, 'src', File.join(dest, 'fonts'), File.join(lib_name, 'fonts'), config, file_types, url)
       end
 
       # save the modified css file
@@ -202,11 +245,7 @@ Jekyll::Hooks.register :site, :after_init do |site|
               dest = File.join(site.source, 'assets', 'libs', key, file_name)
               download_file(url2, dest)
               # change the url to the local file, considering baseurl
-              if site.config['baseurl']
-                site.config['third_party_libraries'][key]['url'][type][type2] = File.join(site.config['baseurl'], 'assets', 'libs', key, file_name)
-              else
-                site.config['third_party_libraries'][key]['url'][type][type2] = File.join('/assets', 'libs', key, file_name)
-              end
+              site.config['third_party_libraries'][key]['url'][type][type2] = local_asset_path(site.config, key, file_name)
             end
 
           else
@@ -218,11 +257,7 @@ Jekyll::Hooks.register :site, :after_init do |site|
                 # if the file is a css file, download the css file, the fonts from it, and change information on the css file
                 file_name = download_fonts_from_css(site.config, url, File.join(site.source, 'assets', 'libs', key), key, font_file_types)
                 # change the url to the local file, considering baseurl
-                if site.config['baseurl']
-                  site.config['third_party_libraries'][key]['url'][type] = File.join(site.config['baseurl'], 'assets', 'libs', key, file_name)
-                else
-                  site.config['third_party_libraries'][key]['url'][type] = File.join('/assets', 'libs', key, file_name)
-                end
+                site.config['third_party_libraries'][key]['url'][type] = local_asset_path(site.config, key, file_name)
               else
                 # download the font files and change the url to the local file
                 download_fonts(url, File.join(site.source, 'assets', 'libs', key, site.config['third_party_libraries'][key]['local'][type]), font_file_types)
@@ -238,12 +273,17 @@ Jekyll::Hooks.register :site, :after_init do |site|
               # download the file and change the url to the local file
               dest = File.join(site.source, 'assets', 'libs', key, file_name)
               download_file(url, dest)
-              # change the url to the local file, considering baseurl
-              if site.config['baseurl']
-                site.config['third_party_libraries'][key]['url'][type] = File.join(site.config['baseurl'], 'assets', 'libs', key, file_name)
-              else
-                site.config['third_party_libraries'][key]['url'][type] = File.join('/assets', 'libs', key, file_name)
+              if key == 'pseudocode' && type == 'css'
+                replace_file_text(
+                  dest,
+                  {
+                    '@import url(https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css);' =>
+                      "@import url(#{local_asset_path(site.config, 'katex', 'katex.min.css')});"
+                  }
+                )
               end
+              # change the url to the local file, considering baseurl
+              site.config['third_party_libraries'][key]['url'][type] = local_asset_path(site.config, key, file_name)
             end
           end
         end

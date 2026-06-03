@@ -18,6 +18,14 @@
   >
 {% endif %}
 
+<link
+  rel="preload"
+  as="font"
+  href="{{ '/assets/fonts/tabler-icons.woff2' | relative_url }}"
+  type="font/woff2"
+  crossorigin
+>
+
 <!-- Bootstrap & MDB -->
 <link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url | bust_file_cache }}">
 <link
@@ -202,7 +210,7 @@
 {% endif %}
 
 {% if page.tikzjax %}
-  <link defer rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+  <link defer rel="stylesheet" type="text/css" href="{{ site.third_party_libraries.tikzjax_fonts.url.fonts }}">
 {% endif %}
 
 {% include custom_styles.liquid %}

@@ -136,8 +136,8 @@
   <!-- Tikzjax -->
   <script
     defer
-    src="https://tikzjax.com/v1/tikzjax.js"
-    integrity="sha256-+1qyucCXRZJrCg3lm3KxRt/7WXaYhBid4/1XJRHGB1E="
+    src="{{ site.third_party_libraries.tikzjax.url.js }}"
+    integrity="{{ site.third_party_libraries.tikzjax.integrity.js }}"
     crossorigin="anonymous"
   ></script>
 {% endif %}
@@ -257,7 +257,7 @@
   <script async defer src="https://openpanel.dev/op1.js"></script>
 {% endif %}
 {% if site.enable_51la_analytics %}
-  <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+  <script charset="UTF-8" id="LA_COLLECT" src="{{ site.third_party_libraries.la51.url.js }}"></script>
   <script>
     LA.init({
       id: '{{ site.la51_analytics_id }}',

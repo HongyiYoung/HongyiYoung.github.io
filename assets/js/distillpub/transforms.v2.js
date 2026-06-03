@@ -13561,7 +13561,7 @@
     }
 
     if (needsCSS) {
-      const katexCSSTag = '<link rel="stylesheet" href="https://distill.pub/third-party/katex/katex.min.css" crossorigin="anonymous">';
+      const katexCSSTag = '<link rel="stylesheet" href="/assets/libs/katex/katex.min.css" crossorigin="anonymous">';
       dom.head.insertAdjacentHTML("beforeend", katexCSSTag);
     }
   }
@@ -14080,7 +14080,7 @@ window.addEventListener('WebComponentsReady', function() {
 
     // add loader
     const loaderTag = dom.createElement("script");
-    loaderTag.src = "https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.17/webcomponents-loader.js";
+    loaderTag.src = "/assets/libs/webcomponentsjs/webcomponents-loader.js";
     dom.head.insertBefore(loaderTag, dom.head.firstChild);
 
     // add loader event listener to add tempalrte back in
