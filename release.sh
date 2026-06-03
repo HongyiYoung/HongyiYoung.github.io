@@ -55,6 +55,8 @@ fi
 # 3. 编译网站 (Build)
 echo -e "\n${GREEN}[2/3] 正在编译 Jekyll 网站...${QC}"
 # 确保使用 bundler 环境
+mkdir -p _data
+echo "last_updated: \"$(TZ=Asia/Shanghai date +'%Y-%m-%d')\"" > _data/build.yml
 bundle exec jekyll build
 
 if [ $? -ne 0 ]; then
