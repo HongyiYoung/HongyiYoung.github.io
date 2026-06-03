@@ -17,17 +17,21 @@ def require(condition, message):
 layout = read("_layouts/about.liquid")
 head = read("_includes/head.liquid")
 header = read("_includes/header.liquid")
+main_scss = read("assets/css/main.scss")
 custom = read("_sass/_custom.scss")
 inline_custom = read("_includes/custom_styles.liquid")
 base_styles = read("_sass/_base.scss")
 cv_styles = read("_sass/_cv.scss")
 theme_styles = read("_sass/_themes.scss")
 cache_bust_plugin = read("_plugins/cache-bust.rb")
+download_third_party_plugin = read("_plugins/download-3rd-party.rb")
 social_include = read("_includes/social.liquid")
 news_include = read("_includes/news.liquid")
 bib_layout = read("_layouts/bib.liquid")
 scripts_include = read("_includes/scripts.liquid")
 distill_scripts_include = read("_includes/distill_scripts.liquid")
+distill_template_js = read("assets/js/distillpub/template.v2.js")
+distill_transforms_js = read("assets/js/distillpub/transforms.v2.js")
 footer_include = read("_includes/footer.liquid")
 resume_skills_include = read("_includes/resume/skills.liquid")
 resume_interests_include = read("_includes/resume/interests.liquid")
@@ -64,6 +68,79 @@ require("profile-image-fallback" in layout, "profile image should switch to the 
 require(".profile-image-figure.profile-image-fallback" in custom, "profile image fallback styles should be defined")
 require("prof_pic-480.webp" not in layout and "prof_pic-480.webp" not in head, "profile image should not preload a missing WebP asset")
 require("prof_pic.jpg" in head and "image/jpeg" in head, "profile image preload should target the existing JPEG asset")
+require(
+    "assets/fonts/tabler-icons.woff2" in head
+    and 'rel="preload"' in head
+    and 'as="font"' in head
+    and "font/woff2" in head,
+    "Tabler icon font should be preloaded from local site assets",
+)
+require(
+    "download: true # download these libraries during build and serve them from /assets/libs/" in site_config,
+    "third-party libraries should be downloaded during build and served locally",
+)
+require(
+    "altmetric: false" in site_config and "dimensions: false" in site_config,
+    "unused dynamic publication badge scripts should stay disabled",
+)
+require(
+    "la51:" in site_config
+    and "https://sdk.51.la/js-sdk-pro.min.js" in site_config
+    and "{{ site.third_party_libraries.la51.url.js }}" in scripts_include
+    and "{{ site.third_party_libraries.la51.url.js }}" in distill_scripts_include,
+    "51.LA SDK should be routed through third-party library local download config",
+)
+require(
+    "tikzjax:" in site_config
+    and "tikzjax_fonts:" in site_config
+    and "{{ site.third_party_libraries.tikzjax.url.js }}" in scripts_include
+    and "{{ site.third_party_libraries.tikzjax.url.js }}" in distill_scripts_include
+    and "{{ site.third_party_libraries.tikzjax_fonts.url.fonts }}" in head,
+    "TikZJax assets should be routed through third-party library local download config",
+)
+require(
+    "webcomponentsjs:" in site_config
+    and "/assets/libs/webcomponentsjs/webcomponents-loader.js" in distill_transforms_js
+    and "https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/" not in distill_transforms_js,
+    "Distill webcomponents loader should use the local third-party library copy",
+)
+require(
+    "katex:" in site_config
+    and "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" in site_config
+    and "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js" in site_config
+    and "/assets/libs/katex/katex.min.css" in distill_template_js
+    and "/assets/libs/katex/katex.min.js" in distill_template_js
+    and "/assets/libs/katex/katex.min.css" in distill_transforms_js
+    and "https://distill.pub/third-party/katex/" not in distill_template_js
+    and "https://distill.pub/third-party/katex/" not in distill_transforms_js,
+    "Distill KaTeX runtime assets should use the local third-party library copy",
+)
+require(
+    "def local_asset_path" in download_third_party_plugin
+    and "source_url = nil" in download_third_party_plugin
+    and "URI.join(source_url || '', url).to_s" in download_third_party_plugin,
+    "third-party downloader should resolve relative URLs in CSS font files against the stylesheet URL",
+)
+require(
+    "Tempfile" in download_third_party_plugin
+    and "downloadable_values" in download_third_party_plugin
+    and "Skipping unavailable font source" in download_third_party_plugin,
+    "third-party downloader should handle multi-source CSS fonts and skip unavailable fallback formats",
+)
+require(
+    "https://tikzjax.com/v1/" not in head
+    and "https://tikzjax.com/v1/" not in scripts_include
+    and "https://tikzjax.com/v1/" not in distill_scripts_include
+    and "https://sdk.51.la/js-sdk-pro.min.js" not in scripts_include
+    and "https://sdk.51.la/js-sdk-pro.min.js" not in distill_scripts_include,
+    "head and script includes should not hard-code localizable external library URLs",
+)
+require(
+    '"tabler-icons/tabler-icons.scss"' in main_scss
+    and "tabler-icons-filled.scss" not in main_scss
+    and "tabler-icons-outline.scss" not in main_scss,
+    "Tabler icons should use the complete local font without duplicate filled/outline imports",
+)
 
 require("ZhiMangXingNameSubset" in custom, "custom stylesheet should define the expressive name font subset")
 require("ZhiMangXing-name-subset.woff2" in custom, "custom stylesheet should load the expressive WOFF2 subset")
@@ -136,8 +213,19 @@ for styles in (custom, inline_custom):
     require("linear-gradient(135deg" not in styles, "stat cards should avoid bright fixed gradients")
     require("var(--stat-card-bg)" in styles, "stat cards should use theme-aware custom properties")
     require("html[data-theme=\"dark\"]" in styles, "stat cards should define a dark-theme palette")
+    require("container-type: inline-size" in styles, "stat cards should size text against their own card width")
+    require("overflow: hidden" in styles, "stat cards should clip accidental overflow inside the card")
+    require("stat-value-wide" in styles, "stat cards should define a compact long-value variant")
+    require(
+        "font-size: 1.25rem" in styles and "clamp(1.2rem, 12cqw, 1.62rem)" in styles,
+        "long stat values should have a small fallback and card-relative responsive font size",
+    )
 
 for text in (about, zh_about):
+    require(
+        'class="stat-value stat-value-wide">4.10/5.00</div>' in text,
+        "GPA stat should use the compact long-value class to prevent card overflow",
+    )
     require("Merit Student" in text or "三好学生" in text, "homepage should mention merit student")
     require(
         "Outstanding Student Cadre" in text or "优秀学生干部" in text,
@@ -330,8 +418,9 @@ require(
     and "site.la51_analytics_ck" in scripts_include
     and "site.la51_analytics_id" in distill_scripts_include
     and "site.la51_analytics_ck" in distill_scripts_include
-    and "https://sdk.51.la/js-sdk-pro.min.js" in scripts_include,
-    "51.LA script includes should use configured v6 credentials over HTTPS",
+    and "{{ site.third_party_libraries.la51.url.js }}" in scripts_include
+    and "{{ site.third_party_libraries.la51.url.js }}" in distill_scripts_include,
+    "51.LA script includes should use configured v6 credentials and locally routed SDK",
 )
 require(
     "site.data.build.last_updated" in footer_include and "'now'" not in footer_include,
