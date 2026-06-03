@@ -219,6 +219,17 @@
   <script async defer src="https://openpanel.dev/op1.js"></script>
 {% endif %}
 
+{% if site.enable_51la_analytics %}
+  <script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script>
+  <script>
+    LA.init({
+      id: '{{ site.la51_analytics_id }}',
+      ck: '{{ site.la51_analytics_ck }}',
+      autoTrack: true,
+    });
+  </script>
+{% endif %}
+
 {% if site.enable_progressbar %}
   <!-- Scrolling Progress Bar -->
   <script defer src="{{ '/assets/js/progress-bar.js' | relative_url | bust_file_cache }}" type="text/javascript"></script>

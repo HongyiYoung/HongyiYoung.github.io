@@ -84,6 +84,8 @@ google_analytics: # your Google Analytics measurement ID (format: G-XXXXXXXXXX)
 cronitor_analytics: # cronitor RUM analytics site ID (format: XXXXXXXXX)
 pirsch_analytics: # your Pirsch analytics site ID (length 32 characters)
 openpanel_analytics: # your Openpanel analytics client ID (format: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX)
+la51_analytics_id: "3OTnyWhHyoe0kxf2" # your 51.LA v6 application ID
+la51_analytics_ck: "3OTnyWhHyoe0kxf2" # your 51.LA v6 application ck
 
 # For Google Search Console, see https://support.google.com/webmasters/answer/9008080?hl=en#meta_tag_verification&zippy=%2Chtml-tag
 google_site_verification: # your google-site-verification ID (Google Search Console)
@@ -343,9 +345,7 @@ filtered_bibtex_keywords:
     preview_content_zh,
   ]
 
-# Maximum number of authors to be shown for each publication (more authors are visible on click)
-max_author_limit: 3 # leave blank to always show all authors
-more_authors_animation_delay: 10 # more authors are revealed on click using animation; smaller delay means faster animation
+# Publication authors are shown in full.
 
 # Enables publication thumbnails. If disabled, none of the publications will display thumbnails, even if specified in the bib entry.
 enable_publication_thumbnails: true
@@ -400,6 +400,7 @@ enable_google_analytics: false # enables google analytics
 enable_cronitor_analytics: false # enables cronitor RUM analytics
 enable_pirsch_analytics: false # enables Pirsch analytics (https://pirsch.io/)
 enable_openpanel_analytics: false # enables Openpanel analytics (https://openpanel.dev/)
+enable_51la_analytics: true # enables 51.LA analytics
 enable_google_verification: false # enables google site verification
 enable_bing_verification: false # enables bing site verification
 enable_masonry: true # enables automatic project cards arrangement

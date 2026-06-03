@@ -25,6 +25,10 @@ theme_styles = read("_sass/_themes.scss")
 cache_bust_plugin = read("_plugins/cache-bust.rb")
 social_include = read("_includes/social.liquid")
 news_include = read("_includes/news.liquid")
+bib_layout = read("_layouts/bib.liquid")
+scripts_include = read("_includes/scripts.liquid")
+distill_scripts_include = read("_includes/distill_scripts.liquid")
+footer_include = read("_includes/footer.liquid")
 resume_skills_include = read("_includes/resume/skills.liquid")
 resume_interests_include = read("_includes/resume/interests.liquid")
 resume_languages_include = read("_includes/resume/languages.liquid")
@@ -37,6 +41,14 @@ resume_tex = read("resume_content.tex")
 electronic_project = read("_projects/electronic_design_2025.md")
 electronic_project_zh = read("_projects/electronic_design_2025_zh.md")
 admin_data = read("admin_data.js")
+admin_page = read("admin.html")
+site_config = read("_config.yml")
+coauthors = read("_data/coauthors.yml")
+news_2024_honors = read("_news/2024honors.md")
+news_2025_honors = read("_news/2025honors.md")
+deploy_workflow = read(".github/workflows/deploy.yml")
+release_script = read("release.sh")
+gitignore = read(".gitignore")
 resume_en_data = json.loads(resume_en)
 resume_zh_data = json.loads(resume_zh)
 language_toggle_block = base_styles.split("\n\n.language-toggle {\n", 1)[1].split("\n}", 1)[0]
@@ -307,6 +319,61 @@ require("Provincial 1st Prize" in about, "English homepage awards should use Pro
 require("Provincial First Prize" in electronic_project, "English project page should use Provincial First Prize")
 require("省部级一等奖" in electronic_project_zh, "Chinese project page should use 省部级一等奖")
 require("省部级一等奖" in resume_tex and "省部级二等奖" in resume_tex, "TeX resume should use 省部级 wording")
+require("enable_51la_analytics: true" in site_config, "51.LA analytics should be enabled in site config")
+require(
+    'la51_analytics_id: "3OTnyWhHyoe0kxf2"' in site_config
+    and 'la51_analytics_ck: "3OTnyWhHyoe0kxf2"' in site_config,
+    "51.LA v6 app id and ck should be configured in _config.yml",
+)
+require(
+    "site.la51_analytics_id" in scripts_include
+    and "site.la51_analytics_ck" in scripts_include
+    and "site.la51_analytics_id" in distill_scripts_include
+    and "site.la51_analytics_ck" in distill_scripts_include
+    and "https://sdk.51.la/js-sdk-pro.min.js" in scripts_include,
+    "51.LA script includes should use configured v6 credentials over HTTPS",
+)
+require(
+    "site.data.build.last_updated" in footer_include and "'now'" not in footer_include,
+    "footer last updated date should come from deploy-generated build data instead of Liquid now",
+)
+require(
+    "_data/build.yml" in deploy_workflow and "Asia/Shanghai" in deploy_workflow,
+    "deploy workflow should generate a timezone-aware build date for the footer",
+)
+require(
+    "_data/build.yml" in release_script and "Asia/Shanghai" in release_script,
+    "local release script should generate the same timezone-aware build date for the footer",
+)
+require("_data/build.yml" in gitignore, "generated build date data should stay out of source commits")
+for honors_news in (news_2024_honors, news_2025_honors):
+    require(
+        "[Southwest University](https://swu.edu.cn/){:target=\"_blank\"}" in honors_news,
+        "English honors news should link Southwest University to the official website",
+    )
+for admin_text in (admin_data, admin_page):
+    require(
+        "https://swu.edu.cn/" in admin_text
+        and "Honored as **Merit Student** at Southwest University!" not in admin_text
+        and "Outstanding Student Cadre** at Southwest University!" not in admin_text,
+        "admin news defaults should keep Southwest University linked",
+    )
+require(
+    "max_author_limit: 3" not in site_config,
+    "publication authors should not be collapsed behind a maximum author limit",
+)
+require(
+    "class=\"more-authors\"" not in bib_layout and "more_authors" not in bib_layout,
+    "publication template should render all authors directly instead of a more-authors expander",
+)
+require(
+    "https://bingyaohuang.github.io/" in coauthors,
+    "Bingyao Huang should link to the configured personal homepage",
+)
+require(
+    "https://haibinling.github.io/" in coauthors,
+    "Haibin Ling should link to the configured personal homepage",
+)
 require("profile-info-card" in about and "profile-info-card" in zh_about, "profile info should use the compact card markup")
 require(".profile-info-card" in custom and ".profile-info-item" in custom, "profile info card styles should be defined")
 require(

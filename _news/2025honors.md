@@ -6,4 +6,4 @@ related_posts: false
 featured: true
 ---
 
-🎖️ Honored as **Merit Student** at Southwest University!
+🎖️ Honored as **Merit Student** at [Southwest University](https://swu.edu.cn/){:target="_blank"}!

@@ -12,6 +12,7 @@ node_modules/
 vendor
 .idea
 admin_data.js
+_data/build.yml
 
 # Extra standard ignores
 .vscode/

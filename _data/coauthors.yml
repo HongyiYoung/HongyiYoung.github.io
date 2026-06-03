@@ -17,6 +17,14 @@
   - firstname: ["Carl Philipp Emanuel", "C. P. E."]
     url: https://en.wikipedia.org/wiki/Carl_Philipp_Emanuel_Bach
 
+"huang":
+  - firstname: ["Bingyao"]
+    url: https://bingyaohuang.github.io/
+
+"ling":
+  - firstname: ["Haibin"]
+    url: https://haibinling.github.io/
+
 "przibram":
   - firstname: ["Karl"]
     url: https://link.springer.com/article/10.1007/s00016-019-00242-z

@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-🎖️ Honored as **Merit Student** and **Outstanding Student Cadre** at Southwest University!
+🎖️ Honored as **Merit Student** and **Outstanding Student Cadre** at [Southwest University](https://swu.edu.cn/){:target="_blank"}!
