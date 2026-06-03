@@ -6,6 +6,22 @@ div.container-link-button {
   margin-right: 0.5rem;
 }
 
+.cv {
+  .font-weight-light,
+  .card-text,
+  .table-cv .text {
+    font-weight: var(--site-body-font-weight) !important;
+  }
+
+  h6.ml-1.ml-md-4:not(.title) {
+    font-weight: var(--site-body-font-weight) !important;
+  }
+
+  .table-cv-map td.text {
+    padding-top: 0.38rem !important;
+  }
+}
+
 table.table-cv {
   background-color: transparent !important;
 

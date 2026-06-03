@@ -2,10 +2,16 @@
  * Content
  ******************************************************************************/
 
+:root {
+  --site-body-font-weight: 400;
+  --site-bold-font-size: 1.15em;
+}
+
 body {
   padding-bottom: 70px;
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
+  font-weight: var(--site-body-font-weight);
 
   h1,
   h2,

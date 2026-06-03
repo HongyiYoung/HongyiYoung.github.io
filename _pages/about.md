@@ -61,23 +61,23 @@ I'm **Hongyi Yang**, an undergraduate in Computer Science at Southwest Universit
 
 #### Research
 
-1.**Aesthetics-Driven Leader Line Generation in Label Layouts** (2025.08–Present, 1st author, submitted to IEEE VIS, **CCF-A**)
+**1.Aesthetics-Driven Leader Line Generation in Label Layouts** (2025.08–Present, 1st author, submitted to IEEE VIS, **CCF-A**)
 
 In view management tasks, mainstream approaches primarily focus on label placement, neglecting the aesthetics of leader lines that serve as visual bridges. This work achieves leader line layout generation in complex scenarios by proposing a **Deep Reinforcement Learning**-based framework. We utilize the PPO algorithm for intelligent obstacle avoidance and dynamic generation of leader lines, while introducing a style-unified post-processing mechanism to ensure overall visual consistency. Experiments demonstrate that this method reduces the aesthetic cost of generated leader lines by 57.1% compared to baselines on the SWU-AMIL dataset, and it outperforms commercial layouts in user studies.
 
-2.**VLM-based 3D Annotation Layout Evaluation** (2026.01–Present)
+**2.VLM-based 3D Annotation Layout Evaluation** (2026.01–Present)
 
 Addressing the lack of evaluation paradigms for 3D annotation layouts in the fields of Visualization and VR, we propose the first application of **VLMs** for automated layout assessment in this domain. Based on the PartNet dataset, we construct an annotated layout dataset in 3D scenes, develop a multi-dimensional quantitative evaluation framework encompassing readability and unambiguity, and utilize knowledge distillation to generate a structured scoring dataset. By fine-tuning a lightweight model via **LoRA** for efficient deployment, this method achieves precise identification and quantitative scoring of layout defects (e.g., label occlusion, leader line intersection). It provides an efficient and objective automated evaluation tool for annotation layouts in complex 3D scenes.
 
-3.**GAN-based Annotation Stripping and Background Reconstruction** (2024.12–2025.07)
+**3.GAN-based Annotation Stripping and Background Reconstruction** (2024.12–2025.07)
 
 Addressing the challenge of stripping annotations from images, we employ a **GAN** to simultaneously predict the annotation mask and reconstruct the background. A weighted loss function is introduced to optimize the capture of fine linear features such as annotation leader lines, thereby resolving the high-fidelity restoration of underlying device details in complex backgrounds. By combining image differencing and line segment detection, we automatically generate the supervision labels required for model training, and integrate OCR and graph theory algorithms to extract and comprehend the annotation content. This approach achieves accurate stripping of complex annotations and background reconstruction, significantly improving the construction efficiency of structured image datasets.
 
 #### Awards
 
-1.**Honorary Awards**: National Scholarship (2024, 2025), Merit Student of SWU (2024, 2025), Outstanding Student Cadre of SWU (2024)
+**1.Honorary Awards:** National Scholarship (2024, 2025), Merit Student of SWU (2024, 2025), Outstanding Student Cadre of SWU (2024)
 
-2.**Competition Awards**: MCM Finalist (2025), National Undergraduate Electronics Design Contest Provincial 1st Prize (2025), Lanqiao Cup National Software and Information Technology Professionals Competition National 3rd Prize (2025), National Invention Patent (1st author) (2025), etc.
+**2.Competition Awards:** MCM Finalist (2025), National Undergraduate Electronics Design Contest Provincial 1st Prize (2025), Lanqiao Cup National Software and Information Technology Professionals Competition National 3rd Prize (2025), National Invention Patent (1st author) (2025), etc.
 
 #### Internship
 

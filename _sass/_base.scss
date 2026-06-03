@@ -19,6 +19,15 @@ strong {
   color: var(--global-text-color);
 }
 
+p strong,
+p b,
+li strong,
+li b,
+td strong,
+td b {
+  font-size: var(--site-bold-font-size);
+}
+
 hr {
   border-top: 1px solid var(--global-divider-color);
 }
@@ -33,6 +42,15 @@ table {
   th {
     font-weight: bold;
   }
+}
+
+.news td,
+.news td a {
+  font-weight: var(--site-body-font-weight);
+}
+
+.news td strong {
+  font-weight: 700;
 }
 
 a,
@@ -248,6 +266,13 @@ ul.task-list input[type="checkbox"] {
   border-bottom: 1px solid var(--global-divider-color);
   background-color: var(--global-bg-color);
   opacity: 0.95;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .dropdown-item,
+.navbar button {
+  font-weight: 700 !important;
 }
 
 .navbar .dropdown-menu {
