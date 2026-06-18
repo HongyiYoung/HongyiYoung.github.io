@@ -102,18 +102,36 @@
 - **Stat Cards**：在移动端强制显示为 2x2 网格，防止挤压。
 - **Contact Badges**: 强制设置为 `inline-block` 以保证换行整齐。
 
-## 📦 部署 (Deployment)
-### 自动发布脚本 (推荐)
-本仓库包含一个自动化发布脚本 **`release.sh`**，它可以一键完成“备份源码到 `source` 分支”和“发布网站到 `main` 分支”的操作。
+## 📦 部署 (Deployment) 与多设备同步
+本仓库使用 GitHub Actions 自动部署（见 `.github/workflows/deploy.yml`）。这意味着 **提交并推送源码到 `source` 分支即可自动触发构建并部署到网站**。这种机制不仅省去了本地构建的麻烦，还能直接把源码备份到云端，**非常方便多设备切换开发（换设备后先执行 `git pull origin source` 即可）**。
 
-**使用方法 (Windows 用户需在 Git Bash 或 WSL 中运行)**:
-```bash
-./release.sh "你的提交信息"
-# 例如: ./release.sh "Update homepage content"
+### 快捷发布命令 `d` (Windows PowerShell 推荐)
+我们在根目录提供了 `d.ps1` 快捷脚本，它会自动执行：
+1. `git pull` 尝试拉取远端最新源码（防冲突）
+2. `git add` & `git commit` 保存本地更改
+3. `git push` 推送源码到远端，触发 GitHub Actions 部署
+
+**使用方法**:
+右键点击 `d.ps1` 并选择“使用 PowerShell 运行”，或者在终端中运行：
+```powershell
+.\d.ps1 "你的提交信息(可选)"
 ```
 
-### 手动部署
-如果你不使用脚本，也可以通过 Git 手动推送。通常建议将源码保存在 `source` 分支，而 `main` 分支仅用于存放 `_site` 生成的静态文件（如果使用 GitHub Pages 的话）。或者利用 GitHub Actions 自动构建（取决于你的 `.github/workflows` 配置）。
+### 自动发布脚本 (Linux/WSL)
+我们也保留了 Bash 版本的自动发布脚本 **`deploy.sh`**。
+```bash
+./deploy.sh "你的提交信息"
+```
+
+### 手动发布
+如果不使用快捷脚本，只需执行标准的 Git 命令：
+```bash
+git pull origin source
+git add .
+git commit -m "Update"
+git push origin source
+```
+等待大约 1-2 分钟，GitHub Actions 就会自动完成站点的更新。
 
 ### 8. 国内访问优化 (China Accessibility)
 由于 GitHub 统计图服务 (`vercel.app`) 在国内访问不稳，我们在 **`_config.yml`** 中提供了镜像配置：
