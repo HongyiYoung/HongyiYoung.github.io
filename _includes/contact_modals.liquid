@@ -1,74 +1,72 @@
 <!-- filepath: c:\AcademicPage\_includes\contact_modals.liquid -->
 <!-- 邮箱模态框 -->
 <div id="email-modal" class="contact-modal-overlay" style="display: none;">
-  <div class="contact-modal-box">
+  <div class="contact-modal-box theme-email">
     <div class="contact-modal-header">
       <h3 class="contact-modal-title" data-toc-skip>Email</h3>
-      <div class="header-actions">
-        <button class="copy-button" data-email="yhy520@email.swu.edu.cn" title="Copy Email">
-          <i class="fa fa-copy"></i> Copy
-        </button>
-        <button class="contact-modal-close" onclick="closeEmailModal()">&times;</button>
-      </div>
+      <button class="contact-modal-close" onclick="closeEmailModal()">&times;</button>
     </div>
     <div class="contact-modal-body">
       <div class="image-wrapper">
         <img src="{{ site.contact_info.email_qr | relative_url }}" alt="Email QR Code" class="contact-qrcode">
       </div>
+      <button class="copy-pill-button" data-copy="{{ site.contact_info.email }}">
+        <i class="fa-solid fa-copy"></i> 复制邮箱地址
+      </button>
     </div>
   </div>
 </div>
 
 <!-- 微信模态框 -->
 <div id="wechat-modal" class="contact-modal-overlay" style="display: none;">
-  <div class="contact-modal-box">
+  <div class="contact-modal-box theme-wechat">
     <div class="contact-modal-header">
       <h3 class="contact-modal-title" data-toc-skip>WeChat</h3>
-      <div class="header-actions">
-        <button class="contact-modal-close" onclick="closeWeChatModal()">&times;</button>
-      </div>
+      <button class="contact-modal-close" onclick="closeWeChatModal()">&times;</button>
     </div>
     <div class="contact-modal-body">
       <div class="image-wrapper">
         <img src="{{ site.contact_info.WeChat | relative_url }}" alt="WeChat QR Code" class="contact-qrcode">
       </div>
+      <button class="copy-pill-button" data-copy="Y-H_Y01">
+        <i class="fa-solid fa-copy"></i> 复制微信号
+      </button>
     </div>
   </div>
 </div>
 
 <!-- QQ模态框 -->
 <div id="qq-modal" class="contact-modal-overlay" style="display: none;">
-  <div class="contact-modal-box">
+  <div class="contact-modal-box theme-qq">
     <div class="contact-modal-header">
       <h3 class="contact-modal-title" data-toc-skip>QQ</h3>
-      <div class="header-actions">
-        <button class="contact-modal-close" onclick="closeQQModal()">&times;</button>
-      </div>
+      <button class="contact-modal-close" onclick="closeQQModal()">&times;</button>
     </div>
     <div class="contact-modal-body">
       <div class="image-wrapper">
         <img src="{{ site.contact_info.qq_qr | relative_url }}" alt="QQ QR Code" class="contact-qrcode">
       </div>
+      <button class="copy-pill-button" data-copy="2280205837">
+        <i class="fa-solid fa-copy"></i> 复制QQ号
+      </button>
     </div>
   </div>
 </div>
 
 <!-- Phone 模态框 -->
 <div id="phone-modal" class="contact-modal-overlay" style="display: none;">
-  <div class="contact-modal-box">
+  <div class="contact-modal-box theme-phone">
     <div class="contact-modal-header">
       <h3 class="contact-modal-title" data-toc-skip>Phone</h3>
-      <div class="header-actions">
-        <button class="copy-button" data-phone="+86 18102203701" title="Copy Phone">
-          <i class="fa fa-copy"></i> Copy
-        </button>
-        <button class="contact-modal-close" onclick="closePhoneModal()">&times;</button>
-      </div>
+      <button class="contact-modal-close" onclick="closePhoneModal()">&times;</button>
     </div>
     <div class="contact-modal-body">
       <div class="image-wrapper">
         <img src="{{ '/assets/img/phone.png' | relative_url }}" alt="Phone Image" class="contact-qrcode">
       </div>
+      <button class="copy-pill-button" data-copy="+86 18102203701">
+        <i class="fa-solid fa-copy"></i> 复制手机号
+      </button>
     </div>
   </div>
 </div>

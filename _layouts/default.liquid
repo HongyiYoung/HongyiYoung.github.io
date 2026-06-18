@@ -152,16 +152,14 @@ function closePhoneModal() {
 
 // 初始化功能
 document.addEventListener('DOMContentLoaded', function() {
-  // 复制功能（支持 data-email 或 data-phone）
-  document.querySelectorAll('.copy-button').forEach(btn => {
+  // 复制功能
+  document.querySelectorAll('.copy-pill-button').forEach(btn => {
     btn.addEventListener('click', function(e) {
-      const email = this.getAttribute('data-email');
-      const phone = this.getAttribute('data-phone');
-      const textToCopy = email || phone || '';
+      const textToCopy = this.getAttribute('data-copy');
       if (!textToCopy) return;
       navigator.clipboard.writeText(textToCopy).then(() => {
         const originalHTML = this.innerHTML;
-        this.innerHTML = '<i class="fa fa-check"></i> Copied!';
+        this.innerHTML = '<i class="fa-solid fa-check"></i> 已复制!';
         setTimeout(() => {
           this.innerHTML = originalHTML;
         }, 2000);
@@ -197,7 +195,8 @@ document.addEventListener('DOMContentLoaded', function() {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -206,144 +205,123 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .contact-modal-box {
   background: white;
-  border-radius: 12px;
-  max-width: 400px;
+  border-radius: 16px;
+  max-width: 320px;
   width: 90%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 20px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
+  padding: 16px 20px;
+  position: relative;
 }
 
 .contact-modal-title {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
-}
-
-.header-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.copy-button, .contact-modal-close {
-  background: none;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.2s;
-}
-
-.copy-button:hover {
-  background-color: #007bff;
   color: white;
-}
-
-.contact-modal-close {
-  font-size: 1.5rem;
-  color: #6c757d;
-}
-
-.contact-modal-close:hover {
-  background-color: #dc3545;
-  color: white;
-}
-
-.contact-modal-body {
-  padding: 20px;
-  text-align: center;
-}
-
-.contact-qrcode {
-  width: 250px;
-  height: 250px;
-  object-fit: contain;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.contact-text {
-  margin-bottom: 15px;
-}
-
-.contact-text p {
-  font-family: monospace;
-  background: #f8f9fa;
-  padding: 10px;
-  border-radius: 6px;
   margin: 0;
 }
 
-.contact-tip {
-  color: #6c757d;
-  font-size: 0.9rem;
-  margin: 10px 0 0 0;
-}
-
-.image-wrapper {
+.contact-modal-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  padding: 0;
+  line-height: 1;
 }
+
+.contact-modal-close:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.contact-modal-body {
+  padding: 30px 20px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0 0 16px 16px;
+}
+
+.contact-qrcode {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: white;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin: 0;
+}
+
+.copy-pill-button {
+  margin-top: 24px;
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copy-pill-button:hover {
+  background: #e0e0e0;
+}
+
+/* 主题色彩 */
+.theme-wechat .contact-modal-header { background: #1aad19; }
+.theme-qq .contact-modal-header { background: #1F2329; }
+.theme-email .contact-modal-header { background: #dd001b; }
+.theme-phone .contact-modal-header { background: #ed8936; }
 
 /* 深色模式支持 */
-html[data-theme="dark"] .contact-modal-box {
-  background: #2d3748;
-  color: #e2e8f0;
+html[data-theme="dark"] .contact-modal-box,
+html[data-theme="dark"] .contact-modal-body { 
+  background: #2d3748; 
 }
-
-html[data-theme="dark"] .contact-modal-header {
-  background: #4a5568;
-  border-bottom-color: #718096;
+html[data-theme="dark"] .contact-qrcode { 
+  background: #fff; /* 保持二维码底色为白，保证可扫码 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+} 
+html[data-theme="dark"] .copy-pill-button { 
+  background: #4a5568; 
+  color: #e2e8f0; 
 }
-
-html[data-theme="dark"] .contact-modal-title {
-  color: #e2e8f0;
-}
-
-html[data-theme="dark"] .contact-text p {
-  background: #4a5568;
-  color: #e2e8f0;
-}
-
-html[data-theme="dark"] .contact-modal-close {
-  color: #a0aec0;
-}
-
-html[data-theme="dark"] .contact-modal-close:hover {
-  background-color: #dc3545;
-  color: white;
-}
-
-html[data-theme="dark"] .copy-button:hover {
-  background-color: #007bff;
-  color: white;
+html[data-theme="dark"] .copy-pill-button:hover { 
+  background: #718096; 
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
   .contact-modal-box {
     max-width: 95%;
-    margin: 10px;
   }
-  
-  .contact-modal-header {
-    padding: 15px;
-  }
-  
-  .contact-modal-body {
-    padding: 15px;
-  }
-  
   .contact-qrcode {
     width: 180px;
     height: 180px;
