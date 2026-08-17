@@ -76,9 +76,18 @@ echo -e "\n${GREEN}[3/3] 正在发布到 $DEPLOY_BRANCH 分支...${QC}"
 
 # 获取远程仓库地址
 REMOTE_URL=$(git remote get-url origin)
+DEPLOY_DIR=$(mktemp -d)
 
-# 进入构建目录
-cd "$BUILD_DIR" || exit
+cleanup_deploy_dir() {
+    case "$DEPLOY_DIR" in
+        /tmp/*) rm -rf "$DEPLOY_DIR" ;;
+    esac
+}
+trap cleanup_deploy_dir EXIT
+
+# 将构建产物复制到临时目录，避免 _site 被父仓库 ignore 或 Docker 权限影响。
+tar --exclude='./.git' -C "$BUILD_DIR" -cf - . | tar -C "$DEPLOY_DIR" -xf -
+cd "$DEPLOY_DIR" || exit
 
 # 初始化临时 Git 仓库
 # 注意：这里我们每次都重新初始化，确保 main 分支只包含最新的构建产物
