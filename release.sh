@@ -44,7 +44,11 @@ fi
 # 2. 备份源码 (Source)
 echo -e "\n${GREEN}[1/3] 正在备份源码到 $SOURCE_BRANCH 分支...${QC}"
 git add .
-git commit -m "$COMMIT_MSG"
+if git diff --cached --quiet; then
+    echo -e "${YELLOW}源码没有新的改动，跳过提交。${QC}"
+else
+    git commit -m "$COMMIT_MSG"
+fi
 git push origin "$SOURCE_BRANCH"
 
 if [ $? -ne 0 ]; then
@@ -75,8 +79,8 @@ cd "$BUILD_DIR" || exit
 # 注意：这里我们每次都重新初始化，确保 main 分支只包含最新的构建产物
 # 这样可以避免 _site 目录的历史包袱
 git init
-git checkout -b "$DEPLOY_BRANCH"
-git add .
+git checkout -B "$DEPLOY_BRANCH"
+git add -A .
 git commit -m "Deploy: $COMMIT_MSG"
 
 # 添加远程仓库
