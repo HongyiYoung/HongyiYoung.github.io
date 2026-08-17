@@ -10,6 +10,7 @@ Gemfile.lock
 assets/libs/
 node_modules/
 vendor
+.tmp_pdf_extract/
 .idea
 admin_data.js
 _data/build.yml
