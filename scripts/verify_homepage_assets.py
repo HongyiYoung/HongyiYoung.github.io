@@ -423,18 +423,10 @@ require(
     "51.LA script includes should use configured v6 credentials and locally routed SDK",
 )
 require(
-    "site.data.build.last_updated" in footer_include and "'now'" not in footer_include,
-    "footer last updated date should come from deploy-generated build data instead of Liquid now",
+    "Last updated: {{ site.time | date: '%B %d, %Y' }}." in footer_include
+    and "site.data.build.last_updated" not in footer_include,
+    "footer last updated date should use the current Jekyll build time instead of ignored data files",
 )
-require(
-    "_data/build.yml" in deploy_workflow and "Asia/Shanghai" in deploy_workflow,
-    "deploy workflow should generate a timezone-aware build date for the footer",
-)
-require(
-    "_data/build.yml" in release_script and "Asia/Shanghai" in release_script,
-    "local release script should generate the same timezone-aware build date for the footer",
-)
-require("_data/build.yml" in gitignore, "generated build date data should stay out of source commits")
 for honors_news in (news_2024_honors, news_2025_honors):
     require(
         "[Southwest University](https://swu.edu.cn/){:target=\"_blank\"}" in honors_news,
@@ -474,6 +466,73 @@ require(
     ".profile-info-card" in inline_custom and ".profile-info-item" in inline_custom,
     "inlined custom styles should style the profile info card loaded by the page",
 )
+require("about-body" in layout, "about layout should wrap the main content in a scoped body container")
+require(
+    layout.count('class="homepage-section-heading"') >= 2,
+    "about layout should mark the News and selected publications headings for homepage-specific typography",
+)
+for styles in (custom, inline_custom):
+    require(".about-body" in styles, "about body styles should be scoped to the homepage content container")
+    require(
+        'font-family: "AboutBodyNumerals"' in styles
+        and 'src: local("Times New Roman")' in styles
+        and "unicode-range: U+0030-0039" in styles,
+        "about body should define a Times New Roman font face for plain digits",
+    )
+    require(".about-body {" in styles, "about body should have a container-level style block")
+    about_body_block = styles.split(".about-body {", 1)[1].split("}", 1)[0]
+    require(
+        'font-family: "AboutBodyNumerals", "Merriweather", "Georgia", serif' in about_body_block,
+        "about body should use Times New Roman for digits while keeping the requested serif text stack",
+    )
+    require("text-align: justify" in styles, "about body should justify paragraph text")
+    require("hyphens: auto" in styles, "about body should enable automatic hyphenation")
+    require("overflow-wrap: normal" in styles or "overflow-wrap: break-word" in styles, "about body should keep normal word wrapping behavior")
+    require("word-break: normal" in styles, "about body should avoid forcing character-by-character breaks")
+    require(
+        ".about-body strong,\n.about-body b" in styles and "font-size: inherit" in styles,
+        "about body bold text should not be enlarged beyond the surrounding text",
+    )
+    require(
+        ".about-body h4" in styles and "font-size: inherit" in styles and "font-weight: 700" in styles,
+        "about body h4 headings should be bold without using a larger font size",
+    )
+    require(
+        'font-family: "Times New Roman", "Georgia", serif' in styles
+        and ".about-body strong" in styles
+        and "color: #000" in styles,
+        "about body bold text should use a darker Times New Roman face",
+    )
+    require(".homepage-section-heading" in styles, "homepage section headings should have scoped styles")
+    homepage_heading_block = styles.split(".homepage-section-heading {", 1)[1].split("}", 1)[0]
+    require(
+        'font-family: "Merriweather", "Georgia", serif' in homepage_heading_block,
+        "homepage section headings should only set the requested serif font stack",
+    )
+    for forbidden_heading_property in (
+        "font-size:",
+        "font-weight:",
+        "color:",
+        "border-bottom:",
+        "display:",
+        "margin",
+        "padding",
+        "line-height:",
+    ):
+        require(
+            forbidden_heading_property not in homepage_heading_block,
+            "homepage section headings should not change styling beyond the font family",
+        )
+
+bibliography_heading_block = base_styles.split("h2.bibliography {", 1)[1].split("ol.bibliography {", 1)[0]
+require("font-size" not in bibliography_heading_block, "bibliography year heading size should remain unchanged")
+require("color: #6b7280" in bibliography_heading_block, "bibliography year heading should use the sampled black-gray text color")
+require("box-shadow: none" in base_styles, "publication rows should stay frameless until hover")
+require("box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08)" in base_styles, "publication rows should cast a hover shadow")
+require("font-size: 0.8rem" in base_styles, "publication action buttons should stay compact")
+require("font-family: \"Merriweather\", \"Georgia\", \"Times New Roman\", serif" in base_styles, "bibliography year heading should use the provided serif stack")
+bibliography_hover_block = base_styles.split("ol.bibliography {", 1)[1].split("&:hover {", 1)[1].split("}", 1)[0]
+require("transform:" not in bibliography_hover_block, "publication hover should not transform rows because modals are nested inside bibliography items")
 
 for asset in ("assets/img/prof_pic.jpg", "assets/fonts/ZhiMangXing-name-subset.woff2"):
     require((ROOT / asset).exists(), f"missing optimized asset: {asset}")

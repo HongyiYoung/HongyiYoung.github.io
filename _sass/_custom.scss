@@ -5,8 +5,16 @@
   src: url('../fonts/ZhiMangXing-name-subset.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
   unicode-range: U+6768, U+5F18, U+6BC5;
+}
+
+@font-face {
+  font-family: "AboutBodyNumerals";
+  src: local("Times New Roman");
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+0030-0039;
 }
 
 .name-calligraphy {
@@ -52,6 +60,42 @@
   font-size: clamp(2.6rem, 7vw, 4.5rem);
   font-weight: 600;
   line-height: 1;
+}
+
+.about-body {
+  font-family: "AboutBodyNumerals", "Merriweather", "Georgia", serif;
+}
+
+.about-body p,
+.about-body li {
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+  line-break: auto;
+}
+
+.about-body strong,
+.about-body b {
+  font-size: inherit;
+  font-family: "Times New Roman", "Georgia", serif;
+  color: #000;
+  font-weight: 700;
+}
+
+.about-body h4 {
+  font-size: inherit;
+  font-weight: 700;
+  font-family: "Times New Roman", "Georgia", serif;
+  color: #000;
+}
+
+.homepage-section-heading {
+  font-family: "Merriweather", "Georgia", serif;
 }
 
 /* Mobile Profile Fix */

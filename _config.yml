@@ -15,6 +15,7 @@ footer_text: >
   More information can be seen on my <a href="https://vinyyang.github.io" target="_blank">Personal Homepage</a>.
 keywords: Hongyi Yang, SWU, CS, Computer Vision, NLP, Embodied AI, Autonomous Driving # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
+timezone: Asia/Shanghai
 icon: 🐣 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: "https://HongyiYoung.github.io" # the base hostname & protocol for your site

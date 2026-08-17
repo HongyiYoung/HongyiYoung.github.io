@@ -54,11 +54,12 @@ layout: default
       </div>
     {% endif %}
 
-    <div class="clearfix">{{ content }}</div>
+    {% assign about_content_lang = page.lang | default: site.lang | default: 'en' %}
+    <div class="clearfix about-body" lang="{{ about_content_lang }}">{{ content }}</div>
 
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
-      <h2>
+      <h2 class="homepage-section-heading">
         <a href="{{ '/news/' | relative_url }}" style="color: inherit">
           {% if page.lang == 'zh' %}新闻{% else %}news{% endif %}
         </a>
@@ -78,7 +79,7 @@ layout: default
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
-      <h2>
+      <h2 class="homepage-section-heading">
         <a href="{{ '/publications/' | relative_url }}" style="color: inherit">
           {% if page.lang == 'zh' %}精选论文{% else %}selected publications{% endif %}
         </a>

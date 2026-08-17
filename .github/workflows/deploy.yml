@@ -32,8 +32,6 @@ jobs:
         run: |
           pip3 install --upgrade jupyter
           npm install -g mermaid.cli
-          mkdir -p _data
-          echo "last_updated: \"$(TZ=Asia/Shanghai date +'%Y-%m-%d')\"" > _data/build.yml
           export JEKYLL_ENV=production
           bundle exec jekyll build
       - name: Deploy 🚀

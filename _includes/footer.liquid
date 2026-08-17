@@ -12,7 +12,7 @@
     <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
   {% endif %}
   {% if site.last_updated %}
-    Last updated: {{ site.data.build.last_updated | default: site.time | date: '%B %d, %Y' }}.
+    Last updated: {{ site.time | date: '%B %d, %Y' }}.
   {% endif %}
 {% endcapture %}
 
