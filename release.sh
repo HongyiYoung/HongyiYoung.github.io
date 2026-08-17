@@ -58,12 +58,17 @@ fi
 
 # 3. 编译网站 (Build)
 echo -e "\n${GREEN}[2/3] 正在编译 Jekyll 网站...${QC}"
-# 确保使用 bundler 环境
-bundle exec jekyll build
-
-if [ $? -ne 0 ]; then
-    echo -e "${RED}❌ 编译失败，请检查 Jekyll 日志。${QC}"
-    exit 1
+# 优先使用本地 bundler；如果本地 gems 不完整，则回退到 Docker 环境。
+if bundle exec jekyll build; then
+    echo -e "${GREEN}✅ 本地 Jekyll 编译成功。${QC}"
+else
+    echo -e "${YELLOW}本地 Jekyll 依赖不完整，改用 Docker 编译...${QC}"
+    if docker compose -f docker-compose.yml run --rm --no-deps -e JEKYLL_ENV=production jekyll bundle exec jekyll build; then
+        echo -e "${GREEN}✅ Docker Jekyll 编译成功。${QC}"
+    else
+        echo -e "${RED}❌ 编译失败，请检查 Jekyll 日志。${QC}"
+        exit 1
+    fi
 fi
 
 # 4. 发布部署 (Deploy)
